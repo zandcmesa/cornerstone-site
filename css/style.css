@@ -820,8 +820,8 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   overflow: hidden;
 }
 .group-card-image.has-logo img {
-  object-fit: contain;
-  padding: 20px;
+  object-fit: cover;
+  padding: 0;
 }
 .group-card-monogram {
   width: 100%;
