@@ -100,6 +100,35 @@
   </div>
 </div>
 
+<!-- ─── Video Modal ───────────────────────────────────────────── -->
+<div class="video-modal-backdrop" id="video-modal-backdrop">
+  <div class="video-modal" id="video-modal">
+    <div class="video-modal-player">
+      <iframe id="video-modal-iframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-modal-meta">
+      <div class="video-modal-info">
+        <div class="video-modal-series" id="modal-series"></div>
+        <div class="video-modal-title" id="modal-title"></div>
+        <div class="video-modal-byline">
+          <span id="modal-speaker">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <span id="modal-scripture">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span id="modal-date">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+        </div>
+      </div>
+      <button class="video-modal-close" id="video-modal-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- ─── Footer ────────────────────────────────────────────────── -->
 <footer class="footer">
   <div class="container">
