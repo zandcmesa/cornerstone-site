@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sermons — Cornerstone Church</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ─── Nav ──────────────────────────────────────────────────── -->
+<nav class="nav scrolled">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/cornerstone-logo.png" alt="Cornerstone Church" height="36">
+      </a>
+      <ul class="nav-links">
+        <li><a href="sermons.html" class="active">Sermons</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="staff.html">Staff</a></li>
+        <li><a href="groups.html">Groups</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="announcements.html">Announcements</a></li>
+        <li><a href="give.html">Give</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="watch.html" class="btn btn-primary btn-sm">Watch Online</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── Page Header ───────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="container">
+    <p class="label mb-16">Message Archive</p>
+    <h1 class="display-section-italic">Sermons</h1>
+    <p class="body-text mt-16" style="max-width: 560px;">
+      Search and filter 189 messages by topic, scripture, series, or speaker. Every sermon is indexed so you can find exactly what you're looking for.
+    </p>
+  </div>
+</div>
+
+<!-- ─── Filter Bar ────────────────────────────────────────────── -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="filter-bar-inner">
+      <div class="filter-search">
+        <svg class="filter-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="filter-search" placeholder="Search messages, topics, scripture…">
+      </div>
+
+      <div class="filter-select-wrap">
+        <select class="filter-select" id="filter-series">
+          <option value="">All Series</option>
+        </select>
+        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+      <div class="filter-select-wrap">
+        <select class="filter-select" id="filter-speaker">
+          <option value="">All Speakers</option>
+        </select>
+        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+      <div class="filter-select-wrap">
+        <select class="filter-select" id="filter-topic">
+          <option value="">All Topics</option>
+        </select>
+        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+      <div class="filter-select-wrap">
+        <select class="filter-select" id="filter-book">
+          <option value="">All Scripture</option>
+        </select>
+        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+
+      <span class="filter-results" id="filter-results"></span>
+    </div>
+    <div class="active-filters" id="active-filters"></div>
+  </div>
+</div>
+
+<!-- ─── Sermons Grid ──────────────────────────────────────────── -->
+<div class="container">
+  <div class="sermons-archive-grid" id="sermons-grid">
+    <!-- skeleton cards — replaced by sermons.js on load -->
+    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:130px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title"></div><div class="skel skel-line" style="width:65%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:88%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
+    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:115px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:78%;"></div><div class="skel skel-line" style="width:55%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:92%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
+    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:140px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:90%;"></div><div class="skel skel-line" style="width:60%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:85%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
+    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:120px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:82%;"></div><div class="skel skel-line" style="width:70%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:95%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
+    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:135px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:75%;"></div><div class="skel skel-line" style="width:58%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:90%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
+    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:110px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:88%;"></div><div class="skel skel-line" style="width:62%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:87%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
+  </div>
+</div>
+
+<!-- ─── Footer ────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <img src="images/cornerstone-logo.png" alt="Cornerstone Church" height="30">
+        </a>
+        <p class="footer-desc mt-16">To see our region forever transformed by the Gospel, cultivating fully devoted, fully equipped, fully effective disciples of Jesus.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Explore</div>
+        <ul class="footer-links">
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="staff.html">Staff</a></li>
+          <li><a href="groups.html">Groups</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Get Involved</div>
+        <ul class="footer-links">
+          <li><a href="announcements.html">Announcements</a></li>
+          <li><a href="give.html">Give</a></li>
+          <li><a href="watch.html">Watch Online</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Visit Us</div>
+        <div class="footer-contact">
+          <div class="footer-contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            15 Kibbe Rd, East Longmeadow, MA
+          </div>
+          <div class="footer-contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Sundays at 10:00am
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Cornerstone Church · East Longmeadow, MA</span>
+      <span>Foursquare Church</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/sermons.js"></script>
+</body>
+</html>
