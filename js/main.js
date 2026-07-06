@@ -17,6 +17,27 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   }
 });
 
+// Hero video cross-fade
+const heroVideoA = document.querySelector('.hero-video-a');
+const heroVideoB = document.querySelector('.hero-video-b');
+if (heroVideoA && heroVideoB) {
+  const HOLD_MS = 9000;
+  const FADE_MS = 2500;
+  let current = 'a';
+  setTimeout(function crossfade() {
+    if (current === 'a') {
+      heroVideoA.style.opacity = '0';
+      heroVideoB.style.opacity = '1';
+      current = 'b';
+    } else {
+      heroVideoB.style.opacity = '0';
+      heroVideoA.style.opacity = '1';
+      current = 'a';
+    }
+    setTimeout(crossfade, HOLD_MS + FADE_MS);
+  }, HOLD_MS);
+}
+
 // Sermon thumbnail color placeholders (cycling palette)
 const placeholderGradients = [
   'linear-gradient(135deg, #1a1d2c 0%, #2a2040 100%)',
