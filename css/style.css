@@ -134,10 +134,10 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 }
 .btn-outline {
   background: transparent;
-  color: var(--text-secondary);
+  color: var(--gold);
 }
 .btn-outline:hover {
-  color: var(--text-primary);
+  color: var(--gold-light);
 }
 .btn-ghost {
   background: transparent;
