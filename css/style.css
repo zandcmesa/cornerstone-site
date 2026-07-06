@@ -14,7 +14,7 @@
 
   --text-primary:   #f0ece4;
   --text-secondary: #8c8679;
-  --text-muted:     #55524c;
+  --text-muted:     #959088;
 
   --border-subtle: rgba(240, 236, 228, 0.07);
   --border-normal: rgba(240, 236, 228, 0.14);
@@ -291,7 +291,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   margin-bottom: 24px;
   padding: 4px 10px;
   border-radius: 3px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42));
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 0% 100%;
@@ -311,7 +311,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   margin-bottom: 40px;
 }
 .hero-title em {
-  font-style: normal;
+  font-style: italic;
   color: var(--text-primary);
 }
 .hero-body {
@@ -1252,6 +1252,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .mb-16 { margin-bottom: 16px; }
 .mb-24 { margin-bottom: 24px; }
 .mb-32 { margin-bottom: 32px; }
+.mb-48 { margin-bottom: 48px; }
 .flex { display: flex; }
 .flex-col { display: flex; flex-direction: column; }
 .items-center { align-items: center; }
