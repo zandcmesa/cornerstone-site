@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
 
 /* ─── Tokens ─────────────────────────────────────────────────── */
 :root {
@@ -25,7 +25,7 @@
   --radius-pill: 999px;
 
   --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'Inter', -apple-system, sans-serif;
+  --font-body:    'Albert Sans', -apple-system, sans-serif;
 
   --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.5);
   --shadow-sm:   0 2px 12px rgba(0, 0, 0, 0.3);
@@ -125,13 +125,14 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 }
 .btn-primary {
   background: var(--gold);
-  color: #0d0f14;
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(54, 137, 197, 0.45), 0 4px 12px rgba(54, 137, 197, 0.25);
 }
-.btn-primary:hover { background: var(--gold-light); }
+.btn-primary:hover { background: var(--gold-light); box-shadow: 0 0 24px rgba(54, 137, 197, 0.6), 0 4px 16px rgba(54, 137, 197, 0.35); }
 .btn-outline {
   background: transparent;
-  border: 1px solid var(--gold-border);
-  color: var(--text-primary);
+  border: 1px solid rgba(54, 137, 197, 0.18);
+  color: rgba(240, 236, 228, 0.6);
 }
 .btn-outline:hover {
   border-color: var(--gold);
@@ -207,7 +208,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 44px;
   list-style: none;
   flex: 1;
   justify-content: center;
@@ -233,18 +234,33 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   padding-bottom: 96px;
   padding-top: calc(var(--nav-height) + 64px);
   position: relative;
   overflow: hidden;
   background: var(--bg-base);
 }
-.hero::before {
-  content: '';
+.hero-video-wrap {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200, 169, 110, 0.06) 0%, transparent 70%);
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.45) 25%,
+    rgba(0, 0, 0, 0.2) 55%,
+    transparent 100%);
   pointer-events: none;
 }
 .hero-arc {
@@ -255,10 +271,11 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   width: 600px;
   height: 600px;
   opacity: 0.08;
+  z-index: 2;
 }
 .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   max-width: 100%;
 }
 .hero-eyebrow {
@@ -271,12 +288,12 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   font-style: italic;
   line-height: 0.88;
   letter-spacing: -0.03em;
-  color: var(--text-primary);
+  color: var(--gold);
   margin-bottom: 40px;
 }
 .hero-title em {
   font-style: normal;
-  color: var(--gold);
+  color: var(--text-primary);
 }
 .hero-body {
   max-width: 520px;
