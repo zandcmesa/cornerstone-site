@@ -24,6 +24,11 @@ if (heroVideoA && heroVideoB) {
   const HOLD_MS = 9000;
   const FADE_MS = 2500;
   let current = 'a';
+  heroVideoA.addEventListener('canplay', function() {
+    const eyebrow = document.querySelector('.hero-eyebrow');
+    if (eyebrow) eyebrow.classList.add('highlight-in');
+  }, { once: true });
+
   setTimeout(function crossfade() {
     if (current === 'a') {
       heroVideoA.style.opacity = '0';

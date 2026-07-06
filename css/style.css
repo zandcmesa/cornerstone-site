@@ -287,7 +287,18 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
 }
 .hero-eyebrow {
+  display: inline-block;
   margin-bottom: 24px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 0% 100%;
+  transition: background-size 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hero-eyebrow.highlight-in {
+  background-size: 100% 100%;
 }
 .hero-title {
   font-family: var(--font-display);
