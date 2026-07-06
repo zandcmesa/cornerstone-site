@@ -376,9 +376,11 @@
   function renderCard(s) {
     const badge = s.series ? '<span class="sermon-series-badge">' + s.series + '</span>' : '';
     const topics = s.topics.slice(0, 3).map(t => '<span class="topic-tag">' + t + '</span>').join('');
+    const wikiQuery = (typeof SERMON_IMAGES !== 'undefined' && SERMON_IMAGES[s.id]) || '';
+    const thumbImg = wikiQuery ? '<img class="wiki-thumb" data-wiki="' + wikiQuery + '" alt="">' : '';
     return '<article class="sermon-card" data-sermon-id="' + s.id + '" style="cursor:pointer;">' +
       '<div class="sermon-thumb">' +
-        '<div class="sermon-thumb-placeholder"></div>' +
+        thumbImg +
         badge +
         '<div class="sermon-play-btn"><div class="sermon-play-icon">' + PLAY_SVG + '</div></div>' +
       '</div>' +
@@ -420,6 +422,7 @@
   const grid = document.getElementById('homepage-sermons-grid');
   if (grid && typeof SERMON_DATA !== 'undefined') {
     grid.innerHTML = SERMON_DATA.slice(0, 3).map(renderCard).join('');
+    if (typeof fetchWikiImages !== 'undefined') fetchWikiImages();
     grid.addEventListener('click', function (e) {
       const card = e.target.closest('[data-sermon-id]');
       if (!card) return;

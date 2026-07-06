@@ -424,6 +424,17 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   transition: transform 0.4s ease;
 }
 .sermon-card:hover .sermon-thumb img { transform: scale(1.03); }
+.wiki-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.4s ease;
+}
+.wiki-thumb.loaded { opacity: 1; }
+.sermon-card:hover .wiki-thumb { transform: scale(1.03); }
 .sermon-thumb-placeholder {
   width: 100%;
   height: 100%;

@@ -74,6 +74,88 @@ const SERMON_DATA = [
   { id: 60, title: "The Cost of Following",                        date: "2025-03-23", speaker: "Pastor Christine Disibio",  series: "The Way of the Cross", scripture: "Luke 9:23–26",          scriptureBook: "Luke",           topics: ["Discipleship", "Sacrifice", "Identity"],                   description: "Take up your cross daily and follow me. Not weekly, not occasionally — daily. This message unpacks the radical, ordinary, costly invitation of Jesus to walk the way of the cross.",                                                                                                                                                                                                                                        vimeoId: "1069285446" }
 ];
 
+// ── Wikipedia image mapping (article name → Wikipedia REST API) ──
+const SERMON_IMAGES = {
+  1:  "Wildfire",
+  2:  "Sunrise",
+  3:  "Old-growth forest",
+  4:  "Campfire",
+  5:  "River",
+  6:  "Waterfall",
+  7:  "Sailboat",
+  8:  "Cliff",
+  9:  "Grand Canyon",
+  10: "Sinai Peninsula",
+  11: "Desert",
+  12: "Jerusalem",
+  13: "Sea of Galilee",
+  14: "Gothic architecture",
+  15: "Giant sequoia",
+  16: "Wheat",
+  17: "Dry stone wall",
+  18: "Horizon",
+  19: "Oak",
+  20: "Jericho",
+  21: "Full plate armour",
+  22: "Library",
+  23: "Hiking",
+  24: "Alps",
+  25: "Fishing boat",
+  26: "Snow",
+  27: "Wilderness",
+  28: "Aurora",
+  29: "Spring (hydrology)",
+  30: "Oasis",
+  31: "Milky Way",
+  32: "Dew",
+  33: "Rock of Gibraltar",
+  34: "Lighthouse",
+  35: "Thunderstorm",
+  36: "Anchor",
+  37: "Footpath",
+  38: "Orchestra",
+  39: "Castle",
+  40: "Lake",
+  41: "Sheep",
+  42: "Vineyard",
+  43: "Golden eagle",
+  44: "Dove",
+  45: "Butterfly",
+  46: "Meadow",
+  47: "Door",
+  48: "Bird migration",
+  49: "Nebula",
+  50: "Star cluster",
+  51: "Golden hour (photography)",
+  52: "Galaxy",
+  53: "Andromeda Galaxy",
+  54: "Olive tree",
+  55: "Metamorphosis (biology)",
+  56: "Easter lily",
+  57: "Sunset",
+  58: "Date palm",
+  59: "Garden of Gethsemane",
+  60: "Mountain pass",
+};
+
+function fetchWikiImages() {
+  document.querySelectorAll('.wiki-thumb[data-wiki]').forEach(async (img) => {
+    const article = img.dataset.wiki;
+    if (!article || img.src) return;
+    try {
+      const res = await fetch(
+        'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(article)
+      );
+      const data = await res.json();
+      const src = data.originalimage?.source || data.thumbnail?.source;
+      if (src) {
+        img.src = src;
+        img.onload = () => img.classList.add('loaded');
+      }
+    } catch(e) {}
+  });
+}
+
 let allSermons = [];
 let activeFilters = { search: '', series: '', speaker: '', topic: '', book: '' };
 
@@ -152,8 +234,8 @@ function renderSermons() {
 
   grid.innerHTML = filtered.map((s, i) => `
     <article class="sermon-card" style="cursor:pointer;" data-id="${s.id}">
-      <div class="sermon-thumb">
-        <div class="sermon-thumb-placeholder" style="background:${gradients[i % gradients.length]}"></div>
+      <div class="sermon-thumb" style="background:${gradients[i % gradients.length]}">
+        ${SERMON_IMAGES[s.id] ? `<img class="wiki-thumb" data-wiki="${SERMON_IMAGES[s.id]}" alt="">` : ''}
         ${s.series ? `<span class="sermon-series-badge">${s.series}</span>` : ''}
         <div class="sermon-play-btn">
           <div class="sermon-play-icon">
@@ -180,6 +262,7 @@ function renderSermons() {
   `).join('');
 
   renderActiveFilters();
+  fetchWikiImages();
 
   grid.querySelectorAll('.sermon-card[data-id]').forEach(card => {
     card.addEventListener('click', () => {
