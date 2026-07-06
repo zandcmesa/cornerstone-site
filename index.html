@@ -117,92 +117,7 @@
       </div>
       <a href="sermons.html" class="btn btn-outline">View all sermons</a>
     </div>
-    <div class="sermons-grid">
-      <!-- Sermon 1 -->
-      <article class="sermon-card">
-        <div class="sermon-thumb">
-          <div class="sermon-thumb-placeholder"></div>
-          <span class="sermon-series-badge">Abiding Revival</span>
-          <div class="sermon-play-btn">
-            <div class="sermon-play-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-        </div>
-        <div class="sermon-body">
-          <div class="sermon-meta">
-            <span class="sermon-speaker">Pastor Josh Eldridge</span>
-            <span class="sermon-date">Jun 29, 2026</span>
-          </div>
-          <h3 class="sermon-title">The River of His Presence</h3>
-          <div class="sermon-scripture">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            John 7:37–39
-          </div>
-          <div class="sermon-topics">
-            <span class="topic-tag">Holy Spirit</span>
-            <span class="topic-tag">Revival</span>
-            <span class="topic-tag">Prayer</span>
-          </div>
-        </div>
-      </article>
-      <!-- Sermon 2 -->
-      <article class="sermon-card">
-        <div class="sermon-thumb">
-          <div class="sermon-thumb-placeholder"></div>
-          <span class="sermon-series-badge">Abiding Revival</span>
-          <div class="sermon-play-btn">
-            <div class="sermon-play-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-        </div>
-        <div class="sermon-body">
-          <div class="sermon-meta">
-            <span class="sermon-speaker">Pastor Christine Disibio</span>
-            <span class="sermon-date">Jun 22, 2026</span>
-          </div>
-          <h3 class="sermon-title">When the Fire Falls</h3>
-          <div class="sermon-scripture">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            Acts 2:1–4
-          </div>
-          <div class="sermon-topics">
-            <span class="topic-tag">Holy Spirit</span>
-            <span class="topic-tag">Revival</span>
-            <span class="topic-tag">Worship</span>
-          </div>
-        </div>
-      </article>
-      <!-- Sermon 3 -->
-      <article class="sermon-card">
-        <div class="sermon-thumb">
-          <div class="sermon-thumb-placeholder"></div>
-          <span class="sermon-series-badge">Abiding Revival</span>
-          <div class="sermon-play-btn">
-            <div class="sermon-play-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-        </div>
-        <div class="sermon-body">
-          <div class="sermon-meta">
-            <span class="sermon-speaker">Pastor Josh Eldridge</span>
-            <span class="sermon-date">Jun 15, 2026</span>
-          </div>
-          <h3 class="sermon-title">Rooted and Abiding</h3>
-          <div class="sermon-scripture">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            John 15:1–8
-          </div>
-          <div class="sermon-topics">
-            <span class="topic-tag">Discipleship</span>
-            <span class="topic-tag">Prayer</span>
-            <span class="topic-tag">Obedience</span>
-          </div>
-        </div>
-      </article>
-    </div>
+    <div class="sermons-grid" id="homepage-sermons-grid"></div>
   </div>
 </section>
 
@@ -423,6 +338,98 @@
   </div>
 </footer>
 
+<!-- ─── Video Modal ───────────────────────────────────────────── -->
+<div class="video-modal-backdrop" id="video-modal-backdrop">
+  <div class="video-modal" id="video-modal">
+    <div class="video-modal-player">
+      <iframe id="video-modal-iframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-modal-meta">
+      <div class="video-modal-info">
+        <div class="video-modal-series" id="modal-series"></div>
+        <div class="video-modal-title" id="modal-title"></div>
+        <div class="video-modal-byline">
+          <span id="modal-speaker"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <span id="modal-scripture"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+          <span id="modal-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        </div>
+      </div>
+      <button class="video-modal-close" id="video-modal-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/sermons.js"></script>
+<script>
+(function () {
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const BOOK_SVG = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+  const PLAY_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+
+  function formatDate(str) {
+    const [y, m, d] = str.split('-').map(Number);
+    return MONTHS[m - 1] + ' ' + d + ', ' + y;
+  }
+
+  function renderCard(s) {
+    const badge = s.series ? '<span class="sermon-series-badge">' + s.series + '</span>' : '';
+    const topics = s.topics.slice(0, 3).map(t => '<span class="topic-tag">' + t + '</span>').join('');
+    return '<article class="sermon-card" data-sermon-id="' + s.id + '" style="cursor:pointer;">' +
+      '<div class="sermon-thumb">' +
+        '<div class="sermon-thumb-placeholder"></div>' +
+        badge +
+        '<div class="sermon-play-btn"><div class="sermon-play-icon">' + PLAY_SVG + '</div></div>' +
+      '</div>' +
+      '<div class="sermon-body">' +
+        '<div class="sermon-meta">' +
+          '<span class="sermon-speaker">' + s.speaker + '</span>' +
+          '<span class="sermon-date">' + formatDate(s.date) + '</span>' +
+        '</div>' +
+        '<h3 class="sermon-title">' + s.title + '</h3>' +
+        '<div class="sermon-scripture">' + BOOK_SVG + ' ' + s.scripture + '</div>' +
+        '<div class="sermon-topics">' + topics + '</div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function openModal(sermon) {
+    const backdrop = document.getElementById('video-modal-backdrop');
+    if (!backdrop) return;
+    document.getElementById('video-modal-iframe').src =
+      'https://player.vimeo.com/video/' + sermon.vimeoId + '?autoplay=1&title=0&byline=0&portrait=0';
+    document.getElementById('modal-series').textContent = sermon.series || '';
+    document.getElementById('modal-title').textContent = sermon.title;
+    document.getElementById('modal-speaker').innerHTML =
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + sermon.speaker;
+    document.getElementById('modal-scripture').innerHTML =
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> ' + sermon.scripture;
+    document.getElementById('modal-date').innerHTML =
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ' + formatDate(sermon.date);
+    backdrop.classList.add('open');
+  }
+
+  function closeModal() {
+    const backdrop = document.getElementById('video-modal-backdrop');
+    if (!backdrop) return;
+    backdrop.classList.remove('open');
+    document.getElementById('video-modal-iframe').src = '';
+  }
+
+  const grid = document.getElementById('homepage-sermons-grid');
+  if (grid && typeof SERMON_DATA !== 'undefined') {
+    grid.innerHTML = SERMON_DATA.slice(0, 3).map(renderCard).join('');
+    grid.addEventListener('click', function (e) {
+      const card = e.target.closest('[data-sermon-id]');
+      if (!card) return;
+      const sermon = SERMON_DATA.find(s => s.id === parseInt(card.dataset.sermonId));
+      if (sermon) openModal(sermon);
+    });
+  }
+
+})();
+</script>
 <script src="js/main.js"></script>
 </body>
 </html>
