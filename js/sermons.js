@@ -543,9 +543,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') closeVideoModal();
   });
 
-  document.getElementById('filter-search')?.addEventListener('input', e => {
+  const searchEl = document.getElementById('filter-search');
+  searchEl?.addEventListener('input', e => {
     activeFilters.search = e.target.value;
     renderSermons();
+  });
+  searchEl?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      activeFilters.search = e.target.value;
+      renderSermons();
+    }
   });
 
   ['series', 'speaker', 'topic', 'book'].forEach(key => {
