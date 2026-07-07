@@ -43,27 +43,28 @@ cornerstone-site-upgrade/
 
 ## Sermon data
 
-All data is in `js/sermons.js` as `const SERMON_DATA` (60 entries). Fetch is not used — the file:// protocol blocks it.
+All data is in `js/sermons.js` as `const SERMON_DATA` (currently ~129 entries). Fetch is not used — the file:// protocol blocks it.
 
-**Entries 1–25** have real metadata extracted from Vimeo auto-caption transcripts:
-- Real titles, scripture references, series names, topics, and descriptions
-- Confirmed real series: **Leadership Lessons** (ids 7–11, Apr–May 2026), **Next Level Project** (ids 13–17, Mar 2026)
+All entries 1–129 have real metadata extracted from Vimeo auto-caption transcripts (titles, scripture, series, topics, descriptions). Vimeo retroactively generated auto-captions for all videos going back to 2023.
+
+- Confirmed real series: **Leadership Lessons** (ids 7–11), **Next Level Project** (ids 13–17), **Dependent on the Holy Spirit** (ids 47–53), **Why Our Values Matter** (ids 40–46)
 - `series: null` for sermons without an explicit series name in the transcript
 
-**Entries 26–60** have placeholder metadata (no transcripts available for pre-Dec 2025 videos — Vimeo auto-captions weren't enabled then).
+Transcripts live in `../transcripts/{vimeoId}.txt` (one file per sermon, VTT stripped to plain text).
 
 ### Vimeo API
 
 - **v2 (public, no auth):** `https://vimeo.com/api/v2/cornerstonechurchma/videos.json?page=N`
 - **v3 (requires OAuth):** text tracks at `GET /videos/{id}/texttracks`
 - **Token:** stored in `../vimeo-token.rtf` (parent dir, not in site/). Value is a Personal Access Token with Public + Private scopes. Never commit it.
-- Transcripts were fetched with `fetch_transcripts.sh` (in scratchpad). The script hits the v3 text tracks endpoint, downloads VTT, and strips it to plain text.
+- Transcripts were fetched with a bash script hitting the v3 text tracks endpoint, downloading VTT, and stripping it to plain text.
 
 ### Adding more sermon data
 
-To extend entries 26–60 with real data:
-1. The church needs to enable Vimeo auto-captions on older videos — they don't currently exist
-2. Once available, run the transcript fetch script and extract metadata with Claude
+To add more entries beyond ~129:
+1. Fetch more Sunday Sermon videos via the Vimeo v2 API (currently goes back to May 2023)
+2. Download transcripts for new vimeoIds to `../transcripts/`
+3. Use Claude to extract metadata and append entries to `SERMON_DATA` in sermons.js
 
 ## Sermons page (main showpiece)
 
