@@ -303,6 +303,12 @@ const SERMON_IMAGES = {
 
 let wikiObserver = null;
 
+function highlight(text, q) {
+  if (!q || !text) return text || '';
+  const safe = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return String(text).replace(new RegExp(safe, 'gi'), m => `<mark class="search-hl">${m}</mark>`);
+}
+
 async function loadWikiImage(img) {
   const article = img.dataset.wiki;
   if (!article || img.dataset.loading) return;
@@ -373,12 +379,12 @@ function getFiltered() {
   return allSermons.filter(s => {
     const q = activeFilters.search.toLowerCase();
     const matchSearch = !q ||
-      s.title.toLowerCase().includes(q) ||
-      s.speaker.toLowerCase().includes(q) ||
+      (s.title || '').toLowerCase().includes(q) ||
+      (s.speaker || '').toLowerCase().includes(q) ||
       (s.series || '').toLowerCase().includes(q) ||
-      s.scripture.toLowerCase().includes(q) ||
+      (s.scripture || '').toLowerCase().includes(q) ||
       s.topics.some(t => t.toLowerCase().includes(q)) ||
-      s.description.toLowerCase().includes(q);
+      (s.description || '').toLowerCase().includes(q);
     const matchSeries  = !activeFilters.series  || s.series === activeFilters.series;
     const matchSpeaker = !activeFilters.speaker || s.speaker === activeFilters.speaker;
     const matchTopic   = !activeFilters.topic   || s.topics.includes(activeFilters.topic);
@@ -393,7 +399,10 @@ function renderSermons() {
   const count = document.getElementById('filter-results');
   if (!grid) return;
 
-  count.textContent = `${filtered.length} sermon${filtered.length !== 1 ? 's' : ''}`;
+  const q = activeFilters.search;
+  count.textContent = q
+    ? `${filtered.length} result${filtered.length !== 1 ? 's' : ''} for "${q}"`
+    : `${filtered.length} sermon${filtered.length !== 1 ? 's' : ''}`;
 
   if (filtered.length === 0) {
     grid.innerHTML = `
@@ -428,7 +437,7 @@ function renderSermons() {
           <span class="sermon-speaker">${s.speaker}</span>
           <span class="sermon-date">${formatDate(s.date)}</span>
         </div>
-        <h3 class="sermon-title">${s.title}</h3>
+        <h3 class="sermon-title">${highlight(s.title, activeFilters.search)}</h3>
         <div class="sermon-scripture">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           ${s.scripture}
@@ -544,13 +553,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const searchEl = document.getElementById('filter-search');
+  let searchDebounce;
   searchEl?.addEventListener('input', e => {
-    activeFilters.search = e.target.value;
-    renderSermons();
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      activeFilters.search = e.target.value;
+      renderSermons();
+    }, 150);
   });
   searchEl?.addEventListener('keydown', e => {
     if (e.key === 'Enter') {
       e.preventDefault();
+      clearTimeout(searchDebounce);
       activeFilters.search = e.target.value;
       renderSermons();
     }

@@ -504,6 +504,12 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   color: var(--text-primary);
   margin-bottom: 10px;
 }
+.search-hl {
+  background: rgba(54, 137, 197, 0.18);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-style: normal;
+}
 .sermon-scripture {
   display: inline-flex;
   align-items: center;
