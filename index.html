@@ -473,7 +473,7 @@
   const grid = document.getElementById('homepage-sermons-grid');
   if (grid && typeof SERMON_DATA !== 'undefined') {
     grid.innerHTML = SERMON_DATA.slice(0, 3).map(renderCard).join('');
-    if (typeof fetchWikiImages !== 'undefined') fetchWikiImages();
+    if (typeof setupWikiObserver !== 'undefined') setupWikiObserver();
     grid.addEventListener('click', function (e) {
       const card = e.target.closest('[data-sermon-id]');
       if (!card) return;
