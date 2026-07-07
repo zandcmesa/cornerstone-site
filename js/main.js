@@ -1,16 +1,38 @@
-// Nav scroll behavior
+// Nav scroll behavior + mobile menu
 const nav = document.querySelector('.nav');
 if (nav) {
   const onScroll = () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
+    // Close mobile menu on scroll
+    if (nav.classList.contains('menu-open')) {
+      nav.classList.remove('menu-open');
+      const menuBtn = nav.querySelector('.nav-menu-btn');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Hamburger toggle
+  const menuBtn = nav.querySelector('.nav-menu-btn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('menu-open');
+      menuBtn.setAttribute('aria-expanded', isOpen);
+    });
+    // Close drawer when a mobile link is clicked
+    nav.querySelectorAll('.nav-mobile-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('menu-open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 }
 
-// Mark active nav link
+// Mark active nav link (desktop + mobile)
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-document.querySelectorAll('.nav-links a').forEach(link => {
+document.querySelectorAll('.nav-links a, .nav-mobile-links a').forEach(link => {
   const href = link.getAttribute('href');
   if (href === currentPage || (currentPage === '' && href === 'index.html')) {
     link.classList.add('active');

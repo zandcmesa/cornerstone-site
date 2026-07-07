@@ -1759,3 +1759,176 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 #ministries, #serve-at-cornerstone, #serve-in-community, #unique-groups {
   scroll-margin-top: 80px;
 }
+
+/* ─── Mobile Nav elements (hidden on desktop) ────────────────── */
+.nav-logo-icon { display: none; }
+.nav-menu-btn  { display: none; }
+.nav-mobile-drawer { display: none; }
+
+/* ─── Responsive: 768px and below ───────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Layout */
+  .container { padding: 0 20px; }
+  .section    { padding: 56px 0; }
+  .section-sm { padding: 36px 0; }
+
+  /* Nav: swap logo → icon, show hamburger */
+  .nav {
+    height: auto;
+    min-height: var(--nav-height);
+    align-items: stretch;
+  }
+  .nav .container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+  }
+  .nav-inner {
+    height: var(--nav-height);
+    align-items: center;
+  }
+  .nav-logo-full { display: none; }
+  .nav-logo-icon {
+    display: flex;
+    align-items: center;
+  }
+  .nav-links  { display: none; }
+  .nav-actions { display: none; }
+  .nav-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    flex-shrink: 0;
+    transition: color 0.15s;
+  }
+  .nav-menu-btn:hover { color: var(--gold); }
+
+  /* Mobile drawer */
+  .nav.menu-open {
+    background: var(--bg-base) !important;
+    border-bottom-color: var(--border-subtle) !important;
+  }
+  .nav.menu-open .nav-mobile-drawer { display: flex; }
+  .nav-mobile-drawer {
+    flex-direction: column;
+    padding: 8px 0 24px;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .nav-mobile-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .nav-mobile-links a {
+    display: block;
+    padding: 14px 0;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: color 0.15s;
+  }
+  .nav-mobile-links a:hover { color: var(--gold); }
+  .nav-mobile-links a.active { color: var(--gold); }
+  .nav-mobile-cta { align-self: flex-start; margin-top: 4px; }
+
+  /* Hero */
+  .hero {
+    min-height: 100svh;
+    padding-bottom: 64px;
+  }
+  .hero-arc { display: none; }
+  .hero-ctas {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* Info band */
+  .info-band-grid { grid-template-columns: 1fr; }
+  .info-band-item {
+    padding: 16px 0;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .info-band-item:first-child { padding-left: 0; }
+  .info-band-item:last-child  { border-bottom: none; padding-right: 0; }
+
+  /* Section header row */
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .section-header { margin-bottom: 32px; }
+
+  /* Sermon grids */
+  .sermons-grid          { grid-template-columns: 1fr; }
+  .sermons-grid-2col     { grid-template-columns: 1fr; }
+  .sermons-archive-grid  { grid-template-columns: 1fr; padding: 32px 0; }
+
+  /* Filter bar */
+  .filter-bar-inner { flex-direction: column; align-items: stretch; gap: 10px; }
+  .filter-search    { min-width: 0; }
+  .filter-results   { margin-left: 0; }
+  .filter-select-wrap { flex: 1; }
+  .filter-select    { width: 100%; }
+
+  /* Groups */
+  .groups-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Events */
+  .event-row {
+    grid-template-columns: 60px 1fr;
+    gap: 14px;
+    padding: 16px;
+  }
+  .event-row > :last-child { display: none; }
+
+  /* Announcements */
+  .announcements-grid { grid-template-columns: 1fr; }
+
+  /* Staff */
+  .staff-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+  /* About */
+  .about-two-col  { grid-template-columns: 1fr; gap: 40px; }
+  .values-grid    { grid-template-columns: 1fr; }
+  .missions-grid  { grid-template-columns: 1fr; gap: 24px; }
+
+  /* Give */
+  .give-options { grid-template-columns: 1fr; }
+
+  /* Watch */
+  .watch-info-grid { grid-template-columns: 1fr; }
+  .watch-embed-wrap { margin-top: 32px; }
+
+  /* Page header padding */
+  .page-header { padding: calc(var(--nav-height) + 32px) 0 40px; }
+  .about-hero  { padding: calc(var(--nav-height) + 48px) 0 48px; }
+  .give-page-hero { padding: calc(var(--nav-height) + 48px) 0 48px; }
+  .watch-hero  { padding: calc(var(--nav-height) + 48px) 0 48px; }
+
+  /* Footer */
+  .footer { padding: 48px 0 32px; }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    padding-top: 24px;
+  }
+}
