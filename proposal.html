@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Services Proposal — Cornerstone Church</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #3689C5;
+      --blue-light: #EBF4FB;
+      --fg: #141414;
+      --fg-subtle: #555;
+      --border: #ddd;
+      --surface: #ffffff;
+      --bg: #f4f4f4;
+      --radius: 10px;
+      --shadow: 0 1px 6px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Albert Sans', -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--fg);
+      background: var(--bg);
+      padding: 48px 24px;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 56px 64px;
+    }
+
+    /* Header */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 32px;
+      border-bottom: 2px solid var(--blue);
+      margin-bottom: 40px;
+    }
+
+    .agency-logo img {
+      height: 76px;
+      display: block;
+    }
+
+    .doc-meta {
+      text-align: right;
+      font-size: 12px;
+      color: var(--fg-subtle);
+      line-height: 1.8;
+    }
+
+    .doc-meta strong {
+      color: var(--fg);
+      font-weight: 600;
+    }
+
+    /* Title block */
+    .doc-title {
+      margin-bottom: 40px;
+    }
+
+    .doc-title h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .doc-title .subtitle {
+      font-size: 14px;
+      color: var(--fg-subtle);
+    }
+
+    /* Section headings */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--fg);
+    }
+
+    p {
+      color: var(--fg-subtle);
+      margin-bottom: 12px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* Service cards */
+    .service-block {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+
+    .service-block.accent {
+      border-color: var(--blue);
+      background: var(--blue-light);
+    }
+
+    .service-block .service-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .badge-donated {
+      background: #E8F5E9;
+      color: #2E7D32;
+    }
+
+    .badge-paid {
+      background: #FFF3E0;
+      color: #E65100;
+    }
+
+    /* Commitment list */
+    .commitments {
+      list-style: none;
+      margin-top: 12px;
+    }
+
+    .commitments li {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--fg-subtle);
+      padding: 5px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .service-block.accent .commitments li {
+      border-top-color: #C9E2F5;
+    }
+
+    .commitments li:first-child { border-top: none; }
+
+    .commitments .label {
+      font-weight: 600;
+      color: var(--fg);
+      min-width: 120px;
+      flex-shrink: 0;
+    }
+
+    /* Callout boxes */
+    .scope-note {
+      background: #FFFBF0;
+      border: 1px solid #F0C040;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #5A4200;
+      margin-top: 8px;
+    }
+
+    .scope-note strong { color: #3A2800; }
+
+    .info-note {
+      background: var(--blue-light);
+      border: 1px solid #C9E2F5;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: #1A4F7A;
+      margin-top: 8px;
+    }
+
+    .info-note strong { color: #0D3356; }
+
+    /* Discovery steps */
+    .discovery-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .discovery-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-content h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--fg);
+      margin-bottom: 2px;
+    }
+
+    .step-content p {
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+
+    /* Estimated value display */
+    .service-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .est-value {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--fg-subtle);
+    }
+
+    /* Donated value summary */
+    .value-summary {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+
+    .value-summary-header {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-subtle);
+      margin-bottom: 12px;
+    }
+
+    .value-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13px;
+      padding: 6px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .value-row:first-of-type { border-top: none; }
+
+    .value-row .value-label { color: var(--fg-subtle); }
+
+    .value-row .value-amount {
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .value-row.total {
+      border-top: 2px solid var(--fg);
+      margin-top: 4px;
+      padding-top: 10px;
+      font-weight: 700;
+    }
+
+    .value-row.total .value-label { color: var(--fg); }
+
+    .value-disclaimer {
+      font-size: 11px;
+      color: #999;
+      margin-top: 10px;
+    }
+
+    /* Divider */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* Terms section */
+    .terms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .term-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+
+    .term-item.full-width {
+      grid-column: span 2;
+    }
+
+    .term-item .term-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-subtle);
+      margin-bottom: 4px;
+    }
+
+    .term-item .term-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+      line-height: 1.4;
+    }
+
+    .term-item .term-detail {
+      font-size: 12px;
+      color: var(--fg-subtle);
+      margin-top: 3px;
+    }
+
+    /* Optional add-on */
+    .addon-block {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+    }
+
+    .addon-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .price-tag {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.03em;
+    }
+
+    .price-tag span {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--fg-subtle);
+    }
+
+    .template-list {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .template-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--fg-subtle);
+    }
+
+    .template-item .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .template-item .tbd {
+      font-style: italic;
+      color: #999;
+    }
+
+    /* DocuSign note */
+    .docusign-note {
+      background: #F8F8F8;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 12px;
+      color: var(--fg-subtle);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .docusign-note::before {
+      content: "✍️";
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    /* Signature block */
+    .signature-section {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .signature-section h2 {
+      margin-bottom: 8px;
+    }
+
+    .signature-section > p {
+      margin-bottom: 24px;
+    }
+
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .sig-block .sig-party {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-subtle);
+      margin-bottom: 40px;
+    }
+
+    .sig-line {
+      border-top: 1px solid var(--fg);
+      padding-top: 8px;
+    }
+
+    .sig-line .sig-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .sig-line .sig-title {
+      font-size: 12px;
+      color: var(--fg-subtle);
+    }
+
+    .sig-date {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      font-size: 12px;
+      color: var(--fg-subtle);
+    }
+
+    /* Footer */
+    .doc-footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; border-radius: 0; padding: 40px 48px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="agency-logo">
+      <img src="oasis-lockup.svg" alt="Oasis Creative Studios">
+    </div>
+    <div class="doc-meta">
+      <div><strong>Prepared for</strong> Cornerstone Church</div>
+      <div>East Longmeadow, MA</div>
+      <div style="margin-top:6px;"><strong>Date</strong> July 2026</div>
+    </div>
+  </div>
+
+  <!-- Title -->
+  <div class="doc-title">
+    <h1>Digital Services Proposal &amp; Service Agreement</h1>
+    <div class="subtitle">Site launch, migration, ongoing maintenance, and email template services for Cornerstone Church.</div>
+  </div>
+
+  <!-- Overview -->
+  <p>This document covers everything Oasis Creative Studios will do to launch and maintain Cornerstone Church's new website — what's included, what's not, how requests are handled, and the terms under which we'll work together. Both parties sign below to make it official.</p>
+
+  <hr class="section-divider">
+
+  <!-- Part 1: Launch & Migration -->
+  <div class="section-label">Part One</div>
+  <h2>Site Launch &amp; Migration</h2>
+  <p>Before the new site goes live, we need to understand the current digital setup and plan the transition carefully. This work is donated in full — there's no charge to move from your current provider to the new site.</p>
+
+  <div class="service-block">
+    <div class="service-header">
+      <h3>Discovery &amp; Transition Planning</h3>
+      <span class="badge badge-donated">Donated</span>
+    </div>
+    <p>The first step is a short discovery process to map your current setup. This happens before any migration work begins.</p>
+    <div class="discovery-steps">
+      <div class="discovery-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h4>Discovery</h4>
+          <p>We'll review your current hosting provider, domain registrar, email configuration, and any accounts managed by your current agency (Vimeo, YouTube, Planning Center, Mailchimp). No long meetings — a short written questionnaire or a 20-minute call.</p>
+        </div>
+      </div>
+      <div class="discovery-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h4>Transition Plan</h4>
+          <p>Based on discovery, we'll produce a written plan covering what changes, when, and in what order — including any steps Cornerstone needs to take with its current agency.</p>
+        </div>
+      </div>
+      <div class="discovery-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h4>Staging &amp; Testing</h4>
+          <p>The new site will run at a staging URL for testing before going live. We confirm everything works — sermons, Planning Center integration, contact forms — before the domain switches over.</p>
+        </div>
+      </div>
+      <div class="discovery-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h4>Go-Live</h4>
+          <p>Domain DNS is updated to point to the new site. The old site is retired on a coordinated date. Ongoing maintenance begins the same day.</p>
+        </div>
+      </div>
+    </div>
+    <div class="info-note" style="margin-top:16px;">
+      <strong>A note on email:</strong> Switching website hosting typically does not affect your domain's email service (staff inboxes, contact addresses). We'll confirm this during discovery. If any email configuration needs to change, we'll walk through it together before anything is touched.<br><br>
+      <strong>Important:</strong> If your current agency manages your domain's DNS, Cornerstone will need to reclaim that access before migration can begin. This is common — we'll identify it in discovery and handle it step by step.
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Part 2: Ongoing Maintenance -->
+  <div class="section-label">Part Two</div>
+  <h2>Ongoing Maintenance</h2>
+  <p>The following services are provided at no cost to Cornerstone Church for the duration of this agreement. This is a genuine gift — no invoice, no retainer, no catch.</p>
+
+  <!-- Sermon Publishing -->
+  <div class="service-block accent">
+    <div class="service-header">
+      <h3>Weekly Sermon Publishing</h3>
+      <span class="badge badge-donated">Donated</span>
+    </div>
+    <p>Every Sunday sermon will be edited, uploaded, and live on the website by Tuesday. The new site automatically generates a title, scripture reference, description, and imagery from each sermon — no generic thumbnails, no "Sunday Sermon (Jun 28)."</p>
+    <ul class="commitments">
+      <li><span class="label">Deadline</span> Live on site every Tuesday</li>
+      <li><span class="label">Process</span> Worship trimmed from Sunday livestream, uploaded to Vimeo, published to site</li>
+      <li><span class="label">Metadata</span> Title, scripture, and description generated from sermon transcript. Imagery is generated from sermon content or replaced with a custom image if provided by the church.</li>
+    </ul>
+  </div>
+
+  <!-- Page Maintenance -->
+  <div class="service-block">
+    <div class="service-header">
+      <h3>Page Maintenance &amp; Content Updates</h3>
+      <span class="badge badge-donated">Donated</span>
+    </div>
+    <p>Announcements, Groups, Events, and other pages kept current as the church's needs change. Requests are handled one at a time, in the order received, through a single designated point of contact.</p>
+    <ul class="commitments">
+      <li><span class="label">Turnaround</span> 2 business days from request submission</li>
+      <li><span class="label">Requests</span> One active request at a time, submitted by the designated church representative</li>
+      <li><span class="label">Point of contact</span> One designated church representative at a time. Changes to this designation must be submitted in writing.</li>
+    </ul>
+    <div class="scope-note">
+      <strong>What's included:</strong> Content updates — text, images, adding or removing items on existing pages (announcements, group listings, event details, staff bios, etc.).<br><br>
+      <strong>What's not included:</strong> New page layouts, new site features, design changes, or new functionality. Requests of that nature are welcome but fall outside this agreement and would be scoped separately.
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Terms -->
+  <div class="section-label">Agreement Terms</div>
+  <h2>How We Work Together</h2>
+
+  <div class="terms-grid">
+    <div class="term-item">
+      <div class="term-label">Term</div>
+      <div class="term-value">12 months</div>
+      <div class="term-detail">Beginning on the go-live date. Terms will be revisited at the 12-month mark.</div>
+    </div>
+    <div class="term-item">
+      <div class="term-label">Exit</div>
+      <div class="term-value">At-will, 30 days notice</div>
+      <div class="term-detail">Either party may end this agreement at any time with 30 days written notice. No penalty, no hard feelings.</div>
+    </div>
+    <div class="term-item">
+      <div class="term-label">Point of Contact</div>
+      <div class="term-value">One representative at a time</div>
+      <div class="term-detail">All requests flow through a single designated church representative. Changes submitted in writing.</div>
+    </div>
+    <div class="term-item">
+      <div class="term-label">Renewal</div>
+      <div class="term-value">Revisited at 12 months</div>
+      <div class="term-detail">At the end of year one, both parties will discuss whether and how to continue.</div>
+    </div>
+    <div class="term-item full-width">
+      <div class="term-label">Code Ownership &amp; License</div>
+      <div class="term-value">Oasis Creative Studios LLC retains ownership of all site code.</div>
+      <div class="term-detail">Cornerstone Church is granted a perpetual, irrevocable license to use, modify, and redistribute the site. Access to the GitHub repository will be provided. If this agreement ends, Cornerstone may take the codebase to another developer without restriction.</div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Part 3: Email Add-On -->
+  <div class="section-label">Part Three — Optional Add-On</div>
+  <h2>Email Template Package</h2>
+  <p>This is an optional paid service, separate from the donated work above. Cornerstone's current digital presence doesn't include branded email templates — this closes that gap and gives the communications team polished, reusable starting points in Mailchimp.</p>
+
+  <div class="addon-block">
+    <div class="addon-header">
+      <h3>Mailchimp Template Design</h3>
+      <div class="price-tag">$600 <span>flat rate</span></div>
+    </div>
+    <p>Three branded Mailchimp email templates, designed to match the new website. The church owns the templates outright — no ongoing dependency on Oasis.</p>
+    <div class="template-list">
+      <div class="template-item">
+        <div class="dot"></div>
+        Weekly Announcements — recurring format for Sunday announcements, events, and updates
+      </div>
+      <div class="template-item">
+        <div class="dot"></div>
+        One-Time Announcement — single-focus message for special communications
+      </div>
+      <div class="template-item">
+        <div class="dot"></div>
+        <span class="tbd">Third template — to be confirmed based on church needs</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top:16px; font-size:13px;">This add-on is not included in the signature below. It will be scoped and agreed upon separately. A separate invoice will be issued through Oasis Creative Studios LLC.</p>
+
+  <!-- Signatures -->
+  <div class="signature-section">
+    <div class="section-label">Acceptance</div>
+    <h2>Signatures</h2>
+    <p>By signing below, both parties agree to the services and terms outlined in Parts One, Two, and Three of this document.</p>
+
+    <div class="docusign-note">
+      This document will be executed via DocuSign prior to any work beginning. The version above is provided for review purposes only.
+    </div>
+
+    <div class="signature-grid">
+      <div class="sig-block">
+        <div class="sig-party">Oasis Creative Studios LLC</div>
+        <div class="sig-line">
+          <div class="sig-name">Zach Mesa</div>
+          <div class="sig-title">Founder, Oasis Creative Studios LLC</div>
+        </div>
+        <div class="sig-date">Date: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      </div>
+      <div class="sig-block">
+        <div class="sig-party">Cornerstone Church</div>
+        <div class="sig-line">
+          <div class="sig-name">&nbsp;</div>
+          <div class="sig-title">Authorized Representative, Cornerstone Church</div>
+        </div>
+        <div class="sig-date">Date: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-footer">
+    Oasis Creative Studios LLC · Somers, CT · Prepared July 2026
+  </div>
+
+</div>
+</body>
+</html>
