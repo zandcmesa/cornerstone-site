@@ -840,7 +840,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .events-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
 }
 .event-row {
   display: grid;
