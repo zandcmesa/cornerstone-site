@@ -46,7 +46,7 @@
         </div>
         <div class="give-option-title">Give Online</div>
         <p class="give-option-desc">Give securely using a credit card, debit card, or bank account through our Planning Center giving portal.</p>
-        <a href="https://cornerstonechurchma.churchcenter.com/giving" target="_blank" class="btn btn-primary">Give Now</a>
+        <button class="btn btn-primary" data-pco-url="https://cornerstonechurchma.churchcenter.com/giving" data-pco-title="Give Online">Give Now</button>
       </div>
       <div class="give-option-card">
         <div class="give-option-icon">
@@ -110,6 +110,36 @@
     <div class="footer-bottom"><span>© 2026 Cornerstone Church · East Longmeadow, MA</span><span>Foursquare Church</span></div>
   </div>
 </footer>
+<div id="pco-modal-backdrop" class="pco-modal-backdrop">
+  <div class="pco-modal">
+    <div class="pco-modal-header">
+      <img src="images/cornerstone-logo.png" alt="Cornerstone Church" height="26">
+      <span class="pco-modal-header-title" id="pco-modal-title"></span>
+      <button class="pco-modal-close" id="pco-modal-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="pco-modal-body">
+      <div class="pco-modal-loading" id="pco-modal-loading">
+        <div class="pco-modal-spinner"></div>
+        <p>Loading</p>
+      </div>
+      <div id="pco-modal-fallback" class="pco-modal-fallback">
+        <div class="pco-modal-fallback-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <div class="pco-modal-fallback-heading">Give on Planning Center</div>
+        <p class="pco-modal-fallback-desc">Complete your gift securely through Planning Center — our church management platform.</p>
+        <a id="pco-modal-fallback-link" href="#" target="_blank" class="pco-modal-fallback-cta">
+          Open Giving Portal
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+      <iframe id="pco-modal-iframe" class="pco-modal-iframe" src="" title="Planning Center" allow="payment"></iframe>
+    </div>
+  </div>
+</div>
+
 <script src="js/main.js"></script>
 </body>
 </html>

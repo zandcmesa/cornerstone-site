@@ -144,7 +144,7 @@
             <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Cornerstone Church</span>
           </div>
         </div>
-        <a href="https://cornerstonechurchma.churchcenter.com/registrations" target="_blank" class="btn btn-primary btn-sm">Register</a>
+        <button class="btn btn-primary btn-sm" data-pco-url="https://cornerstonechurchma.churchcenter.com/registrations" data-pco-title="Event Registration">Register</button>
       </div>
       <div class="event-row">
         <div class="event-date-block">
@@ -170,7 +170,7 @@
             <span>Aug 10–14 · All Ages Welcome</span>
           </div>
         </div>
-        <a href="https://cornerstonechurchma.churchcenter.com/registrations" target="_blank" class="btn btn-primary btn-sm">Register</a>
+        <button class="btn btn-primary btn-sm" data-pco-url="https://cornerstonechurchma.churchcenter.com/registrations" data-pco-title="Event Registration">Register</button>
       </div>
       <div class="event-row">
         <div class="event-date-block">
@@ -201,6 +201,36 @@
     <div class="footer-bottom"><span>© 2026 Cornerstone Church · East Longmeadow, MA</span><span>Foursquare Church</span></div>
   </div>
 </footer>
+<div id="pco-modal-backdrop" class="pco-modal-backdrop">
+  <div class="pco-modal">
+    <div class="pco-modal-header">
+      <img src="images/cornerstone-logo.png" alt="Cornerstone Church" height="26">
+      <span class="pco-modal-header-title" id="pco-modal-title"></span>
+      <button class="pco-modal-close" id="pco-modal-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="pco-modal-body">
+      <div class="pco-modal-loading" id="pco-modal-loading">
+        <div class="pco-modal-spinner"></div>
+        <p>Loading</p>
+      </div>
+      <div id="pco-modal-fallback" class="pco-modal-fallback">
+        <div class="pco-modal-fallback-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="pco-modal-fallback-heading">Register on Planning Center</div>
+        <p class="pco-modal-fallback-desc">Complete your registration securely through Planning Center — our church management platform.</p>
+        <a id="pco-modal-fallback-link" href="#" target="_blank" class="pco-modal-fallback-cta">
+          Open Registration
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+      <iframe id="pco-modal-iframe" class="pco-modal-iframe" src="" title="Planning Center" allow="payment"></iframe>
+    </div>
+  </div>
+</div>
+
 <script src="js/main.js"></script>
 </body>
 </html>
