@@ -131,7 +131,7 @@
             <span>Community service — food donations welcome</span>
           </div>
         </div>
-        <span class="btn btn-outline btn-sm" style="cursor:default;opacity:0.5;">Registration TBD</span>
+        <button class="btn btn-outline btn-sm" data-event-id="church-at-the-park">Details</button>
       </div>
       <div class="event-row">
         <div class="event-date-block">
@@ -144,7 +144,7 @@
             <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Cornerstone Church</span>
           </div>
         </div>
-        <button class="btn btn-primary btn-sm" data-pco-url="https://cornerstonechurchma.churchcenter.com/registrations" data-pco-title="Event Registration">Register</button>
+        <button class="btn btn-primary btn-sm" data-event-id="breakfast-mizrachi">Register</button>
       </div>
       <div class="event-row">
         <div class="event-date-block">
@@ -157,7 +157,7 @@
             <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Tuesdays, 7:00pm</span>
           </div>
         </div>
-        <span></span>
+        <button class="btn btn-outline btn-sm" data-event-id="irreplaceable-study">Details</button>
       </div>
       <div class="event-row">
         <div class="event-date-block">
@@ -170,7 +170,7 @@
             <span>Aug 10–14 · All Ages Welcome</span>
           </div>
         </div>
-        <button class="btn btn-primary btn-sm" data-pco-url="https://cornerstonechurchma.churchcenter.com/registrations" data-pco-title="Event Registration">Register</button>
+        <button class="btn btn-primary btn-sm" data-event-id="dance-camp">Register</button>
       </div>
       <div class="event-row">
         <div class="event-date-block">
@@ -183,7 +183,7 @@
             <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Select Fridays · 7:00pm</span>
           </div>
         </div>
-        <a href="groups.html" class="btn btn-outline btn-sm">Learn More</a>
+        <button class="btn btn-outline btn-sm" data-event-id="young-adults">Learn More</button>
       </div>
     </div>
 
@@ -201,6 +201,44 @@
     <div class="footer-bottom"><span>© 2026 Cornerstone Church · East Longmeadow, MA</span><span>Foursquare Church</span></div>
   </div>
 </footer>
+<div id="event-modal-backdrop" class="event-modal-backdrop">
+  <div class="event-modal">
+    <div class="event-modal-header">
+      <div class="event-modal-date-block">
+        <div class="event-modal-date-month" id="event-modal-month"></div>
+        <div class="event-modal-date-day" id="event-modal-day"></div>
+      </div>
+      <div class="event-modal-header-info">
+        <div class="event-modal-label" id="event-modal-label"></div>
+        <h2 class="event-modal-title" id="event-modal-title"></h2>
+      </div>
+      <button class="event-modal-close" id="event-modal-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="event-modal-scroll">
+      <div class="event-modal-meta">
+        <div class="event-modal-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="event-modal-time"></span>
+        </div>
+        <div class="event-modal-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="event-modal-location"></span>
+        </div>
+      </div>
+      <div class="event-modal-description" id="event-modal-description"></div>
+    </div>
+    <div class="event-modal-footer" id="event-modal-footer">
+      <p class="event-modal-footer-note" id="event-modal-footer-note"></p>
+      <a id="event-modal-cta" href="#" target="_blank" class="btn btn-primary btn-sm">
+        Register
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
 <div id="pco-modal-backdrop" class="pco-modal-backdrop">
   <div class="pco-modal">
     <div class="pco-modal-header">
@@ -231,6 +269,7 @@
   </div>
 </div>
 
+<script src="js/events.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

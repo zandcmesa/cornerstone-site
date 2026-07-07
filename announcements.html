@@ -44,58 +44,50 @@
     <div class="announcements-grid">
 
       <div class="announcement-card">
-        <div class="announcement-image">
-          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a2a1a,#2a402a);display:flex;align-items:center;justify-content:center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          </div>
+        <div class="announcement-image" style="position:relative;background:linear-gradient(135deg,#1a2a1a,#2a402a);">
+          <img class="wiki-thumb" data-wiki="City park" alt="">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">July 26, 2026</div>
           <div class="announcement-title">Church at the Park</div>
           <p class="announcement-desc">Join us for a community service event. We'll be collecting food donations for the local food pantry. Bring a non-perishable item and come ready to serve.</p>
-          <a href="events.html" class="btn btn-outline btn-sm">Details</a>
+          <button class="btn btn-outline btn-sm" data-event-id="church-at-the-park">Details</button>
         </div>
       </div>
 
       <div class="announcement-card">
-        <div class="announcement-image">
-          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a2c,#252540);display:flex;align-items:center;justify-content:center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
+        <div class="announcement-image" style="position:relative;background:linear-gradient(135deg,#1a1a2c,#252540);">
+          <img class="wiki-thumb" data-wiki="Tel Aviv" alt="">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">August 1, 2026</div>
           <div class="announcement-title">Breakfast with Avi &amp; Chaya Mizrachi</div>
           <p class="announcement-desc">Join us for a special morning with Avi and Chaya Mizrachi from the Dugit Messianic Outreach Center in Israel. Registration required.</p>
-          <a href="https://cornerstonechurchma.churchcenter.com/registrations" target="_blank" class="btn btn-primary btn-sm">Register Now</a>
+          <button class="btn btn-primary btn-sm" data-event-id="breakfast-mizrachi">Register Now</button>
         </div>
       </div>
 
       <div class="announcement-card">
-        <div class="announcement-image">
-          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a160a,#332a10);display:flex;align-items:center;justify-content:center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </div>
+        <div class="announcement-image" style="position:relative;background:linear-gradient(135deg,#1a160a,#332a10);">
+          <img class="wiki-thumb" data-wiki="Reading (process)" alt="">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">Tuesdays · July – August</div>
           <div class="announcement-title">"Irreplaceable" Book Study</div>
           <p class="announcement-desc">A weekly Tuesday evening book study running through the summer. All are welcome — no sign-up needed. Drop in any Tuesday at 7pm.</p>
-          <a href="events.html" class="btn btn-outline btn-sm">Details</a>
+          <button class="btn btn-outline btn-sm" data-event-id="irreplaceable-study">Details</button>
         </div>
       </div>
 
       <div class="announcement-card">
-        <div class="announcement-image">
-          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a0f1a,#2a1a2a);display:flex;align-items:center;justify-content:center;">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
+        <div class="announcement-image" style="position:relative;background:linear-gradient(135deg,#1a0f1a,#2a1a2a);">
+          <img class="wiki-thumb" data-wiki="Liturgical dance" alt="">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">August 10–14, 2026</div>
           <div class="announcement-title">High Praise Dance Camp</div>
           <p class="announcement-desc">A five-day summer dance camp celebrating worship through movement. Open to all ages and skill levels. Registration now open — spots are limited.</p>
-          <a href="https://cornerstonechurchma.churchcenter.com/registrations" target="_blank" class="btn btn-primary btn-sm">Register Now</a>
+          <button class="btn btn-primary btn-sm" data-event-id="dance-camp">Register Now</button>
         </div>
       </div>
 
@@ -137,6 +129,45 @@
     <div class="footer-bottom"><span>© 2026 Cornerstone Church · East Longmeadow, MA</span><span>Foursquare Church</span></div>
   </div>
 </footer>
+<div id="event-modal-backdrop" class="event-modal-backdrop">
+  <div class="event-modal">
+    <div class="event-modal-header">
+      <div class="event-modal-date-block">
+        <div class="event-modal-date-month" id="event-modal-month"></div>
+        <div class="event-modal-date-day" id="event-modal-day"></div>
+      </div>
+      <div class="event-modal-header-info">
+        <div class="event-modal-label" id="event-modal-label"></div>
+        <h2 class="event-modal-title" id="event-modal-title"></h2>
+      </div>
+      <button class="event-modal-close" id="event-modal-close" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="event-modal-scroll">
+      <div class="event-modal-meta">
+        <div class="event-modal-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span id="event-modal-time"></span>
+        </div>
+        <div class="event-modal-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span id="event-modal-location"></span>
+        </div>
+      </div>
+      <div class="event-modal-description" id="event-modal-description"></div>
+    </div>
+    <div class="event-modal-footer" id="event-modal-footer">
+      <p class="event-modal-footer-note" id="event-modal-footer-note"></p>
+      <a id="event-modal-cta" href="#" target="_blank" class="btn btn-primary btn-sm">
+        Register
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="js/events.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
