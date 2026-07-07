@@ -1098,6 +1098,11 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   align-items: center;
   gap: 8px;
 }
+a.mission-item {
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a.mission-item:hover { color: var(--text-primary); }
 .mission-item::before {
   content: '';
   width: 4px;
