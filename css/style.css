@@ -1895,6 +1895,8 @@ a.mission-item:hover { color: var(--text-primary); }
   .event-row > :last-child {
     grid-column: 2;
     justify-self: start;
+  }
+  .event-row > .btn-outline:last-child {
     padding-left: 0;
     padding-right: 0;
   }
