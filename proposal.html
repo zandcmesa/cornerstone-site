@@ -501,6 +501,49 @@
       text-align: center;
     }
 
+    @media (max-width: 600px) {
+      body {
+        padding: 0;
+      }
+
+      .page {
+        border-radius: 0;
+        padding: 32px 20px;
+        box-shadow: none;
+      }
+
+      .doc-header {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .doc-meta {
+        text-align: left;
+      }
+
+      .terms-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .term-item.full-width {
+        grid-column: span 1;
+      }
+
+      .signature-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .commitments .label {
+        min-width: 80px;
+      }
+
+      .service-block,
+      .addon-block {
+        padding: 20px 16px;
+      }
+    }
+
     @media print {
       body { background: white; padding: 0; }
       .page { box-shadow: none; border-radius: 0; padding: 40px 48px; }
