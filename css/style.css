@@ -1887,9 +1887,14 @@ a.mission-item:hover { color: var(--text-primary); }
 
   /* Events */
   .event-row {
-    grid-template-columns: 60px 1fr auto;
-    gap: 14px;
+    grid-template-columns: 60px 1fr;
+    gap: 10px 14px;
     padding: 16px;
+    align-items: start;
+  }
+  .event-row > :last-child {
+    grid-column: 2;
+    justify-self: start;
   }
 
   /* Announcements */
