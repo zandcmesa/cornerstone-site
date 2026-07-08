@@ -136,6 +136,12 @@ if (pcoBackdrop) {
     el.addEventListener('click', () => {
       openPCOModal(el.dataset.pcoUrl, el.dataset.pcoTitle || '');
     });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPCOModal(el.dataset.pcoUrl, el.dataset.pcoTitle || '');
+      }
+    });
   });
 }
 

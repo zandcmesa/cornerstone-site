@@ -227,5 +227,11 @@ if (groupBackdrop) {
 
   document.querySelectorAll('[data-group-id]').forEach(el => {
     el.addEventListener('click', () => openGroupModal(el.dataset.groupId));
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openGroupModal(el.dataset.groupId);
+      }
+    });
   });
 }

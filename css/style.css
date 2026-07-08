@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
-
 /* ─── Tokens ─────────────────────────────────────────────────── */
 :root {
   --bg-base:      #0d0f14;
@@ -28,7 +26,12 @@
   --font-body:    'Albert Sans', -apple-system, sans-serif;
 
   --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.5);
-  --shadow-sm:   0 2px 12px rgba(0, 0, 0, 0.3);
+
+  --amber-strong: rgba(200, 169, 110, 0.9);
+  --amber-dim:    rgba(200, 169, 110, 0.28);
+  --amber-glow:   rgba(200, 169, 110, 0.05);
+
+  --modal-backdrop: rgba(0, 0, 0, 0.88);
 
   --nav-height: 72px;
   --container:  1180px;
@@ -473,11 +476,11 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: rgba(200, 169, 110, 0.9);
+  background: var(--amber-strong);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0d0f14;
+  color: var(--bg-base);
 }
 .sermon-body {
   padding: 20px;
@@ -659,7 +662,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   cursor: pointer;
   transition: background 0.15s;
 }
-.active-filter-chip:hover { background: rgba(200, 169, 110, 0.28); }
+.active-filter-chip:hover { background: var(--amber-dim); }
 .active-filter-chip .chip-x { opacity: 0.7; font-size: 13px; line-height: 1; }
 .clear-filters {
   font-size: 11px;
@@ -964,7 +967,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200, 169, 110, 0.05) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, var(--amber-glow) 0%, transparent 70%);
 }
 .give-cta-inner { position: relative; z-index: 1; }
 .give-cta .label { margin-bottom: 16px; }
@@ -1301,20 +1304,30 @@ a.mission-item:hover { color: var(--text-primary); }
 .gap-24 { gap: 24px; }
 .hidden { display: none !important; }
 
-/* ─── Video modal ────────────────────────────────────────────── */
-.video-modal-backdrop {
+/* ─── Modal backdrops (shared) ───────────────────────────────── */
+.video-modal-backdrop,
+.pco-modal-backdrop,
+.group-modal-backdrop,
+.event-modal-backdrop,
+.contact-modal-backdrop {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 500;
-  background: rgba(0, 0, 0, 0.88);
+  background: var(--modal-backdrop);
   align-items: center;
   justify-content: center;
   padding: 24px;
 }
-.video-modal-backdrop.open {
+.video-modal-backdrop.open,
+.pco-modal-backdrop.open,
+.group-modal-backdrop.open,
+.event-modal-backdrop.open,
+.contact-modal-backdrop.open {
   display: flex;
 }
+
+/* ─── Video modal ────────────────────────────────────────────── */
 .video-modal {
   width: 100%;
   max-width: 860px;
@@ -1396,19 +1409,6 @@ a.mission-item:hover { color: var(--text-primary); }
 }
 
 /* ─── PCO modal ──────────────────────────────────────────────── */
-.pco-modal-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(0, 0, 0, 0.88);
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-.pco-modal-backdrop.open {
-  display: flex;
-}
 .pco-modal {
   width: 100%;
   max-width: 960px;
@@ -1552,19 +1552,6 @@ a.mission-item:hover { color: var(--text-primary); }
 }
 
 /* ─── Group detail modal ─────────────────────────────────────── */
-.group-modal-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(0, 0, 0, 0.88);
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-.group-modal-backdrop.open {
-  display: flex;
-}
 .group-modal {
   width: 100%;
   max-width: 680px;
@@ -1708,12 +1695,6 @@ a.mission-item:hover { color: var(--text-primary); }
 }
 
 /* ─── Event detail modal ─────────────────────────────────────── */
-.event-modal-backdrop {
-  display: none; position: fixed; inset: 0; z-index: 500;
-  background: rgba(0,0,0,0.88);
-  align-items: center; justify-content: center; padding: 24px;
-}
-.event-modal-backdrop.open { display: flex; }
 .event-modal {
   width: 100%; max-width: 600px; max-height: calc(100vh - 48px);
   background: var(--bg-surface); border: 1px solid var(--border-subtle);
@@ -1946,17 +1927,6 @@ a.mission-item:hover { color: var(--text-primary); }
 }
 
 /* ─── Contact modal ──────────────────────────────────────────── */
-.contact-modal-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(0, 0, 0, 0.88);
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-}
-.contact-modal-backdrop.open { display: flex; }
 .contact-modal {
   width: 100%;
   max-width: 520px;
