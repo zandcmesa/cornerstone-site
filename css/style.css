@@ -648,6 +648,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   flex-wrap: wrap;
   padding: 8px 0 0;
 }
+.active-filters:empty { padding: 0; }
 .active-filter-chip {
   display: inline-flex;
   align-items: center;
@@ -1127,6 +1128,11 @@ a.mission-item:hover { color: var(--text-primary); }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-top: 64px;
+}
+.give-supports-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 .give-option-card {
   background: var(--bg-surface);
@@ -1881,11 +1887,10 @@ a.mission-item:hover { color: var(--text-primary); }
 
   /* Events */
   .event-row {
-    grid-template-columns: 60px 1fr;
+    grid-template-columns: 60px 1fr auto;
     gap: 14px;
     padding: 16px;
   }
-  .event-row > :last-child { display: none; }
 
   /* Announcements */
   .announcements-grid { grid-template-columns: 1fr; }
@@ -1900,6 +1905,7 @@ a.mission-item:hover { color: var(--text-primary); }
 
   /* Give */
   .give-options { grid-template-columns: 1fr; }
+  .give-supports-grid { grid-template-columns: 1fr; }
 
   /* Watch */
   .watch-info-grid { grid-template-columns: 1fr; }
