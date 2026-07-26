@@ -57,6 +57,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   max-width: var(--container);
   margin: 0 auto;
   padding: 0 32px;
+  min-width: 0;
 }
 .section { padding: 96px 0; }
 .section-sm { padding: 64px 0; }
@@ -981,6 +982,11 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
+.council-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
 .staff-card {
   position: relative;
   overflow: hidden;
@@ -1845,6 +1851,8 @@ a.mission-item:hover { color: var(--text-primary); }
     padding-bottom: 64px;
   }
   .hero-arc { display: none; }
+  .hero-title { font-size: clamp(32px, 15vw, 88px); }
+  .hero-body { max-width: 100%; }
   .hero-ctas {
     flex-direction: column;
     align-items: flex-start;
@@ -1906,6 +1914,7 @@ a.mission-item:hover { color: var(--text-primary); }
 
   /* Staff */
   .staff-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .council-grid { grid-template-columns: repeat(2, 1fr); }
 
   /* About */
   .about-two-col  { grid-template-columns: 1fr; gap: 40px; }
