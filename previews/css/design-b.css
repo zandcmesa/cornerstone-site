@@ -189,9 +189,46 @@ a {
   color: var(--text-on-paper);
 }
 
+.panel-photo-full {
+  padding: 0;
+  background: var(--paper);
+}
+
+.panel-photo-full-img {
+  width: 100%;
+  height: 600px;
+  object-fit: cover;
+  display: block;
+}
+
 .panel-container {
   max-width: 960px;
   margin: 0 auto;
+}
+
+.panel-with-photo {
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.panel-photo {
+  position: relative;
+}
+
+.panel-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.panel-photo-caption {
+  margin-top: 12px;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-muted-paper);
 }
 
 .panel-centered {
@@ -441,6 +478,15 @@ a {
   .panel-info-grid,
   .groups-grid {
     grid-template-columns: 1fr;
+  }
+
+  .panel-with-photo {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .panel-photo-full-img {
+    height: 400px;
   }
 
   .sermons-list {
