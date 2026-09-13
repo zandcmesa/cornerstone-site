@@ -50,9 +50,11 @@ This document outlines intentional design decisions made to avoid common AI-gene
 - Emoji (none used anywhere)
 - Hairline broadsheet typography as entire identity
 - Copy-paste "About/Services/Contact" structure
+- Gradient placeholders pretending to be photos
 ✅ **Used:**
 - Real Cornerstone content (actual sermons, real address, authentic vision statement)
-- No stock imagery - abstract gradient/color fields instead
+- Real ministry photography from the repository (High Praise Dance, Young Adults, Kingdom Kids, Pastor Josh)
+- Photography integrated into layout, not decorative cards
 - Content-first structure unique to each design aesthetic
 
 #### Accessibility & Polish
@@ -68,17 +70,20 @@ This document outlines intentional design decisions made to avoid common AI-gene
 #### Design A: "Kibbe Dusk"
 **Inspiration:** Editorial magazines, New England coastal dusk
 **Key decision:** Restrained motion, ONE parallax moment, copper as single accent
-**Anti-AI element:** Sparse layout rejects the "fill every section" impulse
+**Photography:** High Praise Dance ministry hero image with dusk overlay + Young Adults photo in Visit section
+**Anti-AI element:** Sparse layout rejects the "fill every section" impulse; photography integrated, not decorative
 
 #### Design B: "Sanctuary Type"
 **Inspiration:** Liturgical printed materials, museum websites
 **Key decision:** Alternating panels, slow fade-up ONLY on hero scripture, liturgical restraint
-**Anti-AI element:** Monumental centered type rejects card-grid defaults; gold used sparingly
+**Photography:** Pastor Josh Eldridge portrait in Who We Are panel + full-bleed High Praise Dance editorial panel
+**Anti-AI element:** Monumental centered type rejects card-grid defaults; gold used sparingly; photography as editorial panels, not hero wallpaper
 
 #### Design C: "Sunday Pulse"
 **Inspiration:** Living congregations, kinetic community energy
 **Key decision:** Infinite ticker, uneven photo tiles, bold type contrast
-**Anti-AI element:** Forest + berry palette (NOT terracotta), intentional motion only where it serves purpose
+**Photography:** Uneven mosaic grid with Kingdom Kids, Young Adults, High Praise Dance, and Pastor Josh
+**Anti-AI element:** Forest + berry palette (NOT terracotta), intentional motion only where it serves purpose; photo mosaic is structural, not decorative
 
 ### Second Polish Pass Changes
 
