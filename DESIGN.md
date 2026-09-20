@@ -2,6 +2,8 @@
 
 Living documentation for cornerstonechurchma.org. The visual, client-facing version is `styleguide.html`.
 
+The generic layers (`blocks.css`, `blocks.js`, theme template) are also extracted as a standalone kit at `~/conductor/repos/oasis-blocks` for future client sites; this site is the reference implementation, so sync changes both ways.
+
 ## Architecture
 
 Three layers, loaded in order on every page:
