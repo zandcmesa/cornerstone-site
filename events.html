@@ -10,9 +10,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
   <link rel="stylesheet" href="css/blocks.css?v=1">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <nav class="nav scrolled">
   <div class="container">
@@ -52,6 +53,7 @@
     </div>
   </div>
 </nav>
+<main id="main">
 
 <div class="page-header">
   <div class="container" data-reveal-stagger>
@@ -141,7 +143,7 @@
 
     <!-- Upcoming special events -->
     <p class="label mb-24" data-reveal>Upcoming Events</p>
-    <div class="events-list" data-reveal-stagger>
+    <div class="events-list" data-reveal-stagger data-pco-events>
       <div class="event-row">
         <div class="event-date-block">
           <div class="event-date-month">Jul</div>
@@ -257,6 +259,8 @@
   </div>
 </section>
 
+</main>
+
 <footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
@@ -320,6 +324,10 @@
     </div>
     <div class="footer-bottom">
       <span>&#169; 2026 Cornerstone Church &middot; East Longmeadow, MA</span>
+      <div class="footer-legal">
+        <a href="accessibility.html">Accessibility</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -391,6 +399,7 @@
   </div>
 </div>
 
+<script src="js/pco-data.js"></script>
 <script src="js/events.js"></script>
 <script src="js/main.js"></script>
 <script src="js/blocks.js"></script>

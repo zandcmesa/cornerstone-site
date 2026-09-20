@@ -147,7 +147,7 @@ if (pcoBackdrop) {
 
 // ─── Contact modal ────────────────────────────────────────────
 (function () {
-  // Inject modal + toast stack HTML once
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
   const modalHTML = `
 <div class="contact-modal-backdrop" id="contact-modal-backdrop">
   <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
@@ -182,6 +182,7 @@ if (pcoBackdrop) {
           <label for="cf-message">Message<span class="req">*</span></label>
           <textarea id="cf-message" name="message" required></textarea>
         </div>
+        <input type="text" id="cf-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
         <div class="contact-form-actions">
           <button type="submit" class="contact-submit" id="contact-submit">Send Message</button>
         </div>
@@ -286,26 +287,33 @@ if (pcoBackdrop) {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
 
-    // Mock submit — simulate network delay then randomly succeed/fail for demo realism
-    setTimeout(() => {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Message';
-      closeContactModal();
-
-      // Always succeed in the demo (comment out and use Math.random() to demo error path)
-      const success = true;
-      if (success) {
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        type: savedValues.type,
+        name: savedValues.name,
+        email: savedValues.email,
+        message: savedValues.message,
+        _subject: 'Website ' + savedValues.type + ' inquiry from ' + savedValues.name,
+        _gotcha: document.getElementById('cf-gotcha').value,
+      }),
+    })
+      .then(r => { if (!r.ok) throw new Error(r.status); })
+      .then(() => {
+        closeContactModal();
         form.reset();
         savedValues = {};
         showToast({ type: 'success', message: 'Message sent — we\'ll be in touch.' });
-      } else {
-        showToast({
-          type: 'error',
-          message: 'Something went wrong.',
-          onRetry: true,
-        });
-      }
-    }, 1200);
+      })
+      .catch(() => {
+        closeContactModal();
+        showToast({ type: 'error', message: 'Something went wrong.', onRetry: true });
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      });
   });
 
   // Wire up all contact modal triggers

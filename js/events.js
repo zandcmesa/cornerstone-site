@@ -80,6 +80,33 @@ const EVENTS_DATA = {
   },
 };
 
+// ── Planning Center sync: replace hand-written rows when js/pco-data.js has events ──
+(function () {
+  if (typeof PCO_EVENTS === 'undefined' || !PCO_EVENTS.length) return;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const CLOCK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+  const PIN = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+  document.querySelectorAll('[data-pco-events]').forEach(list => {
+    const limit = parseInt(list.dataset.pcoLimit) || PCO_EVENTS.length;
+    list.innerHTML = PCO_EVENTS.slice(0, limit).map(e => {
+      EVENTS_DATA[e.id] = {
+        title: e.title, dateMonth: e.dateMonth, dateDay: e.dateDay, time: e.time, location: e.location,
+        label: e.source === 'registrations' ? 'Registration Open' : 'Upcoming Event',
+        description: e.description || 'See Planning Center for full details.',
+        hasRegistration: !!e.pcoUrl, ctaText: e.pcoUrl ? 'Register on Church Center' : null, pcoUrl: e.pcoUrl,
+      };
+      const cta = e.pcoUrl
+        ? '<button class="btn btn-primary btn-sm" data-event-id="' + esc(e.id) + '">Register</button>'
+        : '<button class="btn btn-outline btn-sm" data-event-id="' + esc(e.id) + '">Details</button>';
+      return '<div class="event-row">' +
+        '<div class="event-date-block"><div class="event-date-month">' + esc(e.dateMonth) + '</div><div class="event-date-day">' + esc(e.dateDay) + '</div></div>' +
+        '<div class="event-info"><div class="event-info-title">' + esc(e.title) + '</div>' +
+        '<div class="event-info-meta"><span>' + CLOCK + ' ' + esc(e.time) + '</span><span>' + PIN + ' ' + esc(e.location) + '</span></div></div>' +
+        cta + '</div>';
+    }).join('');
+  });
+}());
+
 const eventBackdrop = document.getElementById('event-modal-backdrop');
 if (eventBackdrop) {
   const eventMonth       = document.getElementById('event-modal-month');

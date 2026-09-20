@@ -20,6 +20,8 @@ cornerstone-site-upgrade/
     announcements.html
     give.html
     watch.html
+    accessibility.html   ← accessibility statement (footer link only)
+    privacy.html         ← privacy policy (footer link only)
     styleguide.html      ← client-facing design system page (not in nav)
     DESIGN.md            ← design system working docs
     css/theme-cornerstone.css  ← tokens only (colors/fonts/spacing/motion) — per-client file
@@ -70,6 +72,18 @@ To add more entries beyond ~129:
 1. Fetch more Sunday Sermon videos via the Vimeo v2 API (currently goes back to May 2023)
 2. Download transcripts for new vimeoIds to `../transcripts/`
 3. Use Claude to extract metadata and append entries to `SERMON_DATA` in sermons.js
+
+## Sermon art
+
+`images/sermons/` holds one generated typographic graphic per series (`series-<slug>.jpg`) and per standalone sermon (`<id>.jpg`). `sermonArt(s)` in `js/sermons.js` derives the filename; cards use `onerror="this.remove()"` so a missing file degrades to the gradient. Generated with Artlist (Nano Banana Pro, 16:9, 1K); prompts live in `scripts/sermon-art-jobs.json`, download helper is `scripts/dl-art.sh`. For a new sermon: add a row to the jobs file, generate, drop the JPEG in. Check spelling on every render — the model duplicates words or hides letters behind objects about a third of the time.
+
+## Contact form
+
+`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. Replace `YOUR_FORM_ID` with the real form ID from formspree.io before launch.
+
+## Planning Center sync
+
+`.github/workflows/sync-planning-center.yml` runs `scripts/sync-pco.js` nightly (08:00 UTC) and on demand. It pulls upcoming Calendar events, published Registrations, and open Groups, writes `js/pco-data.js`, and commits if anything changed. Needs repo secrets `PCO_APP_ID` and `PCO_SECRET` (a Planning Center Personal Access Token). `js/events.js` swaps the hand-written rows in any `[data-pco-events]` list for synced ones when `PCO_EVENTS` is non-empty; until the first sync runs the stub file keeps the hand-written rows. `PCO_GROUPS` is written but not rendered yet.
 
 ## Sermons page (main showpiece)
 

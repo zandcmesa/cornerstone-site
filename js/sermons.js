@@ -169,6 +169,12 @@ const SERMON_DATA = [
   { id: 128, title: "Abiding in Truth: Generation Sunday",              date: "2023-05-01", speaker: "Pastor Josh Eldridge",         series: null,                                   scripture: "John 8:31-32",             scriptureBook: "John",            topics: ["Generation Sunday", "Abiding", "Truth", "Freedom", "Children As Heritage", "Family Of God"], description: "Generation Sunday (5th Sunday of month). Kids participate in service. Reads John 8:31-32 twice. Contrasts stuffy/silent church culture with joyful family-of-God ethos. Teaches on abiding = taking up residence.", vimeoId: "822749393" }
 ];
 
+// ── Generated typographic art (images/sermons/). One image per series, or per id for standalone sermons. ──
+function sermonArt(s) {
+  const f = s.series ? 'series-' + s.series.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : String(s.id);
+  return 'images/sermons/' + f + '.jpg';
+}
+
 // ── Wikipedia image mapping (article name → Wikipedia REST API) ──
 const SERMON_IMAGES = {
   1:  "Wildfire",
@@ -424,7 +430,7 @@ function renderSermons() {
   grid.innerHTML = filtered.map((s, i) => `
     <article class="sermon-card" style="cursor:pointer;" data-id="${s.id}">
       <div class="sermon-thumb" style="background:${gradients[i % gradients.length]}">
-        ${SERMON_IMAGES[s.id] ? `<img class="wiki-thumb" data-wiki="${SERMON_IMAGES[s.id]}" alt="">` : ''}
+        <img class="sermon-art" src="${sermonArt(s)}" alt="" onerror="this.remove()">
         ${s.series ? `<span class="sermon-series-badge">${s.series}</span>` : ''}
         <div class="sermon-play-btn">
           <div class="sermon-play-icon">

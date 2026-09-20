@@ -10,9 +10,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
   <link rel="stylesheet" href="css/blocks.css?v=1">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=8">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- ─── Nav ──────────────────────────────────────────────────── -->
 <nav class="nav">
@@ -53,6 +54,7 @@
     </div>
   </div>
 </nav>
+<main id="main">
 
 <!-- ─── Hero ──────────────────────────────────────────────────── -->
 <section class="hero">
@@ -73,7 +75,7 @@
   <div class="container">
     <div class="hero-content">
       <p class="label hero-eyebrow">East Longmeadow, MA — Sundays at 10am</p>
-      <h1 class="hero-title"><em>Transform</em>ation</h1>
+      <h1 class="hero-title"><em>Transformed</em> people<br>transform culture</h1>
       <p class="hero-body">
         Our mission is to see our region transformed by the Gospel — cultivating fully devoted, fully equipped, fully effective disciples of Jesus.
       </p>
@@ -215,7 +217,7 @@
       </div>
       <a href="events.html" class="btn btn-outline btn-flush">Full calendar</a>
     </div>
-    <div class="events-list" data-reveal-stagger>
+    <div class="events-list" data-reveal-stagger data-pco-events data-pco-limit="4">
       <div class="event-row">
         <div class="event-date-block">
           <div class="event-date-month">Jul</div>
@@ -287,6 +289,8 @@
 </div>
 
 <!-- ─── Footer ────────────────────────────────────────────────── -->
+</main>
+
 <footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
@@ -351,7 +355,10 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 Cornerstone Church · East Longmeadow, MA</span>
-      
+      <div class="footer-legal">
+        <a href="accessibility.html">Accessibility</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -417,6 +424,7 @@
   </div>
 </div>
 
+<script src="js/pco-data.js"></script>
 <script src="js/events.js"></script>
 <script src="js/sermons.js"></script>
 <script>
@@ -433,8 +441,7 @@
   function renderCard(s) {
     const badge = s.series ? '<span class="sermon-series-badge">' + s.series + '</span>' : '';
     const topics = s.topics.slice(0, 3).map(t => '<span class="topic-tag">' + t + '</span>').join('');
-    const wikiQuery = (typeof SERMON_IMAGES !== 'undefined' && SERMON_IMAGES[s.id]) || '';
-    const thumbImg = wikiQuery ? '<img class="wiki-thumb" data-wiki="' + wikiQuery + '" alt="">' : '';
+    const thumbImg = '<img class="sermon-art" src="' + sermonArt(s) + '" alt="" onerror="this.remove()">';
     return '<article class="sermon-card" data-sermon-id="' + s.id + '" style="cursor:pointer;">' +
       '<div class="sermon-thumb">' +
         thumbImg +
