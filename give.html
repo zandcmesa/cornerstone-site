@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -52,8 +54,8 @@
 </nav>
 
 <div class="give-page-hero">
-  <div class="container">
-    <p class="label mb-16">Generosity</p>
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16" data-reveal>Generosity</p>
     <h1 class="display-section-italic" style="max-width:640px;margin:0 auto;">See what God can do through<br>your generosity</h1>
     <div class="gold-line" style="margin:24px auto;"></div>
     <p class="body-text" style="max-width:500px;margin:0 auto 0;">
@@ -67,27 +69,27 @@
 </div>
 
 <!-- ─── What Your Gift Supports ───────────────────────────────── -->
-<section class="section" style="background:var(--bg-surface);border-top:1px solid var(--border-subtle);">
+<section class="section divider-top" style="background:var(--bg-surface);">
   <div class="container">
-    <p class="label mb-16" style="text-align:center;">Impact</p>
-    <h2 class="display-section-italic mb-48" style="text-align:center;">What your gift supports</h2>
-    <div class="give-supports-grid">
+    <p class="label mb-16" data-reveal style="text-align:center;">Impact</p>
+    <h2 class="display-section-italic mb-48" data-reveal style="text-align:center;">What your gift supports</h2>
+    <div class="give-supports-grid" data-reveal-stagger>
       <div style="padding:28px;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);">
-        <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--gold-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--gold);">
+        <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--brand-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--brand);">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Local Church</div>
         <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Sunday services, youth ministry, Kingdom Kids, prayer gatherings, and the ongoing work of making disciples in East Longmeadow.</p>
       </div>
       <div style="padding:28px;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);">
-        <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--gold-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--gold);">
+        <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--brand-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--brand);">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
         <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Community Outreach</div>
         <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;">Christina's House, Hills Food Fair, Between Bridges, Clearway Clinic, and other local ministries serving our neighbors in need.</p>
       </div>
       <div style="padding:28px;background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);">
-        <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--gold-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--gold);">
+        <div style="width:48px;height:48px;border-radius:var(--radius-sm);background:var(--brand-dim);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--brand);">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         </div>
         <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Global Missions</div>
@@ -97,7 +99,7 @@
   </div>
 </section>
 
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -164,5 +166,6 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>

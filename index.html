@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -63,7 +65,7 @@
     </video>
   </div>
   <div class="hero-overlay"></div>
-  <svg class="hero-arc" viewBox="0 0 600 600" fill="none">
+  <svg class="hero-arc" viewBox="0 0 600 600" fill="none" data-parallax="0.1">
     <circle cx="300" cy="300" r="298" stroke="#3689C5" stroke-width="1"/>
     <circle cx="300" cy="300" r="240" stroke="#3689C5" stroke-width="0.5"/>
     <path d="M 440 80 A 200 200 0 1 0 440 520" stroke="#3689C5" stroke-width="2" stroke-linecap="round"/>
@@ -84,9 +86,9 @@
 </section>
 
 <!-- ─── Info Band ─────────────────────────────────────────────── -->
-<div class="info-band">
+<div class="info-band divider-top divider-bottom">
   <div class="container">
-    <div class="info-band-grid">
+    <div class="info-band-grid" data-reveal-stagger>
       <div class="info-band-item">
         <div class="info-band-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -129,28 +131,28 @@
 <!-- ─── Recent Sermons ─────────────────────────────────────────── -->
 <section class="section">
   <div class="container">
-    <div class="section-header-row">
+    <div class="section-header-row" data-reveal>
       <div class="section-header-left">
         <p class="label">Recent Messages</p>
         <h2 class="display-section-italic">From the pulpit</h2>
       </div>
       <a href="sermons.html" class="btn btn-outline btn-flush">View all sermons</a>
     </div>
-    <div class="sermons-grid" id="homepage-sermons-grid"></div>
+    <div class="sermons-grid" id="homepage-sermons-grid" data-reveal-stagger></div>
   </div>
 </section>
 
 <!-- ─── Groups ────────────────────────────────────────────────── -->
-<section class="section groups-section">
+<section class="section groups-section divider-top divider-bottom">
   <div class="container">
-    <div class="section-header-row">
+    <div class="section-header-row" data-reveal>
       <div class="section-header-left">
         <p class="label">Community</p>
         <h2 class="display-section-italic">Find your people</h2>
       </div>
       <a href="groups.html" class="btn btn-outline btn-flush">All groups</a>
     </div>
-    <div class="groups-grid">
+    <div class="groups-grid" data-reveal-stagger>
       <a class="group-card" href="groups.html#ministries">
         <div class="group-card-image">
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1d2c,#2a2040);display:flex;align-items:center;justify-content:center;">
@@ -206,14 +208,14 @@
 <!-- ─── Upcoming Events ────────────────────────────────────────── -->
 <section class="section">
   <div class="container">
-    <div class="section-header-row">
+    <div class="section-header-row" data-reveal>
       <div class="section-header-left">
         <p class="label">What's Coming</p>
         <h2 class="display-section-italic">Upcoming events</h2>
       </div>
       <a href="events.html" class="btn btn-outline btn-flush">Full calendar</a>
     </div>
-    <div class="events-list">
+    <div class="events-list" data-reveal-stagger>
       <div class="event-row">
         <div class="event-date-block">
           <div class="event-date-month">Jul</div>
@@ -274,18 +276,18 @@
 </section>
 
 <!-- ─── Give CTA ───────────────────────────────────────────────── -->
-<div class="give-cta">
-  <div class="container give-cta-inner">
+<div class="cta-panel divider-top divider-bottom">
+  <div class="container cta-panel-inner" data-reveal-stagger>
     <p class="label">Generosity</p>
     <h2 class="display-section-italic">See what God can do<br>through your generosity</h2>
-    <div class="gold-line" style="margin: 20px auto;"></div>
+    <div class="gold-line"></div>
     <p class="body-text">Your giving supports the mission of Cornerstone Church — locally in East Longmeadow and globally through our ministry partners.</p>
     <a href="give.html" class="btn btn-primary">Give Online</a>
   </div>
 </div>
 
 <!-- ─── Footer ────────────────────────────────────────────────── -->
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -489,5 +491,6 @@
 })();
 </script>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>

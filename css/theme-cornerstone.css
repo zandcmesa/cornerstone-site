@@ -1,0 +1,68 @@
+/* ═══════════════════════════════════════════════════════════════
+   Cornerstone Church — Theme Tokens
+   The only file that changes per client. Every value the blocks
+   layer consumes is defined here.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Surfaces */
+  --bg-base:      #0d0f14;
+  --bg-surface:   #13161f;
+  --bg-elevated:  #1b1f2c;
+  --bg-highlight: #222639;
+
+  /* Brand */
+  --brand:        #3689C5;
+  --brand-light:  #5AAEE0;
+  --brand-dim:    rgba(54, 137, 197, 0.15);
+  --brand-border: rgba(54, 137, 197, 0.28);
+
+  /* Text */
+  --text-primary:   #f0ece4;
+  --text-secondary: #8c8679;
+  --text-muted:     #959088;
+
+  /* Borders & dividers */
+  --border-subtle: rgba(240, 236, 228, 0.07);
+  --border-normal: rgba(240, 236, 228, 0.14);
+  --divider:       rgba(240, 236, 228, 0.10);
+
+  /* Warm accent (play button, CTA glow) */
+  --amber-strong: rgba(200, 169, 110, 0.9);
+  --amber-dim:    rgba(200, 169, 110, 0.28);
+  --amber-glow:   rgba(200, 169, 110, 0.05);
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Type */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Albert Sans', -apple-system, sans-serif;
+
+  /* Depth */
+  --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.5);
+  --modal-backdrop: rgba(0, 0, 0, 0.88);
+
+  /* Layout */
+  --nav-height: 72px;
+  --container:  1180px;
+  --space-section: 96px;
+  --space-section-sm: 64px;
+
+  /* Motion */
+  --ease-out:  cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-quick:  0.2s;
+  --dur-reveal: 0.65s;
+  --dur-hero:   0.9s;
+  --reveal-distance: 24px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --space-section: 56px;
+    --space-section-sm: 36px;
+  }
+}

@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -52,8 +54,8 @@
 </nav>
 
 <div class="page-header">
-  <div class="container">
-    <p class="label mb-16">Get Connected</p>
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16" data-reveal>Get Connected</p>
     <h1 class="display-section-italic">Groups</h1>
     <p class="body-text mt-16" style="max-width:560px;">
       Community happens in relationship. Find a group that fits your life — whether you want to serve, grow, or simply belong.
@@ -67,11 +69,11 @@
 
       <!-- Ministries -->
       <div id="ministries">
-        <div class="group-category-header">
+        <div class="group-category-header" data-reveal>
           <h2 class="group-category-title">Ministries</h2>
           <span class="group-count-badge">5 open groups</span>
         </div>
-        <div class="groups-grid">
+        <div class="groups-grid" data-reveal-stagger>
           <div class="group-card" tabindex="0" role="button" data-group-id="kingdom-kids">
             <div class="group-card-image has-logo" style="background:linear-gradient(135deg,#1a1d2c,#2a2040);">
               <img src="images/kingdom-kids.png" alt="Kingdom Kids">
@@ -127,12 +129,12 @@
 
       <!-- Serve at Cornerstone -->
       <div id="serve-at-cornerstone">
-        <div class="group-category-header">
+        <div class="group-category-header" data-reveal>
           <h2 class="group-category-title">Serve at Cornerstone</h2>
           <span class="group-count-badge">17 open groups</span>
         </div>
         <p class="group-category-desc">Serving within the church body is another way to get connected. Find the role that's right for you.</p>
-        <div class="groups-grid">
+        <div class="groups-grid" data-reveal-stagger>
           <div class="group-card" tabindex="0" role="button" data-group-id="hospitality-team">
             <div class="group-card-image" style="background:linear-gradient(135deg,#0a1a1a,#103028);">
               <div class="group-card-monogram">HT</div>
@@ -178,12 +180,12 @@
 
       <!-- Serve in the Community -->
       <div id="serve-in-community">
-        <div class="group-category-header">
+        <div class="group-category-header" data-reveal>
           <h2 class="group-category-title">Serve in Our Community</h2>
           <span class="group-count-badge">9 open groups</span>
         </div>
         <p class="group-category-desc">Here are just a few ways you can serve in our community.</p>
-        <div class="groups-grid">
+        <div class="groups-grid" data-reveal-stagger>
           <div class="group-card" tabindex="0" role="button" data-group-id="christinas-house">
             <div class="group-card-image" style="background:linear-gradient(135deg,#0a1a1a,#103028);">
               <div class="group-card-monogram">CH</div>
@@ -229,11 +231,11 @@
 
       <!-- Unique Groups -->
       <div id="unique-groups">
-        <div class="group-category-header">
+        <div class="group-category-header" data-reveal>
           <h2 class="group-category-title">Unique Groups</h2>
           <span class="group-count-badge">1 open group</span>
         </div>
-        <div class="groups-grid">
+        <div class="groups-grid" data-reveal-stagger>
           <div class="group-card" tabindex="0" role="button" data-group-id="irreplaceable-book-study">
             <div class="group-card-image" style="background:linear-gradient(135deg,#1a1d2c,#2a204a);">
               <div class="group-card-monogram">IB</div>
@@ -252,14 +254,14 @@
 </section>
 
 <!-- ─── Powered by Planning Center callout ────────────────────── -->
-<div style="background:var(--bg-elevated);border-top:1px solid var(--border-subtle);padding:24px 0;">
+<div class="divider-top" style="background:var(--bg-elevated);padding:24px 0;">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
     <p style="font-size:13px;color:var(--text-muted);">Group registration and scheduling powered by Planning Center.</p>
     <button class="btn btn-outline btn-sm" data-pco-url="https://cornerstonechurchma.churchcenter.com/groups" data-pco-title="Browse All Groups">View all 31 groups →</button>
   </div>
 </div>
 
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -396,5 +398,6 @@
 
 <script src="js/groups.js"></script>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/cornerstone-favicon.svg" type="image/svg+xml">
+  <title>Design System — Cornerstone Church</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
+  <style>
+    /* Styleguide-only chrome */
+    .sg-section { padding: 72px 0; }
+    .sg-block { margin-top: 40px; }
+    .sg-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .sg-spec {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .sg-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .sg-swatch {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--bg-surface);
+    }
+    .sg-swatch-chip { height: 96px; }
+    .sg-swatch-info { padding: 14px 16px; }
+    .sg-swatch-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .sg-swatch-value {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      margin-top: 2px;
+    }
+    .sg-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .sg-type-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 32px;
+      align-items: baseline;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .sg-type-row:last-child { border-bottom: none; }
+    .sg-card-demos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+    .sg-motion-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .sg-motion-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+    .sg-motion-card h4 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .sg-motion-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .sg-motion-card code {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      color: var(--brand-light);
+      background: var(--brand-dim);
+      border: 1px solid var(--brand-border);
+      border-radius: 4px;
+      padding: 1px 7px;
+      margin-top: 10px;
+    }
+    .sg-easing {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px 28px 32px;
+    }
+    .sg-easing-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .sg-easing-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .sg-easing-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .sg-easing-track {
+      position: relative;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--divider) 12%, var(--divider) 88%, transparent);
+    }
+    .sg-easing-dot {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      margin-top: -5px;
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 12px var(--brand-dim);
+      transform: translateX(0);
+    }
+    .sg-easing.is-playing .sg-easing-dot {
+      transform: translateX(calc(var(--track-w) - 10px));
+      transition: transform var(--demo-dur) var(--demo-ease);
+    }
+    @media (max-width: 768px) {
+      .sg-swatch-grid { grid-template-columns: repeat(2, 1fr); }
+      .sg-type-row { grid-template-columns: 1fr; gap: 8px; }
+      .sg-card-demos, .sg-motion-grid { grid-template-columns: 1fr; }
+      .sg-easing-row { grid-template-columns: 1fr; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Nav ──────────────────────────────────────────────────── -->
+<nav class="nav scrolled">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo nav-logo-full">
+        <img src="images/cornerstone-logo.png" alt="Cornerstone Church" height="36">
+      </a>
+      <a href="index.html" class="nav-logo nav-logo-icon">
+        <img src="images/cornerstone-icon.svg" alt="Cornerstone" height="36">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Back to site</a></li>
+      </ul>
+      <div class="nav-actions">
+        <span class="label">Design System</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── Header ────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16">Cornerstone Church</p>
+    <h1 class="display-section-italic">Design System</h1>
+    <p class="body-text mt-16" style="max-width:600px;">
+      The visual language of cornerstonechurchma.org — colors, typography, motion, and the
+      building blocks every page is assembled from. Anything new added to the site starts here,
+      so the site stays consistent as it grows.
+    </p>
+  </div>
+</div>
+
+<!-- ─── Color ─────────────────────────────────────────────────── -->
+<section class="sg-section divider-top">
+  <div class="container">
+    <p class="label" data-reveal>Foundations</p>
+    <h2 class="display-section-italic" data-reveal>Color</h2>
+    <p class="sg-note mt-16" data-reveal>
+      A deep night-sky base keeps photography and video luminous. Cornerstone blue is reserved
+      for wayfinding — labels, links, and accents — so it always reads as a signal, never wallpaper.
+    </p>
+    <div class="sg-block sg-swatch-grid" data-reveal-stagger>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--brand);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Cornerstone Blue</div>
+          <div class="sg-swatch-value">--brand · #3689C5</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--brand-light);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Blue Light</div>
+          <div class="sg-swatch-value">--brand-light · #5AAEE0</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--bg-base);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Night Base</div>
+          <div class="sg-swatch-value">--bg-base · #0D0F14</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--bg-surface);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Surface</div>
+          <div class="sg-swatch-value">--bg-surface · #13161F</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--bg-elevated);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Elevated</div>
+          <div class="sg-swatch-value">--bg-elevated · #1B1F2C</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--text-primary);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Warm Ivory</div>
+          <div class="sg-swatch-value">--text-primary · #F0ECE4</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--text-secondary);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Stone</div>
+          <div class="sg-swatch-value">--text-secondary · #8C8679</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:linear-gradient(90deg, transparent, var(--divider) 20%, var(--divider) 80%, transparent); background-color: var(--bg-surface);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Hairline Divider</div>
+          <div class="sg-swatch-value">--divider · ivory @ 10%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Typography ────────────────────────────────────────────── -->
+<section class="sg-section divider-top">
+  <div class="container">
+    <p class="label" data-reveal>Foundations</p>
+    <h2 class="display-section-italic" data-reveal>Typography</h2>
+    <p class="sg-note mt-16" data-reveal>
+      Cormorant Garamond carries the voice — literary, warm, unhurried. Albert Sans does the
+      quiet work of navigation, metadata, and body copy. Italic display type is the signature move.
+    </p>
+    <div class="sg-block" data-reveal>
+      <div class="sg-type-row">
+        <div class="sg-spec">Display Hero<br>Cormorant It. 300 · clamp 72–140</div>
+        <div class="display-hero">Transform</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-spec">Display Section<br>Cormorant It. 300 · clamp 40–64</div>
+        <div class="display-section-italic">Find your people</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-spec">Heading<br>Cormorant 600 · 28</div>
+        <div class="heading">Sunday gatherings at ten</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-spec">Eyebrow Label<br>Albert Sans 600 · 11 · caps</div>
+        <div><span class="label">Recent Messages</span></div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-spec">Body<br>Albert Sans 400 · 15/1.7</div>
+        <div class="body-text" style="max-width:520px;">Our mission is to see our region transformed by the Gospel — cultivating fully devoted, fully equipped, fully effective disciples of Jesus.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Buttons ───────────────────────────────────────────────── -->
+<section class="sg-section divider-top">
+  <div class="container">
+    <p class="label" data-reveal>Blocks</p>
+    <h2 class="display-section-italic" data-reveal>Buttons</h2>
+    <p class="sg-note mt-16" data-reveal>
+      Pill-shaped, understated, one primary action per view. Hover shifts toward
+      Cornerstone blue rather than filling — the dark canvas stays calm.
+    </p>
+    <div class="sg-block sg-row" data-reveal>
+      <a class="btn btn-primary" href="#">Primary — Watch Online</a>
+      <a class="btn btn-outline" href="#">Outline — View all sermons</a>
+      <a class="btn btn-primary btn-sm" href="#">Small primary</a>
+      <a class="btn btn-outline btn-sm" href="#">Small outline</a>
+      <a class="btn btn-ghost" href="#">Ghost action</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Section header block ──────────────────────────────────── -->
+<section class="sg-section divider-top">
+  <div class="container">
+    <p class="label" data-reveal>Blocks</p>
+    <h2 class="display-section-italic" data-reveal>Section header</h2>
+    <p class="sg-note mt-16 mb-48" data-reveal>
+      Every section opens the same way: an eyebrow label in blue, an italic display heading,
+      and an optional flush action on the right baseline.
+    </p>
+    <div class="section-header-row" data-reveal style="border:1px dashed var(--border-normal);border-radius:var(--radius-md);padding:32px;margin-bottom:0;">
+      <div class="section-header-left">
+        <p class="label">Community</p>
+        <h2 class="display-section-italic">Find your people</h2>
+      </div>
+      <a href="#" class="btn btn-outline btn-flush">All groups</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Cards ─────────────────────────────────────────────────── -->
+<section class="sg-section divider-top">
+  <div class="container">
+    <p class="label" data-reveal>Blocks</p>
+    <h2 class="display-section-italic" data-reveal>Cards &amp; rows</h2>
+    <p class="sg-note mt-16" data-reveal>
+      Three workhorses: media cards for sermons and groups, list rows for events. All share the
+      same surface, hairline border, and a gentle lift + blue border on hover.
+    </p>
+    <div class="sg-block sg-card-demos" data-reveal-stagger>
+      <article class="sermon-card">
+        <div class="sermon-thumb">
+          <div class="sermon-thumb-placeholder" style="background:linear-gradient(135deg,#1a1d2c,#2a2040);"></div>
+          <span class="sermon-series-badge">Series Name</span>
+          <div class="sermon-play-btn"><div class="sermon-play-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+        <div class="sermon-body">
+          <div class="sermon-meta">
+            <span class="sermon-speaker">Pastor Josh Eldridge</span>
+            <span class="sermon-date">Jun 28, 2026</span>
+          </div>
+          <h3 class="sermon-title">Sermon card title</h3>
+          <div class="sermon-scripture"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Romans 8:1–11</div>
+          <div class="sermon-topics"><span class="topic-tag">Hope</span><span class="topic-tag">Grace</span></div>
+        </div>
+      </article>
+      <a class="group-card" href="#">
+        <div class="group-card-image">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#0f1a1a,#1a3030);display:flex;align-items:center;justify-content:center;">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+        </div>
+        <div class="group-card-body">
+          <div class="group-card-day">Category · meta line</div>
+          <div class="group-card-name">Group card</div>
+          <div class="group-card-desc">Two lines of supporting copy that clamp cleanly when they run long.</div>
+        </div>
+      </a>
+      <div>
+        <div class="event-row">
+          <div class="event-date-block">
+            <div class="event-date-month">Aug</div>
+            <div class="event-date-day">10</div>
+          </div>
+          <div class="event-info">
+            <div class="event-info-title">Event list row</div>
+            <div class="event-info-meta"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Morning</span></div>
+          </div>
+          <button class="btn btn-primary btn-sm">Register</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA panel ─────────────────────────────────────────────── -->
+<section class="sg-section divider-top" style="padding-bottom:0;">
+  <div class="container">
+    <p class="label" data-reveal>Blocks</p>
+    <h2 class="display-section-italic" data-reveal>CTA panel</h2>
+    <p class="sg-note mt-16 mb-48" data-reveal>
+      The invitation moment. A quiet brand glow rises from below the fold; hairline dividers
+      frame it top and bottom.
+    </p>
+  </div>
+  <div class="cta-panel divider-top divider-bottom">
+    <div class="container cta-panel-inner" data-reveal-stagger>
+      <p class="label">Generosity</p>
+      <h2 class="display-section-italic">See what God can do</h2>
+      <div class="gold-line"></div>
+      <p class="body-text">A centered panel for the page's single most important invitation.</p>
+      <a href="#" class="btn btn-primary">Primary action</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Motion ────────────────────────────────────────────────── -->
+<section class="sg-section">
+  <div class="container">
+    <p class="label" data-reveal>Foundations</p>
+    <h2 class="display-section-italic" data-reveal>Motion</h2>
+    <p class="sg-note mt-16" data-reveal>
+      Everything on this page animated in using the system itself. Motion is slow, soft, and
+      one-shot — it welcomes rather than performs. Users who prefer reduced motion get an
+      instant, motion-free experience.
+    </p>
+    <div class="sg-block sg-motion-grid" data-reveal-stagger>
+      <div class="sg-motion-card">
+        <h4>Scroll reveal</h4>
+        <p>Content fades up 24px over 0.65s the first time it enters the viewport, then leaves the DOM alone.</p>
+        <code>data-reveal</code>
+      </div>
+      <div class="sg-motion-card">
+        <h4>Staggered groups</h4>
+        <p>Grids and lists cascade their children at 90ms intervals, capped so long lists never lag.</p>
+        <code>data-reveal-stagger</code>
+      </div>
+      <div class="sg-motion-card">
+        <h4>Hero choreography</h4>
+        <p>Eyebrow, headline, copy, and actions enter in sequence; the arc draws itself; video drifts slowly.</p>
+        <code>.hero-in · .kenburns</code>
+      </div>
+      <div class="sg-motion-card">
+        <h4>Hairline dividers</h4>
+        <p>Semi-transparent rules draw outward from center over 1.4s as each section boundary appears.</p>
+        <code>.divider-top / .divider-bottom</code>
+      </div>
+      <div class="sg-motion-card">
+        <h4>Parallax accents</h4>
+        <p>Decorative layers drift at a fraction of scroll speed. Reserved for atmosphere, never content.</p>
+        <code>data-parallax="0.1"</code>
+      </div>
+      <div class="sg-motion-card">
+        <h4>Hover states</h4>
+        <p>Cards lift 2–3px with a blue hairline; imagery zooms 4.5% over 0.6s on the same soft curve.</p>
+        <code>--ease-soft · 0.6s</code>
+      </div>
+    </div>
+
+    <div class="sg-block sg-easing" id="easing-demo" data-reveal>
+      <div class="sg-easing-head">
+        <div>
+          <h4 style="font-family:var(--font-display);font-size:19px;font-weight:600;">Easing &amp; tempo</h4>
+          <p style="font-size:13px;color:var(--text-secondary);">The three curves the whole system runs on — watch how each one arrives.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" id="easing-replay">Replay</button>
+      </div>
+      <div class="sg-easing-row">
+        <div class="sg-spec" style="margin-bottom:0;">ease-out · 0.65s<br><span style="text-transform:none;letter-spacing:0;">content reveals</span></div>
+        <div class="sg-easing-track"><div class="sg-easing-dot" style="--demo-ease:var(--ease-out);--demo-dur:0.65s;"></div></div>
+      </div>
+      <div class="sg-easing-row">
+        <div class="sg-spec" style="margin-bottom:0;">ease-soft · 1.4s<br><span style="text-transform:none;letter-spacing:0;">dividers &amp; hero choreography</span></div>
+        <div class="sg-easing-track"><div class="sg-easing-dot" style="--demo-ease:var(--ease-soft);--demo-dur:1.4s;"></div></div>
+      </div>
+      <div class="sg-easing-row">
+        <div class="sg-spec" style="margin-bottom:0;">quick · 0.2s<br><span style="text-transform:none;letter-spacing:0;">hovers &amp; buttons</span></div>
+        <div class="sg-easing-track"><div class="sg-easing-dot" style="--demo-ease:var(--ease-out);--demo-dur:0.2s;"></div></div>
+      </div>
+      <div class="sg-easing-row">
+        <div class="sg-spec" style="margin-bottom:0;">linear · 0.65s<br><span style="text-transform:none;letter-spacing:0;">for contrast — never used</span></div>
+        <div class="sg-easing-track"><div class="sg-easing-dot" style="--demo-ease:linear;--demo-dur:0.65s;"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── How it extends ────────────────────────────────────────── -->
+<div class="cta-panel divider-top">
+  <div class="container cta-panel-inner" data-reveal-stagger>
+    <p class="label">Built to grow</p>
+    <h2 class="display-section-italic">One system, every page</h2>
+    <div class="gold-line"></div>
+    <p class="body-text">
+      Colors, type, spacing, and motion all live in a single theme file. New pages, new
+      ministries, new campaigns — they inherit this language automatically.
+    </p>
+    <a href="index.html" class="btn btn-primary">Back to the site</a>
+  </div>
+</div>
+
+<!-- ─── Footer ────────────────────────────────────────────────── -->
+<footer class="footer divider-top">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <span>© 2026 Cornerstone Church · Design System</span>
+      <span class="text-secondary">Crafted for cornerstonechurchma.org</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
+<script>
+(function () {
+  var demo = document.getElementById('easing-demo');
+  if (!demo) return;
+
+  function setTrackWidths() {
+    demo.querySelectorAll('.sg-easing-track').forEach(function (t) {
+      t.querySelector('.sg-easing-dot').style.setProperty('--track-w', t.offsetWidth + 'px');
+    });
+  }
+
+  function play() {
+    setTrackWidths();
+    demo.classList.remove('is-playing');
+    void demo.offsetWidth;
+    demo.classList.add('is-playing');
+  }
+
+  document.getElementById('easing-replay').addEventListener('click', play);
+  window.addEventListener('resize', setTrackWidths, { passive: true });
+
+  new IntersectionObserver(function (entries, io) {
+    if (!entries[0].isIntersecting) return;
+    io.disconnect();
+    setTimeout(play, 400);
+  }, { threshold: 0.4 }).observe(demo);
+})();
+</script>
+</body>
+</html>

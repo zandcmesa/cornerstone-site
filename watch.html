@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -52,8 +54,8 @@
 </nav>
 
 <div class="watch-hero">
-  <div class="container">
-    <p class="label mb-16">Live &amp; On Demand</p>
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16" data-reveal>Live &amp; On Demand</p>
     <h1 class="display-section-italic">Watch Online</h1>
     <p class="body-text mt-16" style="max-width:520px;margin-left:auto;margin-right:auto;">
       Join us live every Sunday at 10:00am or watch past services on demand. Our online service is fully hosted through Church Online Platform — free and open to everyone.
@@ -69,16 +71,16 @@
       </div>
     </div>
 
-    <div class="watch-info-grid">
+    <div class="watch-info-grid" data-reveal-stagger>
       <div class="watch-info-card">
-        <div style="color:var(--gold);margin-bottom:12px;">
+        <div style="color:var(--brand);margin-bottom:12px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
         <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Sundays at 10am</div>
         <p style="font-size:13px;color:var(--text-secondary);">Join us live every Sunday morning. The stream goes live about 5 minutes before service starts.</p>
       </div>
       <div class="watch-info-card">
-        <div style="color:var(--gold);margin-bottom:12px;">
+        <div style="color:var(--brand);margin-bottom:12px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
         </div>
         <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Sermon Archive</div>
@@ -86,7 +88,7 @@
         <a href="sermons.html" class="btn btn-outline btn-sm mt-16" style="display:inline-flex;">Browse sermons →</a>
       </div>
       <div class="watch-info-card">
-        <div style="color:var(--gold);margin-bottom:12px;">
+        <div style="color:var(--brand);margin-bottom:12px;">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Online Community</div>
@@ -96,7 +98,7 @@
   </div>
 </div>
 
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -163,5 +165,6 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>

@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -52,8 +54,8 @@
 </nav>
 
 <div class="page-header">
-  <div class="container">
-    <p class="label mb-16">July 2026</p>
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16" data-reveal>July 2026</p>
     <h1 class="display-section-italic">Events</h1>
     <p class="body-text mt-16" style="max-width:520px;">Weekly gatherings and upcoming events at Cornerstone Church.</p>
   </div>
@@ -63,8 +65,8 @@
   <div class="container">
 
     <!-- Weekly recurring -->
-    <p class="label mb-24">Weekly Gatherings</p>
-    <div class="events-list mb-48">
+    <p class="label mb-24" data-reveal>Weekly Gatherings</p>
+    <div class="events-list mb-48" data-reveal-stagger>
       <div class="event-row">
         <div class="event-date-block">
           <div class="event-date-month">Every</div>
@@ -138,8 +140,8 @@
     </div>
 
     <!-- Upcoming special events -->
-    <p class="label mb-24">Upcoming Events</p>
-    <div class="events-list">
+    <p class="label mb-24" data-reveal>Upcoming Events</p>
+    <div class="events-list" data-reveal-stagger>
       <div class="event-row">
         <div class="event-date-block">
           <div class="event-date-month">Jul</div>
@@ -208,8 +210,8 @@
     </div>
 
     <!-- Get Involved -->
-    <p class="label mb-24" style="margin-top:48px;">Get Involved</p>
-    <div class="events-list">
+    <p class="label mb-24" data-reveal style="margin-top:48px;">Get Involved</p>
+    <div class="events-list" data-reveal-stagger>
       <div class="event-row">
         <div class="event-date-block">
           <div class="event-date-month">Every</div>
@@ -255,7 +257,7 @@
   </div>
 </section>
 
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -391,5 +393,6 @@
 
 <script src="js/events.js"></script>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>

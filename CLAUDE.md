@@ -20,8 +20,13 @@ cornerstone-site-upgrade/
     announcements.html
     give.html
     watch.html
-    css/style.css
+    styleguide.html      ← client-facing design system page (not in nav)
+    DESIGN.md            ← design system working docs
+    css/theme-cornerstone.css  ← tokens only (colors/fonts/spacing/motion) — per-client file
+    css/blocks.css       ← generic building blocks (reusable across client sites)
+    css/style.css        ← Cornerstone page-specific styles
     js/main.js
+    js/blocks.js         ← motion engine (reveals, dividers, hero choreography, parallax)
     js/sermons.js        ← all sermon data + filter/modal logic
     images/
       cornerstone-logo.png   ← real church logo (RGBA, 1158×240px)
@@ -99,8 +104,10 @@ Nav CSS key: `.nav .container { max-width: none; width: 100%; }` — both proper
 
 ## Key CSS decisions
 
+- **Design system:** see `DESIGN.md`. CSS loads in three layers — `theme-cornerstone.css` (tokens) → `blocks.css` (generic blocks) → `style.css` (page-specific). `js/blocks.js` drives all scroll motion; load it last.
+- Dark theme: `--bg-base: #0d0f14`, warm ivory text. Brand blue tokens are `--brand*` (the legacy `--gold*` names were renamed).
+- Motion is authored via `data-reveal` / `data-reveal-stagger` / `.divider-top` / `.divider-bottom` attributes in HTML; no reveal attrs on the sermon archive grid (it re-renders on filter).
 - `.nav-inner` uses flexbox: logo (`flex-shrink:0`) | links (`flex:1; justify-content:center`) | actions (`flex-shrink:0`)
-- Body background: `#f0f0f0`; content in white surface cards with `box-shadow`
 - Skeleton shimmer: `@keyframes shimmer` with `background-size: 200% 100%`
 - Video modal: `.video-modal-backdrop.open` triggers the overlay; JS clears iframe `src` on close to stop playback
 

@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -52,8 +54,8 @@
 </nav>
 
 <div class="page-header">
-  <div class="container">
-    <p class="label mb-16">What's Happening</p>
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16" data-reveal>What's Happening</p>
     <h1 class="display-section-italic">Announcements</h1>
     <p class="body-text mt-16" style="max-width:520px;">Current news, events, and opportunities from Cornerstone Church. Updated weekly.</p>
   </div>
@@ -61,7 +63,7 @@
 
 <section class="section" style="padding-top:48px;">
   <div class="container">
-    <div class="announcements-grid">
+    <div class="announcements-grid" data-reveal-stagger>
 
       <div class="announcement-card">
         <div class="announcement-image" style="position:relative;background:linear-gradient(135deg,#1a2a1a,#2a402a);">
@@ -148,9 +150,9 @@
       </div>
 
       <!-- Give CTA card -->
-      <div class="announcement-card" style="background:var(--bg-elevated);border-color:var(--gold-border);">
+      <div class="announcement-card" style="background:var(--bg-elevated);border-color:var(--brand-border);">
         <div class="announcement-body" style="padding:32px;display:flex;flex-direction:column;justify-content:center;min-height:240px;">
-          <p class="label mb-16">Generosity</p>
+          <p class="label mb-16" data-reveal>Generosity</p>
           <div class="announcement-title" style="font-size:24px;">Support Our Mission</div>
           <p class="announcement-desc">Your generosity makes everything we do possible — locally and globally. Give online through Planning Center.</p>
           <a href="give.html" class="btn btn-primary btn-sm" style="align-self:flex-start;">Give Online</a>
@@ -160,7 +162,7 @@
       <!-- Newsletter signup -->
       <div class="announcement-card" style="background:var(--bg-surface);">
         <div class="announcement-body" style="padding:32px;display:flex;flex-direction:column;justify-content:center;min-height:240px;">
-          <p class="label mb-16">Stay Connected</p>
+          <p class="label mb-16" data-reveal>Stay Connected</p>
           <div class="announcement-title" style="font-size:24px;">Get Weekly Updates</div>
           <p class="announcement-desc">Sign up for the Cornerstone newsletter to receive announcements, event reminders, and more directly to your inbox.</p>
           <div style="display:flex;gap:8px;margin-top:8px;">
@@ -178,7 +180,7 @@
   </div>
 </section>
 
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -284,5 +286,6 @@
 
 <script src="js/events.js"></script>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>

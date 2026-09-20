@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=1">
+  <link rel="stylesheet" href="css/blocks.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -52,8 +54,8 @@
 </nav>
 
 <div class="page-header">
-  <div class="container">
-    <p class="label mb-16">The Team</p>
+  <div class="container" data-reveal-stagger>
+    <p class="label mb-16" data-reveal>The Team</p>
     <h1 class="display-section-italic">Staff &amp; Leadership</h1>
     <p class="body-text mt-16" style="max-width:520px;">Meet the people who lead, serve, and shepherd Cornerstone Church.</p>
   </div>
@@ -63,7 +65,7 @@
 <section class="section">
   <div class="container">
     <h2 class="label mb-32">Pastoral Staff</h2>
-    <div class="staff-grid">
+    <div class="staff-grid" data-reveal-stagger>
       <div class="staff-card">
         <div class="staff-photo">
           <div class="staff-photo-placeholder">
@@ -102,7 +104,7 @@
       </div>
     </div>
 
-    <div class="staff-grid mt-32">
+    <div class="staff-grid mt-32" data-reveal-stagger>
       <div class="staff-card">
         <div class="staff-photo">
           <div class="staff-photo-placeholder">
@@ -144,7 +146,7 @@
 </section>
 
 <!-- ─── Church Council ─────────────────────────────────────────── -->
-<section class="section" style="background:var(--bg-surface);border-top:1px solid var(--border-subtle);padding-top:64px;padding-bottom:64px;">
+<section class="section divider-top" style="background:var(--bg-surface);padding-top:64px;padding-bottom:64px;">
   <div class="container">
     <h2 class="label mb-32">Church Council</h2>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;">
@@ -166,18 +168,18 @@
       <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:20px;text-align:center;">
         <div class="staff-photo-initials" style="font-size:24px;margin-bottom:8px;">MD</div>
         <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--text-primary);">Michael Disibio</div>
-        <div style="font-size:11px;color:var(--gold);margin-top:4px;letter-spacing:0.06em;">Treasurer</div>
+        <div style="font-size:11px;color:var(--brand);margin-top:4px;letter-spacing:0.06em;">Treasurer</div>
       </div>
       <div style="background:var(--bg-elevated);border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:20px;text-align:center;">
         <div class="staff-photo-initials" style="font-size:24px;margin-bottom:8px;">RV</div>
         <div style="font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--text-primary);">Robert Villenue</div>
-        <div style="font-size:11px;color:var(--gold);margin-top:4px;letter-spacing:0.06em;">Secretary</div>
+        <div style="font-size:11px;color:var(--brand);margin-top:4px;letter-spacing:0.06em;">Secretary</div>
       </div>
     </div>
   </div>
 </section>
 
-<footer class="footer">
+<footer class="footer divider-top">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -244,5 +246,6 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script src="js/blocks.js"></script>
 </body>
 </html>
