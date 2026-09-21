@@ -1,0 +1,179 @@
+# DNS snapshot for cornerstonechurchma.com — captured 2026-09-21T00:32Z via public resolvers (not the authoritative zone export)
+
+## cornerstonechurchma.com NS
+cornerstonechurchma.com. 14400	IN	NS	ns1.dreamhost.com.
+cornerstonechurchma.com. 14400	IN	NS	ns3.dreamhost.com.
+cornerstonechurchma.com. 14400	IN	NS	ns2.dreamhost.com.
+
+## cornerstonechurchma.com SOA
+cornerstonechurchma.com. 300	IN	SOA	ns1.dreamhost.com. hostmaster.dreamhost.com. 2021120909 17667 600 1814400 300
+
+## cornerstonechurchma.com A
+cornerstonechurchma.com. 300	IN	A	151.101.66.159
+
+## cornerstonechurchma.com AAAA
+
+## cornerstonechurchma.com MX
+cornerstonechurchma.com. 300	IN	MX	5 ALT2.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	5 ALT1.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	1 ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	10 ALT4.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	10 ALT3.ASPMX.L.GOOGLE.com.
+
+## cornerstonechurchma.com TXT
+cornerstonechurchma.com. 300	IN	TXT	"google-site-verification=8dtuvh15CE3JvTbDRsCVbgDt2dUPjuwaJNw5unwSWgY"
+
+## cornerstonechurchma.com CAA
+
+## www.cornerstonechurchma.com
+www.cornerstonechurchma.com. 300 IN	A	151.101.66.159
+
+## mail.cornerstonechurchma.com
+mail.cornerstonechurchma.com. 300 IN	CNAME	ghs.googlehosted.com.
+ghs.googlehosted.com.	300	IN	A	142.250.65.243
+
+## mail.cornerstonechurchma.com TXT
+mail.cornerstonechurchma.com. 300 IN	CNAME	ghs.googlehosted.com.
+
+## mail.cornerstonechurchma.com CNAME
+mail.cornerstonechurchma.com. 300 IN	CNAME	ghs.googlehosted.com.
+
+## mail.cornerstonechurchma.com MX
+mail.cornerstonechurchma.com. 300 IN	CNAME	ghs.googlehosted.com.
+
+## calendar.cornerstonechurchma.com
+calendar.cornerstonechurchma.com. 300 IN CNAME	ghs.googlehosted.com.
+ghs.googlehosted.com.	300	IN	A	142.250.72.19
+
+## calendar.cornerstonechurchma.com TXT
+calendar.cornerstonechurchma.com. 300 IN CNAME	ghs.googlehosted.com.
+
+## calendar.cornerstonechurchma.com CNAME
+calendar.cornerstonechurchma.com. 300 IN CNAME	ghs.googlehosted.com.
+
+## calendar.cornerstonechurchma.com MX
+calendar.cornerstonechurchma.com. 300 IN CNAME	ghs.googlehosted.com.
+
+## Zone transfer attempt (usually refused)
+; Transfer failed.
+; Transfer failed.
+; Transfer failed.
+
+## live.cornerstonechurchma.com (all types)
+
+## Authoritative check (straight from ns1.dreamhost.com)
+cornerstonechurchma.com. 300	IN	A	151.101.66.159
+cornerstonechurchma.com. 300	IN	MX	5 ALT2.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	10 ALT4.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	1 ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	10 ALT3.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	MX	5 ALT1.ASPMX.L.GOOGLE.com.
+cornerstonechurchma.com. 300	IN	TXT	"google-site-verification=8dtuvh15CE3JvTbDRsCVbgDt2dUPjuwaJNw5unwSWgY"
+www.cornerstonechurchma.com. 300 IN	A	151.101.66.159
+
+## Reverse lookup of web IP
+
+## HTTP response headers (apex)
+HTTP/2 200 
+content-type: text/html; charset=UTF-8
+referrer-policy: no-referrer-when-downgrade
+x-fw-hash: myptke64rd
+x-fw-server: Flywheel/5.1.0
+x-tec-api-version: v1
+x-fw-dynamic: TRUE
+x-fw-version: 5.0.0
+x-content-type-options: nosniff
+x-xss-protection: 1
+link: <https://cornerstonechurchma.com/wp-json/>; rel="https://api.w.org/"
+link: <https://cornerstonechurchma.com/wp-json/wp/v2/pages/8>; rel="alternate"; title="JSON"; type="application/json"
+link: <https://cornerstonechurchma.com/>; rel=shortlink
+x-tec-api-origin: https://cornerstonechurchma.com
+x-tec-api-root: https://cornerstonechurchma.com/wp-json/tribe/events/v1/
+server: Flywheel/5.1.0
+x-cacheable: YES
+fastly-restarts: 1
+accept-ranges: bytes
+date: Mon, 21 Sep 2026 00:32:42 GMT
+x-served-by: cache-bos-kbos510059-BOS, cache-bos-kbos510033-BOS
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1789950760.805678,VS0,VE3067
+vary: Accept-Encoding
+x-fw-serve: TRUE
+x-fw-static: NO
+x-fw-type: FLYWHEEL_BOT
+content-length: 220464
+
+
+## HTTP response headers (www)
+HTTP/2 301 
+x-fw-version: 5.0.0
+location: https://cornerstonechurchma.com/
+content-type: text/html
+x-content-type-options: nosniff
+referrer-policy: no-referrer-when-downgrade
+x-xss-protection: 1
+x-fw-hash: myptke64rd
+x-fw-server: Flywheel/5.1.0
+server: Flywheel/5.1.0
+accept-ranges: bytes
+date: Mon, 21 Sep 2026 00:32:43 GMT
+x-served-by: cache-lga-kjfk8660027-LGA, cache-lga-kjfk8660022-LGA
+x-cache: MISS, MISS
+x-cache-hits: 0, 0
+x-timer: S1789950763.071935,VS0,VE190
+x-fw-serve: TRUE
+x-fw-static: NO
+x-fw-type: FLYWHEEL_BOT
+content-length: 162
+
+
+## HTTP -> HTTPS redirect check
+HTTP/1.1 301 Moved Permanently
+Connection: keep-alive
+Content-Length: 162
+x-content-type-options: nosniff
+x-fw-version: 5.0.0
+location: https://cornerstonechurchma.com/
+referrer-policy: no-referrer-when-downgrade
+x-xss-protection: 1
+
+## TLS certificate
+subject=CN=cornerstonechurchma.com
+issuer=C=US, O=Let's Encrypt, CN=YR2
+notBefore=Sep 15 12:02:33 2026 GMT
+notAfter=Dec 14 12:02:32 2026 GMT
+X509v3 Subject Alternative Name: 
+    DNS:cornerstonechurchma.com, DNS:www.cornerstonechurchma.com
+
+## WHOIS (registrar / expiry / status)
+status:       ACTIVE
+created:      1985-01-01
+   Registrar WHOIS Server: whois.dreamhost.com
+   Registrar URL: http://www.DreamHost.com
+   Updated Date: 2026-09-18T17:17:23Z
+   Creation Date: 2010-10-03T13:32:41Z
+   Registry Expiry Date: 2027-10-03T13:32:41Z
+   Registrar: DreamHost, LLC
+   Registrar IANA ID: 431
+   Registrar Abuse Contact Email: abuse@dreamhost.com
+   Registrar Abuse Contact Phone: +1.7148729370
+   Domain Status: ok https://icann.org/epp#ok
+   Name Server: NS1.DREAMHOST.COM
+   Name Server: NS2.DREAMHOST.COM
+   Name Server: NS3.DREAMHOST.COM
+   DNSSEC: unsigned
+Registrar WHOIS Server: WHOIS.DREAMHOST.COM
+Registrar URL: WWW.DREAMHOST.COM
+Updated Date: 2026-09-18T17:17:23.00Z
+Creation Date: 2010-10-03T13:32:00.00Z
+Registrar Registration Expiration Date: 2027-10-03T13:32:41.00Z
+Registrar: DREAMHOST
+Registrar IANA ID: 431
+Domain Status: ok https://www.icann.org/epp#ok
+Name Server: NS1.DREAMHOST.COM
+Name Server: NS2.DREAMHOST.COM
+Name Server: NS3.DREAMHOST.COM
+DNSSEC: unsigned
+Registrar Abuse Contact Email: DOMAIN-ABUSE@DREAMHOST.COM
+Registrar Abuse Contact Phone: +1.7148729370
