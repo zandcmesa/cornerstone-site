@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cornerstone Design Previews</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      padding: 40px 20px;
+    }
+    .hub-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 48px;
+      font-weight: 300;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: #888;
+      margin-bottom: 60px;
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .preview-card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .preview-card:hover {
+      transform: translateY(-4px);
+      border-color: #3689C5;
+    }
+    .preview-card-header {
+      padding: 24px;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .preview-card h2 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .preview-card-subtitle {
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .preview-card-body {
+      padding: 24px;
+    }
+    .preview-card-body p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+    .preview-card-body ul {
+      list-style: none;
+      font-size: 14px;
+      color: #888;
+    }
+    .preview-card-body li {
+      padding: 6px 0;
+    }
+    .preview-card-body li::before {
+      content: "→ ";
+      color: #3689C5;
+      margin-right: 8px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 40px;
+      color: #3689C5;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="hub-container">
+    <h1>Cornerstone Design Previews</h1>
+    <p class="subtitle">Three alternate homepage concepts for Cornerstone Church</p>
+    
+    <div class="preview-grid">
+      <a href="design-a.html" class="preview-card">
+        <div class="preview-card-header">
+          <h2>Design A: Kibbe Dusk</h2>
+          <div class="preview-card-subtitle">Editorial New England</div>
+        </div>
+        <div class="preview-card-body">
+          <p>Mid charcoal-blue dusk palette with sparse magazine-style sections. Full-bleed photography meets oversized stacked headlines.</p>
+          <ul>
+            <li>Fraunces + Manrope typefaces</li>
+            <li>Copper accent, fog-cream text</li>
+            <li>Parallax reveal motion</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="design-b.html" class="preview-card">
+        <div class="preview-card-header">
+          <h2>Design B: Sanctuary Type</h2>
+          <div class="preview-card-subtitle">Liturgical Modern</div>
+        </div>
+        <div class="preview-card-body">
+          <p>Deep indigo with warm paper panels alternating. Monumental typography with liturgical restraint.</p>
+          <ul>
+            <li>Playfair Display + Outfit</li>
+            <li>Gold scripture accents</li>
+            <li>Slow fade-up entrance</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="design-c.html" class="preview-card">
+        <div class="preview-card-header">
+          <h2>Design C: Sunday Pulse</h2>
+          <div class="preview-card-subtitle">Kinetic Community</div>
+        </div>
+        <div class="preview-card-body">
+          <p>Warm off-white, deep forest, and electric berry. Energy of a living congregation with photo mosaics and movement.</p>
+          <ul>
+            <li>Space Grotesk + Source Serif</li>
+            <li>Infinite ministry ticker</li>
+            <li>Uneven photo mosaic</li>
+          </ul>
+        </div>
+      </a>
+    </div>
+
+    <a href="../index.html" class="back-link">← Back to Main Site</a>
+  </div>
+</body>
+</html>
