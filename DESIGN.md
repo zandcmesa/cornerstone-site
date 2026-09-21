@@ -53,7 +53,7 @@ Dynamically injected content: call `Blocks.scan(container)` after insertion. The
 
 ## Blocks inventory
 
-Section shell (`.section` + `.divider-top/-bottom`) · eyebrow label (`.label`) · display headings (`.display-hero`, `.display-section`, `.display-section-italic`) · section header row (`.section-header-row`) · buttons (`.btn` + `-primary/-outline/-ghost/-sm/-flush`) · accent rule (`.gold-line`) · CTA panel (`.cta-panel` > `.cta-panel-inner`) · info band · media cards (sermon/group/announcement) · event list row · staff card · modal shells.
+Section shell (`.section` + `.divider-top/-bottom`) · eyebrow label (`.label`) · display headings (`.display-hero`, `.display-section`, `.display-section-italic`) · section header row (`.section-header-row`) · buttons (`.btn` + `-primary/-outline/-ghost/-sm/-flush`; inline SVG as first or last child for a leading/trailing icon) · accent rule (`.gold-line`) · CTA panel (`.cta-panel` > `.cta-panel-inner`) · info band · media cards (sermon/group/announcement) · event list row · staff card · modal shells.
 
 ## How to change
 

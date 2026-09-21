@@ -130,6 +130,11 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   padding: 9px 20px;
   font-size: 12px;
 }
+.btn svg {
+  width: 1.2em;
+  height: 1.2em;
+  flex-shrink: 0;
+}
 
 /* ─── 5. Section headers ─────────────────────────────────────── */
 .section-header {
