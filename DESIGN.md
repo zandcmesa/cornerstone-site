@@ -28,7 +28,7 @@ Three layers, loaded in order on every page:
 - Surfaces: `--bg-base` → `--bg-surface` → `--bg-elevated` → `--bg-highlight`
 - Text: `--text-primary` (warm ivory), `--text-secondary`, `--text-muted`
 - Hairlines: `--border-subtle`, `--border-normal`, `--divider` (edge-fading section rules)
-- Fonts: `--font-display` (Cormorant Garamond), `--font-body` (Albert Sans)
+- Fonts: `--font-display` (Cormorant Garamond), `--font-body` (Albert Sans); `--leading-display` (1.08) is the line-height for every display heading — it lives in the theme because it depends on the display face's ascender/descender extents
 - Spacing: `--space-section` (96px / 56px mobile), `--space-section-sm`
 - Motion: `--ease-out`, `--ease-soft`, `--dur-quick` (.2s), `--dur-reveal` (.65s), `--dur-hero` (.9s), `--reveal-distance` (24px)
 

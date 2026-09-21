@@ -42,7 +42,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   font-size: clamp(72px, 10vw, 140px);
   font-weight: 300;
   font-style: italic;
-  line-height: 0.9;
+  line-height: var(--leading-display);
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
@@ -50,7 +50,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   font-family: var(--font-display);
   font-size: clamp(40px, 5vw, 64px);
   font-weight: 400;
-  line-height: 1.05;
+  line-height: var(--leading-display);
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
@@ -59,7 +59,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   font-size: clamp(40px, 5vw, 64px);
   font-weight: 300;
   font-style: italic;
-  line-height: 1.05;
+  line-height: var(--leading-display);
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }

@@ -40,6 +40,8 @@
   /* Type */
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body:    'Albert Sans', -apple-system, sans-serif;
+  /* Cormorant's ascenders + descenders span a full 1em; below ~1.05 stacked lines collide */
+  --leading-display: 1.08;
 
   /* Depth */
   --shadow-card: 0 4px 32px rgba(0, 0, 0, 0.5);

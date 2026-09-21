@@ -162,7 +162,7 @@
   font-size: clamp(56px, 8.5vw, 112px);
   font-weight: 300;
   font-style: italic;
-  line-height: 0.95;
+  line-height: var(--leading-display);
   letter-spacing: -0.03em;
   color: var(--text-primary);
   margin-bottom: 40px;
