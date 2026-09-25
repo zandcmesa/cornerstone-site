@@ -1563,8 +1563,8 @@ a.mission-item:hover { color: var(--text-primary); }
 .nav-menu-btn  { display: none; }
 .nav-mobile-drawer { display: none; }
 
-/* ─── Responsive: 768px and below ───────────────────────────── */
-@media (max-width: 768px) {
+/* ─── Responsive: 1024px and below (tablet + mobile) ─────────── */
+@media (max-width: 1024px) {
   .hero-title br { display: none; }
 
   /* Nav: swap logo → icon, show hamburger */
