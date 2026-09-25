@@ -1563,10 +1563,8 @@ a.mission-item:hover { color: var(--text-primary); }
 .nav-menu-btn  { display: none; }
 .nav-mobile-drawer { display: none; }
 
-/* ─── Responsive: 768px and below ───────────────────────────── */
-@media (max-width: 768px) {
-  .hero-title br { display: none; }
-
+/* ─── Responsive Nav: 1024px and below ──────────────────────── */
+@media (max-width: 1024px) {
   /* Nav: swap logo → icon, show hamburger */
   .nav {
     height: auto;
@@ -1633,6 +1631,11 @@ a.mission-item:hover { color: var(--text-primary); }
   .nav-mobile-links a:hover { color: var(--brand); }
   .nav-mobile-links a.active { color: var(--brand); }
   .nav-mobile-cta { align-self: flex-start; margin-top: 4px; }
+}
+
+/* ─── Responsive: 768px and below ───────────────────────────── */
+@media (max-width: 768px) {
+  .hero-title br { display: none; }
 
   /* Hero */
   .hero {
