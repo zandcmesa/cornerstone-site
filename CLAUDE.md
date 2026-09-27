@@ -14,7 +14,6 @@ cornerstone-site-upgrade/
     index.html
     sermons.html         ← AI-powered sermon archive (main technical showpiece)
     about.html
-    staff.html
     groups.html
     events.html
     announcements.html
@@ -94,7 +93,7 @@ To add more entries beyond ~129:
 - **Video modal:** Vimeo iframe embed, opens on card click, closes on backdrop click / Escape
 - **Null-safe series:** `series: null` for unaffiliated sermons; `populateFilters` uses `.filter(Boolean)` so null doesn't appear in the dropdown; search uses `(s.series || '')`
 
-## Nav pattern (all 9 pages)
+## Nav pattern (all 8 pages)
 
 ```html
 <nav class="nav scrolled">
@@ -104,7 +103,7 @@ To add more entries beyond ~129:
         <img src="images/cornerstone-logo.png" alt="Cornerstone Church" height="36">
       </a>
       <ul class="nav-links">
-        <!-- 7 items: Sermons, About, Staff, Groups, Events, Announcements, Give -->
+        <!-- 6 items: Sermons, About, Groups, Events, Announcements, Give (Staff lives on the About page) -->
       </ul>
       <div class="nav-actions">
         <a href="watch.html" class="btn btn-primary btn-sm">Watch Online</a>
