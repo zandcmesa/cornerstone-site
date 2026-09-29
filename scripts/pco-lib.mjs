@@ -58,7 +58,7 @@ export function normalizeCalendar(json, now = new Date()) {
   for (const inst of json.data) {
     const a = inst.attributes;
     const ev = events[inst.relationships.event.data.id];
-    if (!ev || !ev.attributes.visible_in_church_center) continue;
+    if (!ev || !ev.attributes.visible_in_church_center || ev.attributes.approval_status !== 'A' || ev.attributes.link_only) continue;
     if (new Date(a.starts_at) < now) continue;
     const base = {
       title: ev.attributes.name,
@@ -72,6 +72,7 @@ export function normalizeCalendar(json, now = new Date()) {
       const wd = WEEKDAYS.indexOf(fmtWeekday(a.starts_at));
       rhythms.push({
         id: 'cal-' + ev.id, kind: 'rhythm', ...base,
+        pcoUrl: ev.attributes.registration_url || (a.church_center_url ? new URL(a.church_center_url).origin + '/calendar' : null),
         ...recurrenceBlock(a.compact_recurrence_description, a.starts_at),
         time: `${a.compact_recurrence_description} · ${timeRange(a.starts_at, a.ends_at)}`,
         ctaText: 'Details',
@@ -124,7 +125,7 @@ export function normalizeSignups(json, now = new Date()) {
 export function normalizeGroups(groupsJson, typesJson) {
   const enroll = index(groupsJson.included, 'Enrollment');
   const locs = index(groupsJson.included, 'Location');
-  const groups = groupsJson.data
+  const allGroups = groupsJson.data
     .filter(g => g.attributes.listed && g.attributes.public_church_center_web_url)
     .map(g => {
       const a = g.attributes, rel = g.relationships || {};
@@ -143,8 +144,10 @@ export function normalizeGroups(groupsJson, typesJson) {
         membersCount: a.memberships_count || 0,
       };
     });
+  const visibleTypes = new Set(typesJson.data.filter(t => t.attributes.church_center_visible).map(t => t.id));
+  const groups = allGroups.filter(g => visibleTypes.has(g.typeId));
   const groupTypes = typesJson.data
-    .filter(t => t.attributes.church_center_visible)
+    .filter(t => visibleTypes.has(t.id))
     .sort((x, y) => x.attributes.position - y.attributes.position)
     .map(t => ({ id: t.id, name: t.attributes.name, slug: slug(t.attributes.name), description: stripHtml(t.attributes.description), count: groups.filter(g => g.typeId === t.id).length }))
     .filter(t => t.count > 0);

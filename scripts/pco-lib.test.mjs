@@ -96,3 +96,32 @@ test('fetchSnapshot makes 4 calls and assembles the shape', async () => {
   const starts = snap.events.map(e => e.startsAt);
   assert.deepEqual(starts, [...starts].sort(), 'events sorted by start');
 });
+
+test('normalizeCalendar drops pending, rejected, and link-only events even when marked visible', () => {
+  const json = JSON.parse(JSON.stringify(fx('calendar-instances')));
+  const concert = json.included.find(i => i.type === 'Event' && i.attributes.name === 'Josh Baldwin Concert');
+  concert.attributes.approval_status = 'P';
+  const sunday = json.included.find(i => i.type === 'Event' && i.attributes.name === 'Sunday Service');
+  sunday.attributes.link_only = true;
+  const { rhythms, events } = normalizeCalendar(json, NOW);
+  assert.ok(!events.some(e => e.title === 'Josh Baldwin Concert'), 'pending event dropped');
+  assert.ok(!rhythms.some(r => r.title === 'Sunday Service'), 'link-only event dropped');
+});
+
+test('rhythm links are stable across instances (calendar listing, not a dated instance)', () => {
+  const { rhythms } = normalizeCalendar(fx('calendar-instances'), NOW);
+  rhythms.forEach(r => assert.ok(!/\/calendar\/event\/\d+/.test(r.pcoUrl), r.title + ' must not link to a single instance: ' + r.pcoUrl));
+  assert.ok(rhythms[0].pcoUrl.startsWith('https://cornerstonechurchma.churchcenter.com/calendar'));
+});
+
+test('groups whose type is hidden in Church Center never leave the server', () => {
+  const groups = JSON.parse(JSON.stringify(fx('groups')));
+  const types = fx('group-types');
+  const hidden = types.data.find(t => !t.attributes.church_center_visible);
+  const ya = groups.data.find(g => g.attributes.name === 'Cornerstone Young Adults');
+  ya.relationships.group_type.data.id = hidden.id;
+  const out = normalizeGroups(groups, types);
+  assert.ok(!out.groups.some(g => g.name === 'Cornerstone Young Adults'));
+  const visible = new Set(out.groupTypes.map(t => t.id));
+  out.groups.forEach(g => assert.ok(visible.has(g.typeId), g.name));
+});

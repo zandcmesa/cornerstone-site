@@ -6,11 +6,11 @@ import { normalizeGroups } from './pco-lib.mjs';
 
 const fx = name => JSON.parse(fs.readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url)));
 
-function render() {
+function render(Blocks) {
   const snap = { syncedAt: 'x', rhythms: [], events: [], nextSteps: [], ...normalizeGroups(fx('groups'), fx('group-types')) };
   const els = { '[data-pco-groups]': { innerHTML: '' }, '[data-pco-group-types]': { innerHTML: '' }, '[data-pco-group-count]': { textContent: '' } };
   const document = { getElementById: () => null, querySelectorAll: sel => (els[sel] ? [els[sel]] : []), addEventListener: () => {} };
-  const window = { PCO: { onData: fn => fn(snap) } };
+  const window = { PCO: { onData: fn => fn(snap) }, Blocks };
   const ctx = { window, document, console };
   vm.runInNewContext(fs.readFileSync(new URL('../js/events.js', import.meta.url), 'utf8'), ctx);
   vm.runInNewContext(fs.readFileSync(new URL('../js/groups.js', import.meta.url), 'utf8') + ';window.__GROUPS_DATA = GROUPS_DATA;', ctx);
@@ -50,4 +50,10 @@ test('modal data uses overrides and strategy-based CTA text', () => {
   assert.equal(GROUPS_DATA['1711298'].category, 'Ministries');
   const full = Object.values(GROUPS_DATA).find(g => g.enrollment === 'full');
   assert.equal(full.ctaText, 'View on Church Center');
+});
+
+test('groups render hands new sections to the motion engine so reveal headers become visible', () => {
+  const scanned = [];
+  render({ scan: el => scanned.push(el) });
+  assert.ok(scanned.length >= 1);
 });

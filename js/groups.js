@@ -58,6 +58,7 @@ const GRADIENTS = [
           (desc ? '<p class="group-category-desc">' + esc(desc) + '</p>' : '') +
           '<div class="groups-grid" data-reveal-stagger>' + groups.map(g => card(g, t.name)).join('') + '</div></div>';
       }).join('');
+      if (window.Blocks) window.Blocks.scan(root);
     });
     document.querySelectorAll('[data-pco-group-count]').forEach(el => { el.textContent = 'View all ' + snap.groups.length + ' groups →'; });
   }
@@ -73,6 +74,7 @@ const GRADIENTS = [
         '<div class="group-card-name">' + esc(t.name) + '</div>' +
         '<div class="group-card-desc">' + esc(t.description || TYPE_FALLBACK_DESC[t.name] || '') + '</div></div></a>'
       ).join('');
+      if (window.Blocks) window.Blocks.scan(root.parentElement || root);
     });
   }
 

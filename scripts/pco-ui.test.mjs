@@ -24,3 +24,26 @@ test('paragraphs splits on blank lines and keeps single line breaks', () => {
   assert.equal(ui.paragraphs('One\ntwo\n\nThree'), '<p>One<br>two</p><p>Three</p>');
   assert.equal(ui.paragraphs(''), '');
 });
+
+function renderEvents(snap, Blocks) {
+  const src = fs.readFileSync(new URL('../js/events.js', import.meta.url), 'utf8');
+  const list = { innerHTML: '', dataset: {} };
+  const document = { getElementById: () => null, querySelectorAll: sel => (sel === '[data-pco-events]' ? [list] : []), addEventListener: () => {} };
+  const window = { PCO: { onData: fn => fn(snap) }, Blocks };
+  vm.runInNewContext(src, { window, document, console });
+  return list;
+}
+
+test('render skips events whose start time has already passed (stale snapshot guard)', () => {
+  const past = { id: 'old', kind: 'event', title: 'Old Thing', startsAt: '2000-01-01T00:00:00Z', dateMonth: 'Jan', dateDay: '1', time: '', location: '', description: '', pcoUrl: null };
+  const future = { id: 'new', kind: 'event', title: 'New Thing', startsAt: '2999-01-01T00:00:00Z', dateMonth: 'Jan', dateDay: '1', time: '', location: '', description: '', pcoUrl: null };
+  const list = renderEvents({ rhythms: [], events: [past, future], nextSteps: [] });
+  assert.ok(list.innerHTML.includes('New Thing'));
+  assert.ok(!list.innerHTML.includes('Old Thing'));
+});
+
+test('render hands re-rendered lists to the motion engine when it is already running', () => {
+  const scanned = [];
+  const list = renderEvents({ rhythms: [], events: [], nextSteps: [] }, { scan: el => scanned.push(el) });
+  assert.equal(scanned.length, 1);
+});
