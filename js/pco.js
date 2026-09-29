@@ -1,4 +1,4 @@
-const PCO_WORKER_URL = '';
+const PCO_WORKER_URL = 'https://cornerstone-pco.oasisagency.workers.dev';
 
 window.PCO = (function () {
   const url = window.PCO_WORKER_URL || PCO_WORKER_URL;
