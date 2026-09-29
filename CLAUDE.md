@@ -84,7 +84,7 @@ To add more entries beyond ~129:
 
 ## Contact form
 
-`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. Replace `YOUR_FORM_ID` with the real form ID from formspree.io before launch.
+`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. The live form ID is set (`mnpnwblr`); the endpoint is also recorded in the Planning Center Key Google Doc.
 
 ## Planning Center (live)
 
