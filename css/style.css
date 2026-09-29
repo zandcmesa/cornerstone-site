@@ -726,6 +726,20 @@
   line-height: 1;
   color: var(--text-primary);
 }
+.event-row.skeleton { pointer-events: none; }
+.event-row.skeleton .event-date-block,
+.event-row.skeleton .event-info-title,
+.event-row.skeleton .event-info-meta,
+.event-row.skeleton .btn {
+  color: transparent;
+  background: linear-gradient(90deg, var(--bg-highlight) 25%, var(--bg-elevated) 50%, var(--bg-highlight) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+  border-color: transparent;
+}
+.event-row.skeleton .event-info-title { height: 16px; width: 60%; margin-bottom: 8px; }
+.event-row.skeleton .event-info-meta { height: 12px; width: 40%; }
 .event-info-title {
   font-family: var(--font-display);
   font-size: 20px;

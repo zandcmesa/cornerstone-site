@@ -1,110 +1,55 @@
-const EVENTS_DATA = {
-  'church-at-the-park': {
-    title: 'Church at the Park',
-    dateMonth: 'Jul', dateDay: '26',
-    time: 'Morning', location: 'East Longmeadow, MA',
-    label: 'Community Event',
-    description: `Church at the Park is our annual community gathering — a morning of service, connection, and celebration outside. We'll be collecting non-perishable food donations for the local food pantry. Bring a can, bring a friend, and come ready to serve.\n\nThis is a free event open to everyone in the community. No registration required — just show up, meet your neighbors, and be part of something good.`,
-    hasRegistration: false, ctaText: null, pcoUrl: null,
-    gradient: 'linear-gradient(135deg,#1a2a1a,#2a402a)', wikiKeyword: 'City park',
-  },
-  'breakfast-mizrachi': {
-    title: 'Breakfast with Avi & Chaya Mizrachi',
-    dateMonth: 'Aug', dateDay: '1',
-    time: 'Morning', location: 'Cornerstone Church',
-    label: 'Special Event',
-    description: `Join us for a special morning with Avi and Chaya Mizrachi, founders of the Dugit Messianic Outreach Center in Tel Aviv, Israel — one of Cornerstone's long-term global mission partners.\n\nAvi and Chaya will share what God is doing in Israel and among the Jewish people. This is a rare opportunity to hear firsthand from the field. Registration is required — space is limited.`,
-    hasRegistration: true, ctaText: 'Register on Church Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3635704',
-    gradient: 'linear-gradient(135deg,#1a1a2c,#252540)', wikiKeyword: 'Tel Aviv',
-  },
-  'irreplaceable-study': {
-    title: '"Irreplaceable" Book Study',
-    dateMonth: 'Jul–Aug', dateDay: 'Tue',
-    time: 'Tuesdays · 7:00pm', location: 'Cornerstone Church',
-    label: 'Recurring',
-    description: `A summer book study meeting every Tuesday evening through July and August. Open to all — no prior sign-up required. Drop in any Tuesday at 7:00pm.\n\nRegister through Church Center to stay updated on discussion materials and schedule changes.`,
-    hasRegistration: true, ctaText: 'Register on Church Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3636591',
-    gradient: 'linear-gradient(135deg,#1a160a,#332a10)', wikiKeyword: 'Reading (process)',
-  },
-  'dance-camp': {
-    title: 'High Praise Dance Camp',
-    dateMonth: 'Aug', dateDay: '10–14',
-    time: 'Aug 10–14 · All Day', location: 'Cornerstone Church',
-    label: 'Multi-day Event',
-    description: `A five-day summer dance camp celebrating worship through movement. Open to all ages and all skill levels — from first-timers to experienced dancers. Registration is now open and spots are limited.\n\nThe camp runs Monday through Friday, August 10–14. Each day combines technique, choreography, and worship — led by the High Praise Dance Ministry team. Register through Church Center to secure your spot.`,
-    hasRegistration: true, ctaText: 'Register on Church Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3664428',
-    gradient: 'linear-gradient(135deg,#1a0f1a,#2a1a2a)', wikiKeyword: 'Liturgical dance',
-  },
-  'kingdom-kids-volunteer': {
-    title: 'Kingdom Kids Volunteer',
-    dateMonth: 'Every', dateDay: 'Sun',
-    time: 'Sundays · 10:00am', location: 'Cornerstone Church',
-    label: 'Children\'s Ministry',
-    description: `Kingdom Kids is Cornerstone's children's ministry serving kids from infancy through 5th grade during Sunday morning service. We need volunteers to help create a safe, fun, and faith-building environment for the next generation.\n\nWhether you're great with toddlers or older kids, there's a place for you. Sign up through Church Center to join the team.`,
-    hasRegistration: true, ctaText: 'Sign Up on Church Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/1733161',
-    gradient: 'linear-gradient(135deg,#0f1a0f,#1a301a)', wikiKeyword: 'Sunday school',
-  },
-  'water-baptism': {
-    title: 'Water Baptism',
-    dateMonth: 'Next', dateDay: 'Step',
-    time: 'During Sunday Service', location: 'Cornerstone Church',
-    label: 'Next Step',
-    description: `Water baptism is a public declaration of your faith in Jesus Christ — an outward expression of the inward change that has taken place in your life. If you've committed your life to Christ and are ready to take this step, we'd love to celebrate with you.\n\nSign up through Church Center and we'll be in touch with details for the next baptism service.`,
-    hasRegistration: true, ctaText: 'Sign Up on Church Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3683005',
-    gradient: 'linear-gradient(135deg,#0a1a2a,#102840)', wikiKeyword: 'Baptism',
-  },
-  'church-membership': {
-    title: 'Church Membership',
-    dateMonth: 'Join', dateDay: 'Us',
-    time: 'By appointment', location: 'Cornerstone Church',
-    label: 'Join Cornerstone',
-    description: `Becoming a member of Cornerstone Church is a meaningful commitment — to this community, to the mission of the Gospel, and to growing together as the body of Christ.\n\nIf you've been attending Cornerstone and are ready to make it home, sign up through Church Center and we'll reach out to get you started.`,
-    hasRegistration: true, ctaText: 'Apply on Church Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3500013',
-    gradient: 'linear-gradient(135deg,#1a120a,#2a1e10)', wikiKeyword: 'Church congregation',
-  },
-  'young-adults': {
-    title: 'Young Adults',
-    dateMonth: 'Jul & Aug', dateDay: 'Fri',
-    time: 'Select Fridays · 7:00pm', location: 'Cornerstone Church',
-    label: 'Ministry Gathering',
-    description: `Cornerstone Young Adults gathers on select Friday nights through the summer — a space for college students and young professionals to connect around faith, worship, and honest conversation.\n\nFriday dates vary — check Planning Center for the current schedule. No signup required to attend.`,
-    hasRegistration: false, ctaText: 'View on Planning Center',
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/ministries/young-adults',
-    gradient: 'linear-gradient(135deg,#1a0a1a,#2a1030)', wikiKeyword: null,
-  },
-};
+const EVENTS_DATA = {};
 
-// ── Planning Center sync: replace hand-written rows when js/pco-data.js has events ──
+window.PCO_UI = (function () {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const linkify = text => esc(text).replace(/https?:\/\/[^\s<]+[^\s<.,;:)]/g, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+  const paragraphs = text => String(text || '').split(/\n\s*\n/).filter(Boolean).map(p => `<p>${linkify(p).replace(/\n/g, '<br>')}</p>`).join('');
+  return {
+    esc, linkify, paragraphs,
+    CLOCK: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    PIN: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  };
+}());
+
 (function () {
-  if (typeof PCO_EVENTS === 'undefined' || !PCO_EVENTS.length) return;
-  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const CLOCK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
-  const PIN = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
-  document.querySelectorAll('[data-pco-events]').forEach(list => {
-    const limit = parseInt(list.dataset.pcoLimit) || PCO_EVENTS.length;
-    list.innerHTML = PCO_EVENTS.slice(0, limit).map(e => {
-      EVENTS_DATA[e.id] = {
-        title: e.title, dateMonth: e.dateMonth, dateDay: e.dateDay, time: e.time, location: e.location,
-        label: e.source === 'registrations' ? 'Registration Open' : 'Upcoming Event',
-        description: e.description || 'See Planning Center for full details.',
-        hasRegistration: !!e.pcoUrl, ctaText: e.pcoUrl ? 'Register on Church Center' : null, pcoUrl: e.pcoUrl,
-      };
-      const cta = e.pcoUrl
-        ? '<button class="btn btn-primary btn-sm" data-event-id="' + esc(e.id) + '">Register</button>'
-        : '<button class="btn btn-outline btn-sm" data-event-id="' + esc(e.id) + '">Details</button>';
-      return '<div class="event-row">' +
-        '<div class="event-date-block"><div class="event-date-month">' + esc(e.dateMonth) + '</div><div class="event-date-day">' + esc(e.dateDay) + '</div></div>' +
-        '<div class="event-info"><div class="event-info-title">' + esc(e.title) + '</div>' +
-        '<div class="event-info-meta"><span>' + CLOCK + ' ' + esc(e.time) + '</span><span>' + PIN + ' ' + esc(e.location) + '</span></div></div>' +
-        cta + '</div>';
-    }).join('');
-  });
+  const { esc, CLOCK, PIN } = window.PCO_UI;
+  const LABELS = { rhythm: 'Weekly Gathering', event: 'Upcoming Event', signup: 'Registration Open' };
+
+  function row(e) {
+    EVENTS_DATA[e.id] = {
+      title: e.title, dateMonth: e.dateMonth, dateDay: e.dateDay, time: e.time, location: e.location,
+      label: e.kind === 'signup' && !e.startsAt ? 'Next Step' : LABELS[e.kind],
+      description: e.description || 'See Church Center for full details.',
+      ctaText: e.pcoUrl ? (e.kind === 'rhythm' ? 'View on Church Center' : e.ctaText === 'Sign Up' ? 'Sign Up on Church Center' : 'Register on Church Center') : null,
+      pcoUrl: e.pcoUrl || null,
+    };
+    const primary = e.kind === 'signup' || e.ctaText === 'Register';
+    const dayStyle = e.dateDay.length > 2 ? ' style="font-size:18px;line-height:1.4;"' : '';
+    return '<div class="event-row">' +
+      '<div class="event-date-block"><div class="event-date-month">' + esc(e.dateMonth) + '</div><div class="event-date-day"' + dayStyle + '>' + esc(e.dateDay) + '</div></div>' +
+      '<div class="event-info"><div class="event-info-title">' + esc(e.title) + '</div>' +
+      '<div class="event-info-meta"><span>' + CLOCK + ' ' + esc(e.time) + '</span><span>' + PIN + ' ' + esc(e.location) + '</span></div></div>' +
+      '<button class="btn ' + (primary ? 'btn-primary' : 'btn-outline') + ' btn-sm" data-event-id="' + esc(e.id) + '">' + esc(e.ctaText || 'Details') + '</button></div>';
+  }
+
+  function fill(selector, items, emptyText) {
+    document.querySelectorAll(selector).forEach(list => {
+      const limit = parseInt(list.dataset.pcoLimit) || items.length;
+      const slice = items.slice(0, limit);
+      list.innerHTML = slice.length ? slice.map(row).join('') : '<p class="body-text" style="color:var(--text-muted);">' + esc(emptyText) + '</p>';
+    });
+  }
+
+  function render(snap) {
+    fill('[data-pco-rhythms]', snap.rhythms, 'Weekly gatherings will appear here.');
+    fill('[data-pco-events]', snap.events, 'No upcoming events yet. Check back soon.');
+    fill('[data-pco-next-steps]', snap.nextSteps, 'Nothing open right now.');
+    document.querySelectorAll('[data-pco-month]').forEach(el => {
+      el.textContent = new Date().toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'America/New_York' });
+    });
+  }
+
+  if (window.PCO) window.PCO.onData(render);
 }());
 
 const eventBackdrop = document.getElementById('event-modal-backdrop');
@@ -130,10 +75,7 @@ if (eventBackdrop) {
     eventTitle.textContent = e.title;
     eventTime.textContent = e.time;
     eventLocation.textContent = e.location;
-    eventDescription.innerHTML = e.description
-      .split('\n\n')
-      .map(p => `<p>${p}</p>`)
-      .join('');
+    eventDescription.innerHTML = window.PCO_UI.paragraphs(e.description);
 
     if (e.ctaText && e.pcoUrl) {
       eventFooter.style.display = '';
@@ -161,8 +103,9 @@ if (eventBackdrop) {
     if (e.key === 'Escape' && eventBackdrop.classList.contains('open')) closeEventModal();
   });
 
-  document.querySelectorAll('[data-event-id]').forEach(el => {
-    el.addEventListener('click', () => openEventModal(el.dataset.eventId));
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-event-id]');
+    if (btn) openEventModal(btn.dataset.eventId);
   });
 }
 
