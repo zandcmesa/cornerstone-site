@@ -320,4 +320,45 @@ if (pcoBackdrop) {
   document.querySelectorAll('[data-contact-modal]').forEach(el => {
     el.addEventListener('click', () => openContactModal());
   });
+
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = newsletterForm.querySelector('button');
+      const params = new URLSearchParams(new FormData(newsletterForm));
+      const cb = 'mcCallback' + Date.now();
+      params.set('c', cb);
+
+      btn.disabled = true;
+      btn.textContent = 'Subscribing\u2026';
+
+      const script = document.createElement('script');
+      const cleanup = () => {
+        delete window[cb];
+        script.remove();
+        btn.disabled = false;
+        btn.textContent = 'Subscribe';
+      };
+
+      window[cb] = data => {
+        cleanup();
+        if (data.result === 'success') {
+          newsletterForm.reset();
+          showToast({ type: 'success', message: 'You\'re subscribed \u2014 check your inbox to confirm.' });
+        } else {
+          // Mailchimp returns HTML in msg; strip tags for the toast
+          const msg = String(data.msg || '').replace(/<[^>]*>/g, '');
+          showToast({ type: 'error', message: /already subscribed/i.test(msg) ? 'That email is already subscribed.' : 'Something went wrong. Try again.' });
+        }
+      };
+      script.onerror = () => {
+        cleanup();
+        showToast({ type: 'error', message: 'Something went wrong. Try again.' });
+      };
+
+      script.src = newsletterForm.dataset.mcAction + '&' + params.toString();
+      document.body.appendChild(script);
+    });
+  }
 }());
