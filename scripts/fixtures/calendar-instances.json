@@ -1,0 +1,2245 @@
+{
+ "data": [
+  {
+   "type": "EventInstance",
+   "id": "168513060",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/168513060",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-09-30T06:00:10Z",
+    "ends_at": "2026-10-01T00:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-01T00:30:00Z",
+    "published_starts_at": "2026-09-30T23:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-09-30T23:00:00Z",
+    "updated_at": "2024-09-30T06:00:10Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/168513060"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "168594812",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/168594812",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-10-01T02:16:11Z",
+    "ends_at": "2026-10-01T17:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-01T17:00:00Z",
+    "published_starts_at": "2026-10-01T16:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-10-01T16:00:00Z",
+    "updated_at": "2024-10-01T02:16:11Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/168594812"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "230887277",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/230887277",
+    "compact_recurrence_description": "Does not repeat",
+    "created_at": "2026-08-04T19:32:40Z",
+    "ends_at": "2026-10-04T15:00:00Z",
+    "location": null,
+    "name": "Baptisms",
+    "published_ends_at": "2026-10-04T15:00:00Z",
+    "published_starts_at": "2026-10-04T14:00:00Z",
+    "recurrence": "None",
+    "recurrence_description": "Sunday, October 4, 2026 from 10:00am to 11:00am",
+    "starts_at": "2026-10-04T14:00:00Z",
+    "updated_at": "2026-08-04T19:32:40Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/22034603"
+     },
+     "data": {
+      "type": "Event",
+      "id": "22034603"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/230887277"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743085",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743085",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-10-04T16:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-10-04T16:00:00Z",
+    "published_starts_at": "2026-10-04T14:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-10-04T14:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743085"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "169047955",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/169047955",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-10-07T01:23:12Z",
+    "ends_at": "2026-10-08T00:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-08T00:30:00Z",
+    "published_starts_at": "2026-10-07T23:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-10-07T23:00:00Z",
+    "updated_at": "2024-10-07T01:23:12Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/169047955"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "169178308",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/169178308",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-10-08T04:46:27Z",
+    "ends_at": "2026-10-08T17:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-08T17:00:00Z",
+    "published_starts_at": "2026-10-08T16:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-10-08T16:00:00Z",
+    "updated_at": "2024-10-08T04:46:27Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/169178308"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743086",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743086",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-10-11T16:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-10-11T16:00:00Z",
+    "published_starts_at": "2026-10-11T14:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-10-11T14:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743086"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "169611230",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/169611230",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-10-14T02:01:22Z",
+    "ends_at": "2026-10-15T00:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-15T00:30:00Z",
+    "published_starts_at": "2026-10-14T23:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-10-14T23:00:00Z",
+    "updated_at": "2024-10-14T02:01:22Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/169611230"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "169713913",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/169713913",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-10-15T05:09:12Z",
+    "ends_at": "2026-10-15T17:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-15T17:00:00Z",
+    "published_starts_at": "2026-10-15T16:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-10-15T16:00:00Z",
+    "updated_at": "2024-10-15T05:09:12Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/169713913"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "229602458",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/229602458",
+    "compact_recurrence_description": "The third Saturday of every month",
+    "created_at": "2026-07-23T19:34:20Z",
+    "ends_at": "2026-10-17T15:00:00Z",
+    "location": null,
+    "name": "Prayer",
+    "published_ends_at": "2026-10-17T15:00:00Z",
+    "published_starts_at": "2026-10-17T14:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The third Saturday of every month from 10:00am to 11:00am beginning 08/15/2026",
+    "starts_at": "2026-10-17T14:00:00Z",
+    "updated_at": "2026-07-23T19:34:20Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/21885489"
+     },
+     "data": {
+      "type": "Event",
+      "id": "21885489"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/229602458"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743087",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743087",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-10-18T16:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-10-18T16:00:00Z",
+    "published_starts_at": "2026-10-18T14:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-10-18T14:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743087"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "170156277",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/170156277",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-10-21T04:41:02Z",
+    "ends_at": "2026-10-22T00:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-22T00:30:00Z",
+    "published_starts_at": "2026-10-21T23:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-10-21T23:00:00Z",
+    "updated_at": "2024-10-21T04:41:02Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/170156277"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "170236164",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/170236164",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-10-22T02:21:46Z",
+    "ends_at": "2026-10-22T17:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-22T17:00:00Z",
+    "published_starts_at": "2026-10-22T16:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-10-22T16:00:00Z",
+    "updated_at": "2024-10-22T02:21:46Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/170236164"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743088",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743088",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-10-25T16:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-10-25T16:00:00Z",
+    "published_starts_at": "2026-10-25T14:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-10-25T14:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743088"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "170647237",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/170647237",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-10-28T03:37:56Z",
+    "ends_at": "2026-10-29T00:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-29T00:30:00Z",
+    "published_starts_at": "2026-10-28T23:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-10-28T23:00:00Z",
+    "updated_at": "2024-10-28T03:37:56Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/170647237"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "170746428",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/170746428",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-10-29T05:08:43Z",
+    "ends_at": "2026-10-29T17:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-10-29T17:00:00Z",
+    "published_starts_at": "2026-10-29T16:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-10-29T16:00:00Z",
+    "updated_at": "2024-10-29T05:08:43Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/170746428"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743089",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743089",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-11-01T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-11-01T17:00:00Z",
+    "published_starts_at": "2026-11-01T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-11-01T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743089"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "171151877",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/171151877",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-11-04T01:15:42Z",
+    "ends_at": "2026-11-05T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-05T01:30:00Z",
+    "published_starts_at": "2026-11-05T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-11-05T00:00:00Z",
+    "updated_at": "2024-11-04T01:15:42Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/171151877"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "171268088",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/171268088",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-11-05T04:36:54Z",
+    "ends_at": "2026-11-05T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-05T18:00:00Z",
+    "published_starts_at": "2026-11-05T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-11-05T17:00:00Z",
+    "updated_at": "2024-11-05T04:36:54Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/171268088"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743090",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743090",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-11-08T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-11-08T17:00:00Z",
+    "published_starts_at": "2026-11-08T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-11-08T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743090"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "236757182",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/236757182",
+    "compact_recurrence_description": "Does not repeat",
+    "created_at": "2026-09-16T01:11:46Z",
+    "ends_at": "2026-11-09T02:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Josh Baldwin Concert",
+    "published_ends_at": "2026-11-09T02:00:00Z",
+    "published_starts_at": "2026-11-09T00:00:00Z",
+    "recurrence": "None",
+    "recurrence_description": "Sunday, November 8, 2026 from 7:00pm to 9:00pm",
+    "starts_at": "2026-11-09T00:00:00Z",
+    "updated_at": "2026-09-16T01:11:46Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/22682997"
+     },
+     "data": {
+      "type": "Event",
+      "id": "22682997"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/236757182"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "171681220",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/171681220",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-11-11T01:57:42Z",
+    "ends_at": "2026-11-12T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-12T01:30:00Z",
+    "published_starts_at": "2026-11-12T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-11-12T00:00:00Z",
+    "updated_at": "2024-11-11T01:57:42Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/171681220"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "171767160",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/171767160",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-11-12T02:40:45Z",
+    "ends_at": "2026-11-12T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-12T18:00:00Z",
+    "published_starts_at": "2026-11-12T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-11-12T17:00:00Z",
+    "updated_at": "2024-11-12T02:40:45Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/171767160"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "171890804",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/171890804",
+    "compact_recurrence_description": "The second Friday of every month",
+    "created_at": "2024-11-13T04:33:56Z",
+    "ends_at": "2026-11-14T02:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Worshipers and Warriors",
+    "published_ends_at": "2026-11-14T02:00:00Z",
+    "published_starts_at": "2026-11-14T00:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The second Friday of every month from 7:00pm to 9:00pm beginning 09/09/2022",
+    "starts_at": "2026-11-14T00:00:00Z",
+    "updated_at": "2024-11-13T04:33:56Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6746554"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6746554"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/171890804"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743091",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743091",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-11-15T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-11-15T17:00:00Z",
+    "published_starts_at": "2026-11-15T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-11-15T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743091"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "172342683",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/172342683",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-11-18T03:17:25Z",
+    "ends_at": "2026-11-19T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-19T01:30:00Z",
+    "published_starts_at": "2026-11-19T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-11-19T00:00:00Z",
+    "updated_at": "2024-11-18T03:17:25Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/172342683"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "172455888",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/172455888",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-11-19T05:40:09Z",
+    "ends_at": "2026-11-19T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-19T18:00:00Z",
+    "published_starts_at": "2026-11-19T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-11-19T17:00:00Z",
+    "updated_at": "2024-11-19T05:40:09Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/172455888"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "229602459",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/229602459",
+    "compact_recurrence_description": "The third Saturday of every month",
+    "created_at": "2026-07-23T19:34:20Z",
+    "ends_at": "2026-11-21T16:00:00Z",
+    "location": null,
+    "name": "Prayer",
+    "published_ends_at": "2026-11-21T16:00:00Z",
+    "published_starts_at": "2026-11-21T15:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The third Saturday of every month from 10:00am to 11:00am beginning 08/15/2026",
+    "starts_at": "2026-11-21T15:00:00Z",
+    "updated_at": "2026-07-23T19:34:20Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/21885489"
+     },
+     "data": {
+      "type": "Event",
+      "id": "21885489"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/229602459"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743092",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743092",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-11-22T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-11-22T17:00:00Z",
+    "published_starts_at": "2026-11-22T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-11-22T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743092"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "172876426",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/172876426",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-11-25T02:14:07Z",
+    "ends_at": "2026-11-26T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-26T01:30:00Z",
+    "published_starts_at": "2026-11-26T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-11-26T00:00:00Z",
+    "updated_at": "2024-11-25T02:14:07Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/172876426"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "172960944",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/172960944",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-11-26T02:46:30Z",
+    "ends_at": "2026-11-26T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-11-26T18:00:00Z",
+    "published_starts_at": "2026-11-26T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-11-26T17:00:00Z",
+    "updated_at": "2024-11-26T02:46:30Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/172960944"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743093",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743093",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-11-29T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-11-29T17:00:00Z",
+    "published_starts_at": "2026-11-29T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-11-29T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743093"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "173237340",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/173237340",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-12-02T02:14:07Z",
+    "ends_at": "2026-12-03T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-03T01:30:00Z",
+    "published_starts_at": "2026-12-03T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-12-03T00:00:00Z",
+    "updated_at": "2024-12-02T02:14:07Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/173237340"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "173345496",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/173345496",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-12-03T04:12:16Z",
+    "ends_at": "2026-12-03T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-03T18:00:00Z",
+    "published_starts_at": "2026-12-03T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-12-03T17:00:00Z",
+    "updated_at": "2024-12-03T04:12:16Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/173345496"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743094",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743094",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-12-06T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-12-06T17:00:00Z",
+    "published_starts_at": "2026-12-06T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-12-06T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743094"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "173823474",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/173823474",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-12-09T04:09:29Z",
+    "ends_at": "2026-12-10T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-10T01:30:00Z",
+    "published_starts_at": "2026-12-10T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-12-10T00:00:00Z",
+    "updated_at": "2024-12-09T04:09:29Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/173823474"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "173902716",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/173902716",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-12-10T01:36:31Z",
+    "ends_at": "2026-12-10T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-10T18:00:00Z",
+    "published_starts_at": "2026-12-10T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-12-10T17:00:00Z",
+    "updated_at": "2024-12-10T01:36:31Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/173902716"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "174022394",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/174022394",
+    "compact_recurrence_description": "The second Friday of every month",
+    "created_at": "2024-12-11T04:19:52Z",
+    "ends_at": "2026-12-12T02:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Worshipers and Warriors",
+    "published_ends_at": "2026-12-12T02:00:00Z",
+    "published_starts_at": "2026-12-12T00:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The second Friday of every month from 7:00pm to 9:00pm beginning 09/09/2022",
+    "starts_at": "2026-12-12T00:00:00Z",
+    "updated_at": "2024-12-11T04:19:52Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6746554"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6746554"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/174022394"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743095",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743095",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-12-13T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-12-13T17:00:00Z",
+    "published_starts_at": "2026-12-13T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-12-13T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743095"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "174414483",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/174414483",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-12-16T05:25:35Z",
+    "ends_at": "2026-12-17T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-17T01:30:00Z",
+    "published_starts_at": "2026-12-17T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-12-17T00:00:00Z",
+    "updated_at": "2024-12-16T05:25:35Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/174414483"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "174504442",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/174504442",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-12-17T03:49:57Z",
+    "ends_at": "2026-12-17T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-17T18:00:00Z",
+    "published_starts_at": "2026-12-17T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-12-17T17:00:00Z",
+    "updated_at": "2024-12-17T03:49:57Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/174504442"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "229602460",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/229602460",
+    "compact_recurrence_description": "The third Saturday of every month",
+    "created_at": "2026-07-23T19:34:20Z",
+    "ends_at": "2026-12-19T16:00:00Z",
+    "location": null,
+    "name": "Prayer",
+    "published_ends_at": "2026-12-19T16:00:00Z",
+    "published_starts_at": "2026-12-19T15:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The third Saturday of every month from 10:00am to 11:00am beginning 08/15/2026",
+    "starts_at": "2026-12-19T15:00:00Z",
+    "updated_at": "2026-07-23T19:34:20Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/21885489"
+     },
+     "data": {
+      "type": "Event",
+      "id": "21885489"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/229602460"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743096",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743096",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-12-20T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-12-20T17:00:00Z",
+    "published_starts_at": "2026-12-20T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-12-20T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743096"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "174980168",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/174980168",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-12-23T01:26:57Z",
+    "ends_at": "2026-12-24T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-24T01:30:00Z",
+    "published_starts_at": "2026-12-24T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-12-24T00:00:00Z",
+    "updated_at": "2024-12-23T01:26:57Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/174980168"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "175045856",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/175045856",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-12-24T01:26:02Z",
+    "ends_at": "2026-12-24T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-24T18:00:00Z",
+    "published_starts_at": "2026-12-24T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-12-24T17:00:00Z",
+    "updated_at": "2024-12-24T01:26:02Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/175045856"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743097",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743097",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2026-12-27T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2026-12-27T17:00:00Z",
+    "published_starts_at": "2026-12-27T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2026-12-27T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743097"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "175323370",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/175323370",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2024-12-30T04:46:45Z",
+    "ends_at": "2026-12-31T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-31T01:30:00Z",
+    "published_starts_at": "2026-12-31T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2026-12-31T00:00:00Z",
+    "updated_at": "2024-12-30T04:46:45Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/175323370"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "175406302",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/175406302",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2024-12-31T02:55:58Z",
+    "ends_at": "2026-12-31T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2026-12-31T18:00:00Z",
+    "published_starts_at": "2026-12-31T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2026-12-31T17:00:00Z",
+    "updated_at": "2024-12-31T02:55:58Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/175406302"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743098",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743098",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2027-01-03T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2027-01-03T17:00:00Z",
+    "published_starts_at": "2027-01-03T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2027-01-03T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743098"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "175890489",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/175890489",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2025-01-06T01:58:07Z",
+    "ends_at": "2027-01-07T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2027-01-07T01:30:00Z",
+    "published_starts_at": "2027-01-07T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2027-01-07T00:00:00Z",
+    "updated_at": "2025-01-06T01:58:07Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/175890489"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "176105726",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/176105726",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2025-01-07T05:36:42Z",
+    "ends_at": "2027-01-07T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2027-01-07T18:00:00Z",
+    "published_starts_at": "2027-01-07T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2027-01-07T17:00:00Z",
+    "updated_at": "2025-01-07T05:36:42Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/176105726"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "178068373",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/178068373",
+    "compact_recurrence_description": "The second Friday of every month",
+    "created_at": "2025-01-23T04:14:28Z",
+    "ends_at": "2027-01-09T02:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Worshipers and Warriors",
+    "published_ends_at": "2027-01-09T02:00:00Z",
+    "published_starts_at": "2027-01-09T00:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The second Friday of every month from 7:00pm to 9:00pm beginning 09/09/2022",
+    "starts_at": "2027-01-09T00:00:00Z",
+    "updated_at": "2025-01-23T04:14:28Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6746554"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6746554"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/178068373"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743099",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743099",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2027-01-10T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2027-01-10T17:00:00Z",
+    "published_starts_at": "2027-01-10T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2027-01-10T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743099"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "178068380",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/178068380",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2025-01-23T04:14:29Z",
+    "ends_at": "2027-01-14T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2027-01-14T01:30:00Z",
+    "published_starts_at": "2027-01-14T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2027-01-14T00:00:00Z",
+    "updated_at": "2025-01-23T04:14:29Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/178068380"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "178068376",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/178068376",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2025-01-23T04:14:28Z",
+    "ends_at": "2027-01-14T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2027-01-14T18:00:00Z",
+    "published_starts_at": "2027-01-14T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2027-01-14T17:00:00Z",
+    "updated_at": "2025-01-23T04:14:28Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/178068376"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "229602461",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/229602461",
+    "compact_recurrence_description": "The third Saturday of every month",
+    "created_at": "2026-07-23T19:34:20Z",
+    "ends_at": "2027-01-16T16:00:00Z",
+    "location": null,
+    "name": "Prayer",
+    "published_ends_at": "2027-01-16T16:00:00Z",
+    "published_starts_at": "2027-01-16T15:00:00Z",
+    "recurrence": "Monthly",
+    "recurrence_description": "The third Saturday of every month from 10:00am to 11:00am beginning 08/15/2026",
+    "starts_at": "2027-01-16T15:00:00Z",
+    "updated_at": "2026-07-23T19:34:20Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/21885489"
+     },
+     "data": {
+      "type": "Event",
+      "id": "21885489"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/229602461"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743100",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743100",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2027-01-17T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2027-01-17T17:00:00Z",
+    "published_starts_at": "2027-01-17T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2027-01-17T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743100"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "178068381",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/178068381",
+    "compact_recurrence_description": "Every Wednesday",
+    "created_at": "2025-01-23T04:14:29Z",
+    "ends_at": "2027-01-21T01:30:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Prayer",
+    "published_ends_at": "2027-01-21T01:30:00Z",
+    "published_starts_at": "2027-01-21T00:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Wednesday from 7:00pm to 8:30pm beginning 08/28/2024",
+    "starts_at": "2027-01-21T00:00:00Z",
+    "updated_at": "2025-01-23T04:14:29Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760119"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760119"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/178068381"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "178068377",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/178068377",
+    "compact_recurrence_description": "Every Thursday",
+    "created_at": "2025-01-23T04:14:28Z",
+    "ends_at": "2027-01-21T18:00:00Z",
+    "location": "Church Office - 15 Kibbe Rd, East Longmeadow, MA 01028, USA",
+    "name": "Prayer",
+    "published_ends_at": "2027-01-21T18:00:00Z",
+    "published_starts_at": "2027-01-21T17:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Thursday from 12:00pm to 1:00pm beginning 08/04/2022",
+    "starts_at": "2027-01-21T17:00:00Z",
+    "updated_at": "2025-01-23T04:14:28Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/6760370"
+     },
+     "data": {
+      "type": "Event",
+      "id": "6760370"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/178068377"
+   }
+  },
+  {
+   "type": "EventInstance",
+   "id": "204743101",
+   "attributes": {
+    "all_day_event": false,
+    "church_center_url": "https://cornerstonechurchma.churchcenter.com/calendar/event/204743101",
+    "compact_recurrence_description": "Every Sunday",
+    "created_at": "2025-11-04T19:44:01Z",
+    "ends_at": "2027-01-24T17:00:00Z",
+    "location": "East Longmeadow Campus - 15 Kibbe Road, East Longmeadow, Massachusetts 01028",
+    "name": "Sunday Service",
+    "published_ends_at": "2027-01-24T17:00:00Z",
+    "published_starts_at": "2027-01-24T15:00:00Z",
+    "recurrence": "Weekly",
+    "recurrence_description": "Every Sunday from 10:00am to 12:00pm beginning 11/02/2025",
+    "starts_at": "2027-01-24T15:00:00Z",
+    "updated_at": "2025-11-04T19:44:01Z"
+   },
+   "relationships": {
+    "event": {
+     "links": {
+      "related": "https://api.planningcenteronline.com/calendar/v2/events/18780465"
+     },
+     "data": {
+      "type": "Event",
+      "id": "18780465"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/event_instances/204743101"
+   }
+  }
+ ],
+ "included": [
+  {
+   "type": "Event",
+   "id": "6760119",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2022-08-18T16:10:21Z",
+    "description": null,
+    "featured": false,
+    "image_url": null,
+    "link_only": false,
+    "name": "Prayer",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": "Intercessory prayer at the church.",
+    "updated_at": "2026-07-17T16:47:14Z",
+    "visible_in_church_center": true
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "36498797"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/6760119",
+    "html": "https://calendar.planningcenteronline.com/events/6760119"
+   }
+  },
+  {
+   "type": "Event",
+   "id": "6760370",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2022-08-18T16:19:50Z",
+    "description": null,
+    "featured": false,
+    "image_url": null,
+    "link_only": false,
+    "name": "Prayer",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": null,
+    "updated_at": "2026-07-17T16:42:10Z",
+    "visible_in_church_center": true
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "36498797"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/6760370",
+    "html": "https://calendar.planningcenteronline.com/events/6760370"
+   }
+  },
+  {
+   "type": "Event",
+   "id": "22034603",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2026-08-04T19:32:40Z",
+    "description": null,
+    "featured": false,
+    "image_url": null,
+    "link_only": false,
+    "name": "Baptisms",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": null,
+    "updated_at": "2026-08-04T19:32:40Z",
+    "visible_in_church_center": false
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "189124921"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/22034603",
+    "html": "https://calendar.planningcenteronline.com/events/22034603"
+   }
+  },
+  {
+   "type": "Event",
+   "id": "18780465",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2025-11-04T19:44:00Z",
+    "description": null,
+    "featured": false,
+    "image_url": null,
+    "link_only": false,
+    "name": "Sunday Service",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": null,
+    "updated_at": "2025-11-04T19:44:01Z",
+    "visible_in_church_center": true
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "1925450"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/18780465",
+    "html": "https://calendar.planningcenteronline.com/events/18780465"
+   }
+  },
+  {
+   "type": "Event",
+   "id": "21885489",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2026-07-23T19:34:20Z",
+    "description": null,
+    "featured": false,
+    "image_url": null,
+    "link_only": false,
+    "name": "Prayer",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": null,
+    "updated_at": "2026-07-23T19:34:20Z",
+    "visible_in_church_center": false
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "189124921"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/21885489",
+    "html": "https://calendar.planningcenteronline.com/events/21885489"
+   }
+  },
+  {
+   "type": "Event",
+   "id": "22682997",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2026-09-16T01:11:46Z",
+    "description": "<div>\n  <div>Join The Q 99.7 for <strong>A Night of Worship with Josh Baldwin at Cornerstone Church</strong>—an unforgettable evening of inspiring music, heartfelt worship, and a message of hope.<br><br>Known for songs like \"Stand in Your Love,\" \"Evidence,\" \"Made for More,\" and \"There Is Freedom,\" Josh Baldwin has encouraged believers around the world through authentic worship and powerful songwriting.<br><br>Josh will be joined by special guest Patrick Mayberry, who will perform hit songs \"Holy Spirit Come\" &amp; \"Lead on Good Shephard.\"<br><br>Don't miss this special evening at Cornerstone Church in East Longmeadow on <strong>Saturday, November 8th!</strong><br><br><strong>Tickets are required to attend this event.</strong> Click the link below to get your tickets now!<br><br>https://events.humanitix.com/a-night-of-worship-with-josh-baldwin?h=bemzjfbT6mTHRwRsnCP45zmZnb_yKxdsSA2YBAlFAUs&amp;t=1783629024607<br><br><br><br><br><br><br></div>\n</div>\n",
+    "featured": false,
+    "image_url": "https://images.planningcenterusercontent.com/v1/transform?bucket=resources-production&disposition=inline&expires_at=1790830799&key=uploads%2F85313%2Fprnrmpctmezlxffm24lii5aveczv&thumb=960x540%23&signature=9871fc2d5955d2cc5c520346b21daa0e93fce27c7605c5ff305d3cef902d0b38",
+    "link_only": false,
+    "name": "Josh Baldwin Concert",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": "Josh Baldwin Concert\n\n\n",
+    "updated_at": "2026-09-16T14:35:15Z",
+    "visible_in_church_center": true
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "189124921"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/22682997",
+    "html": "https://calendar.planningcenteronline.com/events/22682997"
+   }
+  },
+  {
+   "type": "Event",
+   "id": "6746554",
+   "attributes": {
+    "approval_status": "A",
+    "created_at": "2022-08-17T17:11:40Z",
+    "description": "<div>\n  <div>This is a time of worship and prayer. We gather together to exalt the name of Jesus and join with Him in intercession for the battles at hand!</div>\n</div>\n",
+    "featured": false,
+    "image_url": null,
+    "link_only": false,
+    "name": "Worshipers and Warriors",
+    "percent_approved": 100,
+    "percent_rejected": 0,
+    "registration_url": null,
+    "summary": " This is a time of worship and prayer.  We gather together to exalt the name of Jesus and join with Him in intercession for the battles at hand!",
+    "updated_at": "2026-09-24T13:48:59Z",
+    "visible_in_church_center": true
+   },
+   "relationships": {
+    "calendar": {
+     "data": {
+      "type": "Calendar",
+      "id": "92833"
+     }
+    },
+    "owner": {
+     "data": {
+      "type": "Person",
+      "id": "14338532"
+     }
+    }
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/calendar/v2/events/6746554",
+    "html": "https://calendar.planningcenteronline.com/events/6746554"
+   }
+  }
+ ]
+}

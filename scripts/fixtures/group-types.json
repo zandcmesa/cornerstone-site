@@ -1,0 +1,201 @@
+{
+ "data": [
+  {
+   "type": "GroupType",
+   "id": "123824",
+   "attributes": {
+    "church_center_map_visible": true,
+    "church_center_visible": false,
+    "color": "#56a8e5",
+    "default_group_settings": {
+     "contact_email": "smallgroups@samplechurch.com",
+     "request_event_attendance_from_leaders": false
+    },
+    "description": "Life groups are a key aspect of our church community. They meet weekly in the home of a group member.   ",
+    "name": "Life Groups",
+    "position": 0,
+    "public_church_center_web_url": "https://cornerstonechurchma.churchcenter.com/groups/life-groups"
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/groups/v2/group_types/123824"
+   }
+  },
+  {
+   "type": "GroupType",
+   "id": "132849",
+   "attributes": {
+    "church_center_map_visible": true,
+    "church_center_visible": true,
+    "color": "#7a82e5",
+    "default_group_settings": {
+     "schedule": null,
+     "location_id": null,
+     "enrollment_open_until": null,
+     "enrollment_limit": null,
+     "member_limit_maximum_alert": null,
+     "request_event_attendance_from_leaders": true,
+     "contact_email": null,
+     "events_visibility": "public",
+     "description": null,
+     "leaders_can_search_people_database": false,
+     "publicly_display_meeting_schedule": false,
+     "default_event_automated_reminders_enabled": false,
+     "default_event_automated_reminders_schedule_offset": null,
+     "communication_enabled": false,
+     "attendance_reply_to_person_id": null,
+     "leader_name_visible_on_public_page": false
+    },
+    "description": "Serving within the church body is another way to get connected.  Find the group that's right for you.",
+    "name": "Serve Opportunities at Cornerstone",
+    "position": 2,
+    "public_church_center_web_url": "https://cornerstonechurchma.churchcenter.com/groups/serve-opportunities-at-cornerstone"
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/groups/v2/group_types/132849"
+   }
+  },
+  {
+   "type": "GroupType",
+   "id": "132891",
+   "attributes": {
+    "church_center_map_visible": true,
+    "church_center_visible": true,
+    "color": "#56a8e5",
+    "default_group_settings": {
+     "schedule": null,
+     "location_id": null,
+     "enrollment_open_until": null,
+     "enrollment_limit": null,
+     "member_limit_maximum_alert": null,
+     "request_event_attendance_from_leaders": true,
+     "contact_email": null,
+     "events_visibility": "public",
+     "description": null,
+     "leaders_can_search_people_database": false,
+     "publicly_display_meeting_schedule": false,
+     "default_event_automated_reminders_enabled": false,
+     "default_event_automated_reminders_schedule_offset": null,
+     "communication_enabled": false,
+     "attendance_reply_to_person_id": null,
+     "leader_name_visible_on_public_page": false
+    },
+    "description": null,
+    "name": "Ministries",
+    "position": 1,
+    "public_church_center_web_url": "https://cornerstonechurchma.churchcenter.com/groups/ministries"
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/groups/v2/group_types/132891"
+   }
+  },
+  {
+   "type": "GroupType",
+   "id": "143336",
+   "attributes": {
+    "church_center_map_visible": true,
+    "church_center_visible": true,
+    "color": "#c672d2",
+    "default_group_settings": {
+     "schedule": null,
+     "location_id": null,
+     "enrollment_open_until": null,
+     "enrollment_limit": null,
+     "member_limit_maximum_alert": null,
+     "request_event_attendance_from_leaders": true,
+     "contact_email": null,
+     "events_visibility": "public",
+     "description": null,
+     "leaders_can_search_people_database": false,
+     "publicly_display_meeting_schedule": false,
+     "default_event_automated_reminders_enabled": false,
+     "default_event_automated_reminders_schedule_offset": null,
+     "communication_enabled": false,
+     "attendance_reply_to_person_id": null,
+     "leader_name_visible_on_public_page": false
+    },
+    "description": "Here are just a few ways you can serve in our community.",
+    "name": "Serve Opportunities in Our Community",
+    "position": 3,
+    "public_church_center_web_url": "https://cornerstonechurchma.churchcenter.com/groups/serve-opportunities-in-our-community"
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/groups/v2/group_types/143336"
+   }
+  },
+  {
+   "type": "GroupType",
+   "id": "197860",
+   "attributes": {
+    "church_center_map_visible": true,
+    "church_center_visible": true,
+    "color": "#f9b65c",
+    "default_group_settings": {
+     "schedule": null,
+     "location_id": null,
+     "virtual_location_url": null,
+     "location_type_preference": "physical",
+     "enrollment_open_until": null,
+     "enrollment_limit": null,
+     "member_limit_maximum_alert": null,
+     "request_event_attendance_from_leaders": true,
+     "contact_email": null,
+     "events_visibility": "public",
+     "description": null,
+     "leaders_can_search_people_database": false,
+     "publicly_display_meeting_schedule": false,
+     "default_event_automated_reminders_enabled": false,
+     "default_event_automated_reminders_schedule_offset": null,
+     "communication_enabled": false,
+     "members_can_create_forum_topics": true,
+     "attendance_reply_to_person_id": null,
+     "leader_name_visible_on_public_page": false
+    },
+    "description": null,
+    "name": "Growth Groups",
+    "position": 4,
+    "public_church_center_web_url": "https://cornerstonechurchma.churchcenter.com/groups/growth-groups"
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/groups/v2/group_types/197860"
+   }
+  },
+  {
+   "type": "GroupType",
+   "id": "unique",
+   "attributes": {
+    "church_center_map_visible": true,
+    "church_center_visible": true,
+    "color": "#c6c6c6",
+    "default_group_settings": {
+     "schedule": null,
+     "location_id": null,
+     "virtual_location_url": null,
+     "location_type_preference": "physical",
+     "enrollment_open_until": null,
+     "enrollment_limit": null,
+     "member_limit_maximum_alert": null,
+     "request_event_attendance_from_leaders": true,
+     "contact_email": null,
+     "events_visibility": "public",
+     "description": null,
+     "leaders_can_search_people_database": false,
+     "publicly_display_meeting_schedule": false,
+     "default_event_automated_reminders_enabled": false,
+     "default_event_automated_reminders_schedule_offset": null,
+     "communication_enabled": false,
+     "members_can_create_forum_topics": true,
+     "attendance_reply_to_person_id": null,
+     "leader_name_visible_on_public_page": false
+    },
+    "description": null,
+    "name": "Unique Groups",
+    "position": 999999999,
+    "public_church_center_web_url": "https://cornerstonechurchma.churchcenter.com/groups/unique"
+   },
+   "links": {
+    "self": "https://api.planningcenteronline.com/groups/v2/group_types/unique"
+   }
+  }
+ ],
+ "included": []
+}
