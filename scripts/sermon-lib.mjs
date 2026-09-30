@@ -1,16 +1,25 @@
 const TZ = 'America/New_York';
-const ROW = /^ {2}\{ id: (\d+),.*?date: "(\d{4}-\d\d-\d\d)".*?speaker: "([^"]*)".*?series: (null|"[^"]*").*?vimeoId: "([^"]+)" \},?\s*$/;
+const STR = '"(?:[^"\\\\]|\\\\.)*"';
+const ROW = new RegExp(`^ {2}\\{ id: (\\d+),.*?date: "(\\d{4}-\\d\\d-\\d\\d)".*?speaker: (${STR}).*?series: (null|${STR}).*?vimeoId: "([^"]+)" \\},?\\s*$`);
 
 export function parseArchive(src) {
   const entries = [];
   for (const line of src.split('\n')) {
     const m = line.match(ROW);
     if (!m) continue;
-    entries.push({ id: +m[1], date: m[2], speaker: m[3], series: m[4] === 'null' ? null : JSON.parse(m[4]), vimeoId: m[5], line });
+    entries.push({ id: +m[1], date: m[2], speaker: JSON.parse(m[3]), series: m[4] === 'null' ? null : JSON.parse(m[4]), vimeoId: m[5], line });
   }
   const head = src.indexOf('const SERMON_DATA = [');
   const insertAt = src.indexOf('\n', head) + 1;
   return { entries, maxId: Math.max(0, ...entries.map(e => e.id)), insertAt };
+}
+
+export function archiveContext(archive) {
+  return {
+    knownSeries: [...new Set(archive.entries.map(e => e.series).filter(Boolean))],
+    knownSpeakers: [...new Set(archive.entries.map(e => e.speaker))],
+    examples: archive.entries.slice(0, 3).map(e => e.line),
+  };
 }
 
 export function sermonDateFromVideo(v) {

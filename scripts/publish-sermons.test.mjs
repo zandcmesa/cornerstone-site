@@ -11,3 +11,7 @@ test('pendingPublish returns private Vimeo videos that are now in the merged arc
   const archive = { entries: [{ vimeoId: 'P' }, { vimeoId: 'R' }] };
   assert.deepEqual(pendingPublish(videos, archive), ['P']);
 });
+
+test('pendingPublish also flips unlisted uploads', () => {
+  assert.deepEqual(pendingPublish([{ vimeoId: 'U', privacy: 'unlisted' }], { entries: [{ vimeoId: 'U' }] }), ['U']);
+});

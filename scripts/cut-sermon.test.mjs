@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs } from './cut-sermon.mjs';
+import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, UPLOAD_PRIVACY } from './cut-sermon.mjs';
 
 test('matchReplay picks the stream released on the target Sunday in New York time', () => {
   const list = [
@@ -29,4 +29,16 @@ test('ytBaseArgs adds a cookies file only when YOUTUBE_COOKIES is set', () => {
   const args = ytBaseArgs({ YOUTUBE_COOKIES: '# Netscape HTTP Cookie File\n.youtube.com\tTRUE\t/\tTRUE\t0\tSID\tabc\n' });
   assert.equal(args[0], '--cookies');
   assert.match(args[1], /cookies\.txt$/);
+});
+
+test('findReplay skips streams whose timestamp lookup fails (upcoming scheduled streams)', () => {
+  const r = findReplay('2026-08-16', {
+    listIds: () => ['upcoming', 'aug16'],
+    releaseTs: id => { if (id === 'upcoming') throw new Error('This live event will begin in 3 days'); return 1786887996; },
+  });
+  assert.equal(r.id, 'aug16');
+});
+
+test('uploads are unlisted so the reviewer can preview them', () => {
+  assert.equal(UPLOAD_PRIVACY.view, 'unlisted');
 });

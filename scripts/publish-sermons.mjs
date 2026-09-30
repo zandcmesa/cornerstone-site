@@ -6,7 +6,7 @@ import { listVideos, setPrivacy } from './vimeo.mjs';
 
 export function pendingPublish(videos, archive) {
   const merged = new Set(archive.entries.map(e => e.vimeoId));
-  return videos.filter(v => v.privacy === 'nobody' && merged.has(v.vimeoId)).map(v => v.vimeoId);
+  return videos.filter(v => (v.privacy === 'nobody' || v.privacy === 'unlisted') && merged.has(v.vimeoId)).map(v => v.vimeoId);
 }
 
 export async function publishSermons({ log = console.log } = {}) {

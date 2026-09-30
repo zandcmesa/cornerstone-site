@@ -73,7 +73,7 @@ Already done for this repo (Settings → Actions → General → "Allow GitHub A
 
 1. Go to the repo's Actions tab, pick **Sync sermons**, click Run workflow.
 2. A PR titled "Sermon archive: N new sermons" appears within a few minutes. Open it, check titles and art, edit anything in the PR, merge.
-3. After Oct 4, watch for the Monday **Cut Sunday sermon** run. Its PR lists the cut timestamps and the private Vimeo link so you can preview the cut before merging.
+3. After Oct 4, watch for the Monday **Cut Sunday sermon** run (it retries Tuesday if YouTube's captions weren't ready). Its PR lists the cut timestamps and an unlisted Vimeo link so you can preview the cut before merging. The cut workflow refuses to run while `VIMEO_USER` is set, because that means the token isn't the church's and the upload would land in the wrong library.
 
 ## Running by hand
 

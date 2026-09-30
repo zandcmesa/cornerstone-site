@@ -20,6 +20,11 @@ async function api(path, { method = 'GET', body, headers = {} } = {}) {
   return res.status === 204 ? null : res.json();
 }
 
+export async function me() {
+  const d = await api('/me?fields=uri,name,link');
+  return { userId: d.uri.split('/').pop(), name: d.name, link: d.link };
+}
+
 export async function listVideos({ perPage = 50, pages = 2, user = process.env.VIMEO_USER || 'me' } = {}) {
   const base = user === 'me' ? '/me/videos' : `/users/${user}/videos`;
   const out = [];

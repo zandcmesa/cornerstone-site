@@ -2,7 +2,7 @@ name: Cut Sunday sermon
 
 on:
   schedule:
-    - cron: '0 10 * * 1'
+    - cron: '0 10 * * 1,2'
   workflow_dispatch:
     inputs:
       date:

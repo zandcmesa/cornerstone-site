@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 
 const MODEL = 'claude-opus-5-5';
+export const MAX_TOKENS = 16000;
 
 export const METADATA_SCHEMA = {
   type: 'object',
@@ -9,7 +10,7 @@ export const METADATA_SCHEMA = {
   properties: {
     title: { type: 'string', description: 'Sermon title, 3–8 words, title case. Use the preacher\'s own title if stated, otherwise write one that captures the central idea.' },
     speaker: { type: 'string', description: 'Full name with title as the church uses it, e.g. "Pastor Josh Eldridge", "Pastor Christine Disibio", or a guest such as "Dr. Lynn Lucas".' },
-    series: { type: ['string', 'null'], description: 'Series name only if the preacher explicitly names an ongoing series; otherwise null.' },
+    series: { anyOf: [{ type: 'string' }, { type: 'null' }], description: 'Series name only if the preacher explicitly names an ongoing series; otherwise null.' },
     scripture: { type: 'string', description: 'Primary passage(s), e.g. "Ephesians 3:14–21" or "Acts 8:4-8; John 4". Empty string if none.' },
     scriptureBook: { type: 'string', description: 'Book of the primary passage, e.g. "Ephesians". Empty string if none.' },
     topics: { type: 'array', items: { type: 'string' }, description: '3 to 4 short Title Case topic tags.' },
@@ -54,25 +55,30 @@ export function buildBoundsPrompt(timedTranscript) {
   return { system, user: `Transcript:\n${timedTranscript}` };
 }
 
-async function askJSON({ system, user }, schema, maxTokens) {
-  const client = new Anthropic();
-  const res = await client.messages.create({
-    model: MODEL,
-    max_tokens: maxTokens,
-    system,
-    messages: [{ role: 'user', content: user }],
-    output_config: { effort: 'high', format: { type: 'json_schema', schema } },
-  });
+export function parseResponse(res) {
   if (res.stop_reason === 'refusal') throw new Error(`Claude declined: ${res.stop_details?.explanation || 'no explanation'}`);
+  if (res.stop_reason === 'max_tokens') throw new Error(`Claude hit max_tokens (${MAX_TOKENS}) before finishing the JSON`);
   const text = res.content.filter(b => b.type === 'text').map(b => b.text).join('');
   return JSON.parse(text);
 }
 
+async function askJSON({ system, user }, schema) {
+  const client = new Anthropic();
+  const res = await client.messages.create({
+    model: MODEL,
+    max_tokens: MAX_TOKENS,
+    system,
+    messages: [{ role: 'user', content: user }],
+    output_config: { effort: 'high', format: { type: 'json_schema', schema } },
+  });
+  return parseResponse(res);
+}
+
 export async function extractMetadata(transcript, ctx) {
-  const meta = await askJSON(buildMetadataPrompt(transcript, ctx), METADATA_SCHEMA, 4000);
+  const meta = await askJSON(buildMetadataPrompt(transcript, ctx), METADATA_SCHEMA);
   return { ...meta, series: meta.series || null };
 }
 
 export async function findSermonBounds(timedTranscript) {
-  return askJSON(buildBoundsPrompt(timedTranscript), BOUNDS_SCHEMA, 2000);
+  return askJSON(buildBoundsPrompt(timedTranscript), BOUNDS_SCHEMA);
 }

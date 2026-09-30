@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { parseArchive, pickCandidates, buildEntryLine, insertEntries, artFile } from './sermon-lib.mjs';
+import { parseArchive, pickCandidates, buildEntryLine, insertEntries, artFile, archiveContext } from './sermon-lib.mjs';
 import * as vimeo from './vimeo.mjs';
 import * as ai from './sermon-ai.mjs';
 import * as art from './sermon-art.mjs';
@@ -64,11 +64,10 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
   const candidates = pickCandidates(videos, base, drafts).slice(0, limit);
   d.log(`${candidates.length} sermon(s) not in the archive`);
 
-  const ctx = {
-    knownSeries: [...new Set(base.entries.map(e => e.series).filter(Boolean))],
-    knownSpeakers: [...new Set(base.entries.map(e => e.speaker))],
-    examples: base.entries.slice(0, 3).map(e => e.line),
-  };
+  const ctx = archiveContext(base);
+  for (const id of Object.keys(metaOverride)) {
+    if (!candidates.some(c => c.vimeoId === id)) throw new Error(`metaOverride for ${id} but that video is not among the new Vimeo videos (check VIMEO_USER matches the token's account)`);
+  }
   let nextId = Math.max(base.maxId, ...drafts.entries.map(e => e.id)) + 1;
   const entries = [];
   const skipped = [];
@@ -85,10 +84,16 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
       continue;
     }
     let meta = metaOverride[c.vimeoId];
-    if (!meta) {
-      const transcript = transcriptOverride[c.vimeoId] || await d.getTranscript(c.vimeoId);
-      if (!transcript) { skipped.push({ vimeoId: c.vimeoId, date: c.date, reason: 'captions not ready' }); d.log(`skipping ${c.date}: captions not ready`); continue; }
-      meta = await d.extractMetadata(transcript, { ...ctx, date: c.date });
+    try {
+      if (!meta) {
+        const transcript = transcriptOverride[c.vimeoId] || await d.getTranscript(c.vimeoId);
+        if (!transcript) { skipped.push({ vimeoId: c.vimeoId, date: c.date, reason: 'captions not ready' }); d.log(`skipping ${c.date}: captions not ready`); continue; }
+        meta = await d.extractMetadata(transcript, { ...ctx, date: c.date });
+      }
+    } catch (e) {
+      skipped.push({ vimeoId: c.vimeoId, date: c.date, reason: e.message });
+      d.log(`skipping ${c.date}: ${e.message}`);
+      continue;
     }
     const entry = { ...meta, id: nextId++, date: c.date, vimeoId: c.vimeoId, reused: false };
     entry.line = buildEntryLine(entry);
@@ -110,7 +115,7 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
     d.log(`drafted ${c.date}: ${entry.title} — ${entry.speaker}`);
   }
 
-  if (!entries.length) { d.log('Archive is current'); return { entries, skipped }; }
+  if (!entries.length) { d.log(skipped.length ? `nothing drafted; skipped: ${skipped.map(s => `${s.date} (${s.reason})`).join(', ')}` : 'Archive is current'); return { entries, skipped }; }
 
   const newSrc = insertEntries(baseSrc, entries);
   files.unshift({ path: 'js/sermons.js', content: newSrc });
@@ -121,7 +126,7 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
     return `- **${e.date}** — ${title} (${speaker}) · [vimeo.com/${e.vimeoId}](https://vimeo.com/${e.vimeoId})${e.art ? '' : ' · _art missing_'}`;
   });
   const body = [`${entries.length} new sermon${entries.length === 1 ? '' : 's'} from Vimeo. Review titles, series, and art, then merge.`, '', ...rows,
-    ...(skipped.length ? ['', 'Waiting on captions:', ...skipped.map(s => `- ${s.date} (vimeo.com/${s.vimeoId})`)] : []),
+    ...(skipped.length ? ['', 'Skipped this run:', ...skipped.map(s => `- ${s.date} (vimeo.com/${s.vimeoId}): ${s.reason}`)] : []),
     '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
   const title = `Sermon archive: ${entries.length === 1 ? entries[0].date : `${entries.length} new sermons`}`;
   const message = `Add ${entries.length} sermon${entries.length === 1 ? '' : 's'} to the archive\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`;

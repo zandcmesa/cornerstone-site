@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {
   parseArchive, sermonDateFromVideo, vttToText, json3ToTimed, formatTimed,
-  buildEntryLine, insertEntries, pickCandidates, previousSunday, artFile, validateBounds,
+  buildEntryLine, insertEntries, pickCandidates, previousSunday, artFile, validateBounds, archiveContext,
 } from './sermon-lib.mjs';
 
 const fx = name => fs.readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
@@ -82,4 +82,21 @@ test('validateBounds rejects short, long and inverted spans', () => {
   assert.equal(validateBounds({ start: 1800, end: 2000 }).ok, false);
   assert.equal(validateBounds({ start: 1800, end: 8000 }).ok, false);
   assert.equal(validateBounds({ start: 4500, end: 1800 }).ok, false);
+});
+
+test('parseArchive round-trips a row whose series and speaker contain escaped quotes', () => {
+  const line = buildEntryLine({ id: 200, title: 'T', date: '2026-11-01', speaker: 'Dr. "Doc" Lucas', series: 'The "I Am" Sayings', scripture: '', scriptureBook: '', topics: [], description: '', vimeoId: '1' });
+  const a = parseArchive('const SERMON_DATA = [\n' + line + '\n];\n');
+  assert.equal(a.entries.length, 1);
+  assert.equal(a.entries[0].series, 'The "I Am" Sayings');
+  assert.equal(a.entries[0].speaker, 'Dr. "Doc" Lucas');
+});
+
+test('archiveContext gives Claude the known series, speakers and three example rows', () => {
+  const a = parseArchive(SRC);
+  const ctx = archiveContext(a);
+  assert.ok(ctx.knownSeries.includes('Leadership Lessons'));
+  assert.ok(ctx.knownSpeakers.includes('Pastor Christine Disibio'));
+  assert.equal(ctx.examples.length, 3);
+  assert.ok(ctx.examples[0].startsWith('  { id: 1,'));
 });

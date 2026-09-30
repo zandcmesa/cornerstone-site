@@ -74,3 +74,17 @@ test('overrides supply transcript and metadata for a just-uploaded video', async
   assert.deepEqual(r.entries.map(e => e.vimeoId), ['D', 'N']);
   assert.equal(calls.extract, 0);
 });
+
+test('a failing sermon is skipped with its error and the rest still publish', async () => {
+  const { deps, calls } = fakes({ extractMetadata: async () => { throw new Error('Claude 529 overloaded'); } });
+  const r = await syncSermons({}, deps);
+  assert.deepEqual(r.entries.map(e => e.vimeoId), ['D']);
+  assert.ok(r.skipped.some(s => s.vimeoId === 'N' && /overloaded/.test(s.reason)));
+  assert.ok(calls.published);
+  assert.match(calls.published.body, /overloaded/);
+});
+
+test('a metaOverride for a video the sync cannot see is an error, not a silent no-op', async () => {
+  const { deps } = fakes();
+  await assert.rejects(syncSermons({ metaOverride: { ZZZ: { title: 'x' } } }, deps), /ZZZ/);
+});

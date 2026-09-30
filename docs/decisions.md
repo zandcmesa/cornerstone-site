@@ -38,7 +38,7 @@
 - Decision: Dedupe by sermon date. B skips a Sunday that already has a Vimeo video; A ignores a second Vimeo video for a date already in the archive. Late agency uploads can't double-post.
 
 ### Playback and hosting
-- Decision: Trimmed sermons are re-uploaded to the church's Vimeo (`vimeo.com/cornerstonechurchma`, Josh Eldridge's account, Free plan). Site keeps the single Vimeo player.
+- Decision: Trimmed sermons are re-uploaded to the church's Vimeo (`vimeo.com/cornerstonechurchma`). The existing token belongs to Josh Eldridge's separate personal Vimeo user (Free plan), so the upload token must be minted as the church account. Site keeps the single Vimeo player.
 - Why: Avoids YouTube ads, keeps one source for the archive, and a start-time YouTube embed would still expose the worship set.
 - Decision: Vimeo uploads use the extracted sermon title, with scripture and speaker in the description. Privacy/embed settings match the agency's videos (view anybody, embed public).
 - Decision: Cut is "everything except the sermon itself": from the preacher stepping up to the end of the message. Announcements, pre-roll, and closing songs are dropped.
@@ -50,7 +50,7 @@
 - Why: Precise, distinguishes announcements from preaching. Cost is a Monday-morning PR rather than Sunday afternoon.
 
 ### Review gate
-- Decision: Nothing publishes without Zand. Each new sermon becomes a PR containing the archive entry, the cut timestamps, and the generated art. Vimeo upload is set private until the PR merges, then flipped public.
+- Decision: Nothing publishes without Zand. New sermons land in one PR (branch `sermon-sync`) containing the archive entries, the cut timestamps, and the generated art. Vimeo upload is unlisted until the PR merges (so the reviewer can preview it from the PR link), then flipped public.
 
 ### Keys and access
 - Decision: Claude API (Anthropic key as repo secret) for metadata and cut-point extraction. A few cents per sermon.

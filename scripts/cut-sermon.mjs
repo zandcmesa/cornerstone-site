@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { json3ToTimed, formatTimed, previousSunday, localDate, validateBounds, sermonDateFromVideo, hms } from './sermon-lib.mjs';
+import { json3ToTimed, formatTimed, previousSunday, localDate, validateBounds, sermonDateFromVideo, hms, parseArchive, archiveContext } from './sermon-lib.mjs';
 import * as vimeo from './vimeo.mjs';
 import * as ai from './sermon-ai.mjs';
 import { syncSermons } from './sync-sermons.mjs';
@@ -11,6 +11,8 @@ import { syncSermons } from './sync-sermons.mjs';
 const CHANNEL = process.env.YOUTUBE_CHANNEL || 'UCl4J6MR32QrZOfk8M_n7wvA';
 const CUT_START = process.env.SERMON_CUT_START || '2026-10-04';
 const PAD_BEFORE = 3, PAD_AFTER = 2;
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const UPLOAD_PRIVACY = { view: 'unlisted', embed: 'public' };
 
 export function ytBaseArgs(env = process.env) {
   if (!env.YOUTUBE_COOKIES) return [];
@@ -41,9 +43,15 @@ export function rebaseVtt(segments, start, end) {
   return 'WEBVTT\n\n' + cues.join('\n');
 }
 
-export function findReplay(date) {
-  const ids = ytdlp(['--flat-playlist', '--print', 'id', '--playlist-end', '8', `https://www.youtube.com/channel/${CHANNEL}/streams`], { quiet: true }).split('\n').filter(Boolean);
-  const list = ids.map(id => ({ id, release_timestamp: +ytdlp(['--print', 'release_timestamp', `https://www.youtube.com/watch?v=${id}`], { quiet: true }) || 0 }));
+const ytDeps = {
+  listIds: () => ytdlp(['--flat-playlist', '--print', 'id', '--playlist-end', '8', `https://www.youtube.com/channel/${CHANNEL}/streams`], { quiet: true }).split('\n').filter(Boolean),
+  releaseTs: id => +ytdlp(['--print', 'release_timestamp', `https://www.youtube.com/watch?v=${id}`], { quiet: true }) || 0,
+};
+
+export function findReplay(date, deps = ytDeps) {
+  const list = deps.listIds().map(id => {
+    try { return { id, release_timestamp: deps.releaseTs(id) }; } catch { return { id, release_timestamp: 0 }; }
+  });
   return matchReplay(list, date);
 }
 
@@ -65,6 +73,10 @@ export function downloadSection(youtubeId, start, end, out) {
 
 export async function cutSermon({ date, youtubeId, start, end, dryRun = false, skipUpload = false, keep = false, log = console.log } = {}) {
   date ||= previousSunday();
+  if (process.env.VIMEO_USER && process.env.VIMEO_USER !== 'me' && !dryRun) {
+    const who = await vimeo.me();
+    throw new Error(`VIMEO_USER is set to "${process.env.VIMEO_USER}" but the token belongs to ${who.name} (${who.link}). Uploads go to the token's own library, so the cut workflow needs a token minted as the church account and VIMEO_USER unset.`);
+  }
   if (date < CUT_START) { log(`${date} is before the cutover date ${CUT_START}; nothing to do`); return { status: 'before-cutover' }; }
   const existing = (await vimeo.listVideos({ perPage: 25, pages: 1 })).find(v => sermonDateFromVideo(v) === date);
   if (existing) { log(`${date} is already on Vimeo (${existing.vimeoId}); nothing to do`); return { status: 'already-on-vimeo', vimeoId: existing.vimeoId }; }
@@ -90,7 +102,7 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
 
   const inside = sliceSegments(segments, bounds.start, bounds.end);
   const transcript = inside.map(s => s.text).join(' ');
-  const meta = await ai.extractMetadata(transcript, { date, knownSeries: [], knownSpeakers: ['Pastor Josh Eldridge', 'Pastor Christine Disibio'], examples: [] });
+  const meta = await ai.extractMetadata(transcript, { ...archiveContext(parseArchive(fs.readFileSync(path.join(ROOT, 'js/sermons.js'), 'utf8'))), date });
   log(`title: ${meta.title} — ${meta.speaker}`);
 
   const out = path.join(keep ? process.cwd() : dir, `sermon-${date}.mp4`);
@@ -102,8 +114,8 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
     [meta.speaker, meta.scripture].filter(Boolean).join(' · '), '', meta.description, '',
     `Sermon date: ${date}`, `Source: https://www.youtube.com/watch?v=${youtubeId} (${hms(bounds.start)}–${hms(bounds.end)})`,
   ].join('\n');
-  const vimeoId = await vimeo.uploadVideo({ filePath: out, name: meta.title, description, privacy: { view: 'nobody', embed: 'public' } });
-  log(`uploaded privately to vimeo.com/${vimeoId}`);
+  const vimeoId = await vimeo.uploadVideo({ filePath: out, name: meta.title, description, privacy: UPLOAD_PRIVACY });
+  log(`uploaded (unlisted) to vimeo.com/${vimeoId}`);
   try { await vimeo.uploadTextTrack(vimeoId, rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER)); } catch (e) { log(`caption upload failed: ${e.message}`); }
   if (!keep) fs.rmSync(dir, { recursive: true, force: true });
 
