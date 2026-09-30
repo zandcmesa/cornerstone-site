@@ -31,12 +31,22 @@ The response should show `"scope": "public private upload edit"` and the church'
 
 1. Go to https://console.anthropic.com, create an API key, add a few dollars of credit. Each sermon costs roughly 15 to 30 cents.
 
-### 3. Gemini key with billing
+### 3. Artlist (sermon art)
 
-Image generation is not available on Gemini's free tier. The existing key in the nanobanana config is free-tier, so art fails until billing is on.
+Art is generated on your Artlist plan (Nano Banana Pro, 160 credits per image) through Artlist's MCP server. It needs a one-time browser login that hands the workflow a refresh token.
 
-1. Go to https://aistudio.google.com/apikey, open the project behind the key, and enable billing (Set up billing). Each image costs a few cents.
-2. Until then, new sermons ship with the gradient card and the PR body says "art missing".
+1. Merge the automation PR first. The login uses a small public file, `oauth-client.json`, that GitHub Pages serves from the main branch.
+2. Open Terminal in the repo folder and paste one line at a time:
+
+```bash
+npm ci
+node scripts/artlist-auth.mjs --set-secret
+```
+
+3. A browser tab opens on Artlist. Sign in with your Artlist account and allow access. The script prints your plan and credit balance, then saves the token as the `ARTLIST_REFRESH_TOKEN` repo secret.
+4. If the script reports that Artlist rotates refresh tokens, also add a fine-grained GitHub token with "Secrets: read and write" on this repo as the `ADMIN_GH_TOKEN` secret so the workflow can store the rotated token itself.
+
+If `ARTLIST_REFRESH_TOKEN` is missing, the workflow falls back to a Gemini key, which needs billing enabled; without either, cards show the gradient and the PR body says "art missing".
 
 ### 4. YouTube cookies (cut workflow only)
 
@@ -55,7 +65,6 @@ Paste one line at a time from the repo folder:
 ```bash
 gh secret set VIMEO_TOKEN --body "$VIMEO_TOKEN"
 gh secret set ANTHROPIC_API_KEY --body paste-the-anthropic-key-here
-gh secret set GEMINI_API_KEY --body paste-the-gemini-key-here
 gh secret set YOUTUBE_COOKIES < /tmp/yt-cookies.txt
 rm /tmp/yt-cookies.txt
 ```

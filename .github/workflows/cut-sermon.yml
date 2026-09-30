@@ -52,6 +52,7 @@ jobs:
           VIMEO_USER: ${{ vars.VIMEO_USER }}
           SERMON_CUT_START: ${{ vars.SERMON_CUT_START }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ARTLIST_REFRESH_TOKEN: ${{ secrets.ARTLIST_REFRESH_TOKEN }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
           GH_TOKEN: ${{ github.token }}

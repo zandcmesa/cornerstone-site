@@ -54,10 +54,11 @@
 
 ### Keys and access
 - Decision: Claude API (Anthropic key as repo secret) for metadata and cut-point extraction. A few cents per sermon.
-- Decision: Artlist API for sermon art, following `scripts/sermon-art-jobs.json` prompts. If Artlist has no server-side API, fall back to Gemini (Nano Banana) and flag it.
+- Decision: Sermon art comes from Zand's Artlist plan (Max Pro, Nano Banana Pro model 1042, 160 credits per 16:9 1K image) via Artlist's MCP server over plain HTTP. Auth is Auth0 with a URL-based client id (`oauth-client.json` hosted on the site's GitHub Pages); a one-time browser login (`scripts/artlist-auth.mjs`) yields the `ARTLIST_REFRESH_TOKEN` secret. Gemini stays as a fallback only if that secret is missing.
+- Why: Artlist has no public REST API for image generation and dynamic client registration is disabled, but its OAuth server honors client-id metadata documents, which is how Claude Code connects too.
 - Decision: Art is generated for every automated entry; the PR gate is the spelling check.
 - Decision: The existing Vimeo token has only `public private` scopes. Zand will regenerate it with `upload` + `edit` (and request Vimeo upload access if the app lacks it), logging in as the church. Token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf`, never in the repo.
-- Open: Vimeo Free plan upload quota is not visible to the current token. Confirm a ~50-minute upload fits the weekly limit once the upload-scoped token exists.
+- Resolved: the church account (`/users/15827873`, Cornerstone Church) is on Vimeo Plus, so a ~50-minute weekly upload fits. Josh's personal user (`/users/53345640`) is the Free one.
 
 ### YouTube source
 - Channel `UCl4J6MR32QrZOfk8M_n7wvA`, replays are public, ~2h15m, titled "Cornerstone Online MM/DD/YYYY" (one stray "Live Stream - [...]" on Aug 30). Match by release date, not title.
