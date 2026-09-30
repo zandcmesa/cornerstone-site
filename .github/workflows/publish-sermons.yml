@@ -1,0 +1,19 @@
+name: Publish merged sermons
+
+on:
+  push:
+    branches: [main]
+    paths: [js/sermons.js]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/publish-sermons.mjs
+        env:
+          VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
+          VIMEO_USER: ${{ vars.VIMEO_USER }}
