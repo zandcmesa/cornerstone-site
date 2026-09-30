@@ -352,7 +352,7 @@ let allSermons = [];
 let activeFilters = { search: '', series: '', speaker: '', topic: '', book: '' };
 
 function loadSermons() {
-  allSermons = SERMON_DATA;
+  allSermons = [...SERMON_DATA].sort((a, b) => b.date.localeCompare(a.date));
   populateFilters();
   renderSermons();
 }

@@ -1,5 +1,5 @@
 const TZ = 'America/New_York';
-const ROW = /^ {2}\{ id: (\d+),.*?date: "(\d{4}-\d\d-\d\d)".*?speaker: "([^"]*)".*?series: (null|"[^"]*").*?vimeoId: "(\d+)" \},?\s*$/;
+const ROW = /^ {2}\{ id: (\d+),.*?date: "(\d{4}-\d\d-\d\d)".*?speaker: "([^"]*)".*?series: (null|"[^"]*").*?vimeoId: "([^"]+)" \},?\s*$/;
 
 export function parseArchive(src) {
   const entries = [];
