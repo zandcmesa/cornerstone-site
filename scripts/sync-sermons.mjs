@@ -96,6 +96,7 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
       continue;
     }
     const entry = { ...meta, id: nextId++, date: c.date, vimeoId: c.vimeoId, reused: false };
+    if (entry.series && !ctx.knownSeries.includes(entry.series)) ctx.knownSeries.push(entry.series);
     entry.line = buildEntryLine(entry);
     const artPath = artFile(entry);
     entry.art = null;

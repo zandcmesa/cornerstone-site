@@ -88,3 +88,15 @@ test('a metaOverride for a video the sync cannot see is an error, not a silent n
   const { deps } = fakes();
   await assert.rejects(syncSermons({ metaOverride: { ZZZ: { title: 'x' } } }, deps), /ZZZ/);
 });
+
+test('a series drafted earlier in the run is offered to later sermons as a known series', async () => {
+  const seen = [];
+  const { deps } = fakes({
+    getTranscript: async id => `transcript of ${id}`,
+    extractMetadata: async (t, ctx) => { seen.push([...ctx.knownSeries]); return { title: 'T', speaker: 'Pastor Josh Eldridge', series: 'Seek First the Kingdom', scripture: '', scriptureBook: '', topics: [], description: '', artMood: 'x' }; },
+  });
+  await syncSermons({ dryRun: true }, deps);
+  assert.equal(seen.length, 2);
+  assert.ok(!seen[0].includes('Seek First the Kingdom'));
+  assert.ok(seen[1].includes('Seek First the Kingdom'));
+});
