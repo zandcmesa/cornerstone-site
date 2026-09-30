@@ -28,3 +28,37 @@
 ### Rules
 - Don't commit the Planning Center key. It lives in `~/Documents/planning-center-api-key-cornerstone.rtf`, in GitHub repo secrets `PCO_APP_ID` / `PCO_SECRET`, and as a Cloudflare Worker secret.
 - Timezone for all date formatting is America/New_York.
+
+## Sermon archive automation (2026-09-29)
+
+### Shape
+- Decision: Two stages. Stage A (archive sync) watches Vimeo for new "Sunday Sermon" videos, pulls the auto-caption transcript, extracts metadata with the Claude API, generates art, and opens a PR adding the entry to `SERMON_DATA`. Stage B (cut + upload) pulls the Sunday live replay from YouTube, finds the sermon start/end from the transcript, cuts it with ffmpeg, and uploads to Vimeo. A then picks it up like any other video.
+- Why: Rose and Gold (the current agency) already cut and upload to Vimeo. The archive gap (Jul–Sep 2026, 11 videos) is purely metadata, so A fixes it today. B replaces the agency's step.
+- Decision: Stage B takes over starting with the Oct 4, 2026 service. Before then, A backfills from the agency's Vimeo uploads.
+- Decision: Dedupe by sermon date. B skips a Sunday that already has a Vimeo video; A ignores a second Vimeo video for a date already in the archive. Late agency uploads can't double-post.
+
+### Playback and hosting
+- Decision: Trimmed sermons are re-uploaded to the church's Vimeo (`vimeo.com/cornerstonechurchma`, Josh Eldridge's account, Free plan). Site keeps the single Vimeo player.
+- Why: Avoids YouTube ads, keeps one source for the archive, and a start-time YouTube embed would still expose the worship set.
+- Decision: Vimeo uploads use the extracted sermon title, with scripture and speaker in the description. Privacy/embed settings match the agency's videos (view anybody, embed public).
+- Decision: Cut is "everything except the sermon itself": from the preacher stepping up to the end of the message. Announcements, pre-roll, and closing songs are dropped.
+- Why: Worship music requires separate licensing to rebroadcast.
+
+### Where it runs
+- Decision: GitHub Actions for both stages, same pattern as the Planning Center sync. A runs daily; B runs Monday morning after YouTube auto-captions have had time to generate.
+- Decision: Cut points come from the transcript (Claude reads the timed captions), not audio analysis.
+- Why: Precise, distinguishes announcements from preaching. Cost is a Monday-morning PR rather than Sunday afternoon.
+
+### Review gate
+- Decision: Nothing publishes without Zand. Each new sermon becomes a PR containing the archive entry, the cut timestamps, and the generated art. Vimeo upload is set private until the PR merges, then flipped public.
+
+### Keys and access
+- Decision: Claude API (Anthropic key as repo secret) for metadata and cut-point extraction. A few cents per sermon.
+- Decision: Artlist API for sermon art, following `scripts/sermon-art-jobs.json` prompts. If Artlist has no server-side API, fall back to Gemini (Nano Banana) and flag it.
+- Decision: Art is generated for every automated entry; the PR gate is the spelling check.
+- Decision: The existing Vimeo token has only `public private` scopes. Zand will regenerate it with `upload` + `edit` (and request Vimeo upload access if the app lacks it), logging in as the church. Token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf`, never in the repo.
+- Open: Vimeo Free plan upload quota is not visible to the current token. Confirm a ~50-minute upload fits the weekly limit once the upload-scoped token exists.
+
+### YouTube source
+- Channel `UCl4J6MR32QrZOfk8M_n7wvA`, replays are public, ~2h15m, titled "Cornerstone Online MM/DD/YYYY" (one stray "Live Stream - [...]" on Aug 30). Match by release date, not title.
+- yt-dlp on Actions can hit bot checks; a cookies secret is the fallback, not the default.

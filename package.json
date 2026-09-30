@@ -1,0 +1,11 @@
+{
+  "name": "cornerstone-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test 'scripts/*.test.mjs'"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.90.0"
+  }
+}
