@@ -54,9 +54,8 @@
 
 ### Keys and access
 - Decision: Claude API (Anthropic key as repo secret) for metadata and cut-point extraction. A few cents per sermon.
-- Decision: Sermon art comes from Zand's Artlist plan (Max Pro, Nano Banana Pro model 1042, 160 credits per 16:9 1K image) via Artlist's MCP server over plain HTTP. Auth is Auth0 with a URL-based client id (`oauth-client.json` hosted on the site's GitHub Pages); a one-time browser login (`scripts/artlist-auth.mjs`) yields the `ARTLIST_REFRESH_TOKEN` secret. Gemini stays as a fallback only if that secret is missing.
-- Why: Artlist has no public REST API for image generation and dynamic client registration is disabled, but its OAuth server honors client-id metadata documents, which is how Claude Code connects too.
-- Decision: Art is generated for every automated entry; the PR gate is the spelling check.
+- Decision: Sermon art comes from Zand's Artlist plan (Max Pro, Nano Banana Pro model 1042, 160 credits per 16:9 1K image) but not headlessly. Artlist's Auth0 only accepts allow-listed OAuth clients (Claude Code's works; a self-hosted client-id document returns "Unknown client", dynamic registration is disabled). So art is a review-time step: the `/sermon-art` skill runs in Conductor with the Artlist connector, generates the missing images, and pushes them to the PR branch. Gemini remains a fallback inside the workflow if a billed key is ever set. (Decided 2026-09-30.)
+- Decision: Art is expected for every entry; the PR gate (and the `/sermon-art` step's image check) is the spelling check.
 - Decision: The existing Vimeo token has only `public private` scopes. Zand will regenerate it with `upload` + `edit` (and request Vimeo upload access if the app lacks it), logging in as the church. Token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf`, never in the repo.
 - Resolved: the church account (`/users/15827873`, Cornerstone Church) is on Vimeo Plus, so a ~50-minute weekly upload fits. Josh's personal user (`/users/53345640`) is the Free one.
 
