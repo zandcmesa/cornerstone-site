@@ -53,7 +53,7 @@ If `ARTLIST_REFRESH_TOKEN` is missing, the workflow falls back to a Gemini key, 
 YouTube blocks anonymous video downloads from servers. A logged-in cookie file works. Export it from Chrome while signed in to the channel's Google account:
 
 ```bash
-yt-dlp --cookies-from-browser chrome --cookies /tmp/yt-cookies.txt --skip-download https://www.youtube.com/watch?v=TD_nPXueeeo
+yt-dlp --cookies-from-browser chrome --cookies /tmp/yt-cookies.txt --skip-download "https://www.youtube.com/watch?v=TD_nPXueeeo"
 ```
 
 Cookies last weeks to months. If the cut workflow starts failing with "Sign in to confirm you're not a bot" or 403, export again and update the secret.
