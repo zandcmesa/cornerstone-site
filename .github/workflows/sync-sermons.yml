@@ -1,0 +1,36 @@
+name: Sync sermons
+
+on:
+  schedule:
+    - cron: '0 9 * * 1-3'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sermon-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: npm ci
+      - run: node scripts/sync-sermons.mjs
+        env:
+          VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
+          VIMEO_USER: ${{ vars.VIMEO_USER }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ARTLIST_REFRESH_TOKEN: ${{ secrets.ARTLIST_REFRESH_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GH_TOKEN: ${{ github.token }}

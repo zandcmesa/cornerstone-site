@@ -1,0 +1,58 @@
+name: Cut Sunday sermon
+
+on:
+  schedule:
+    - cron: '0 10 * * 1,2'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Sunday to process (YYYY-MM-DD). Defaults to the most recent Sunday.
+        required: false
+      youtube:
+        description: YouTube video id, if the replay can't be found automatically
+        required: false
+      start:
+        description: Sermon start in seconds (manual override)
+        required: false
+      end:
+        description: Sermon end in seconds (manual override)
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sermon-sync
+  cancel-in-progress: false
+
+jobs:
+  cut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: python3 -m pip install --quiet --upgrade yt-dlp
+      - run: npm ci
+      - run: >
+          node scripts/cut-sermon.mjs
+          ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+          ${{ inputs.youtube && format('--youtube {0}', inputs.youtube) || '' }}
+          ${{ inputs.start && format('--start {0}', inputs.start) || '' }}
+          ${{ inputs.end && format('--end {0}', inputs.end) || '' }}
+        env:
+          VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
+          VIMEO_USER: ${{ vars.VIMEO_USER }}
+          SERMON_CUT_START: ${{ vars.SERMON_CUT_START }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ARTLIST_REFRESH_TOKEN: ${{ secrets.ARTLIST_REFRESH_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+          GH_TOKEN: ${{ github.token }}

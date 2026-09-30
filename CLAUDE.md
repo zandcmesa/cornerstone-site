@@ -73,10 +73,9 @@ Transcripts live in `../transcripts/{vimeoId}.txt` (one file per sermon, VTT str
 
 ### Adding more sermon data
 
-To add more entries beyond ~129:
-1. Fetch more Sunday Sermon videos via the Vimeo v2 API (currently goes back to May 2023)
-2. Download transcripts for new vimeoIds to `../transcripts/`
-3. Use Claude to extract metadata and append entries to `SERMON_DATA` in sermons.js
+Automated. `.github/workflows/sync-sermons.yml` runs `scripts/sync-sermons.mjs` (Mon–Wed) which lists the church's Vimeo videos, pulls auto-caption transcripts, extracts metadata with the Claude API (`scripts/sermon-ai.mjs`), generates art (`scripts/sermon-art.mjs`: Artlist MCP via `scripts/artlist.mjs` when `ARTLIST_REFRESH_TOKEN` is set, Gemini fallback), and force-pushes one `sermon-sync` branch with an open PR. From Oct 4, 2026 `.github/workflows/cut-sermon.yml` runs `scripts/cut-sermon.mjs` on Mondays: finds the Sunday live replay on YouTube (channel `UCl4J6MR32QrZOfk8M_n7wvA`), finds the sermon start/end from timed captions with Claude, downloads and cuts it, uploads privately to Vimeo with captions, then runs the sync. `publish-sermons.yml` flips those uploads public on merge. Setup and secrets: `docs/sermon-automation-setup.md`. Pure helpers live in `scripts/sermon-lib.mjs`; tests run with `npm test`. New entries get `id = maxId + 1` and `loadSermons()` sorts by date, so ids no longer encode order.
+
+Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf` (the `../vimeo-token.rtf` path above is historical). It belongs to Josh Eldridge's personal Vimeo user, not the `cornerstonechurchma` account that holds the videos; Stage B needs an upload-scoped token minted as the church account.
 
 ## Sermon art
 
