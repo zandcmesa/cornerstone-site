@@ -1136,6 +1136,20 @@ a.mission-item:hover { color: var(--text-primary); }
   align-items: center;
   justify-content: center;
 }
+.watch-live-icon {
+  color: var(--brand);
+  opacity: 0.7;
+}
+.watch-live-icon .wave {
+  animation: watch-live-pulse 2.8s ease-in-out infinite;
+}
+.watch-live-icon .wave-outer {
+  animation-delay: 0.45s;
+}
+@keyframes watch-live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
 .watch-info-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
