@@ -19,7 +19,7 @@ const GRADIENTS = [
 ];
 
 (function () {
-  const { esc } = window.PCO_UI;
+  const { esc, brief } = window.PCO_UI;
   const gradientFor = id => GRADIENTS[String(id).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % GRADIENTS.length];
   const monogram = name => name.split(/[\s|]+/).filter(w => /^[a-z0-9]/i.test(w) && !/^(and|of|the|at|in|our|for)$/i.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
   const JOIN = { open_signup: 'Open to join', request_to_join: 'Request to join' };
@@ -30,19 +30,20 @@ const GRADIENTS = [
     const name = o.name || g.name;
     GROUPS_DATA[g.id] = {
       name, category: typeName,
-      schedule: g.schedule || 'See Church Center for schedule',
+      schedule: brief(g.schedule) || 'See Church Center for schedule',
       location: g.location || 'Cornerstone Church',
       enrollment: g.enrollment, strategy: g.strategy,
       ctaText: g.enrollment === 'open' ? (g.strategy === 'open_signup' ? 'Join This Group' : 'Request to Join') : 'View on Church Center',
       description: o.description || g.description || 'See Church Center for details.',
       pcoUrl: g.pcoUrl, gradient: gradientFor(g.id), image: o.image || null,
     };
-    const img = o.image
-      ? '<div class="group-card-image has-logo" style="background:' + gradientFor(g.id) + ';"><img src="' + esc(o.image) + '" alt="' + esc(name) + '"></div>'
-      : '<div class="group-card-image" style="background:' + gradientFor(g.id) + ';"><div class="group-card-monogram">' + esc(monogram(name)) + '</div></div>';
     const pill = g.enrollment !== 'open' ? '<span class="group-card-pill pill-' + g.enrollment + '">' + PILL[g.enrollment] + '</span>' : '';
-    return '<div class="group-card" tabindex="0" role="button" data-group-id="' + esc(g.id) + '">' + img +
-      '<div class="group-card-body"><div class="group-card-day">' + esc(g.schedule || (g.enrollment === 'open' && JOIN[g.strategy]) || '') + pill + '</div>' +
+    const inner = o.image
+      ? ' has-logo" style="background:' + gradientFor(g.id) + ';">' + pill + '<img src="' + esc(o.image) + '" alt="' + esc(name) + '">'
+      : '" style="background:' + gradientFor(g.id) + ';">' + pill + '<div class="group-card-monogram">' + esc(monogram(name)) + '</div>';
+    return '<div class="group-card" tabindex="0" role="button" data-group-id="' + esc(g.id) + '">' +
+      '<div class="group-card-image' + inner + '</div>' +
+      '<div class="group-card-body"><div class="group-card-day">' + esc(brief(g.schedule) || (g.enrollment === 'open' && JOIN[g.strategy]) || '') + '</div>' +
       '<div class="group-card-name">' + esc(name) + '</div>' +
       '<div class="group-card-desc">' + esc(o.description || g.description || '') + '</div></div></div>';
   }
