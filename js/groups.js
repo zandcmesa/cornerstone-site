@@ -1,163 +1,86 @@
-const GROUPS_DATA = {
-  'kingdom-kids': {
-    name: 'Kingdom Kids',
-    category: "Children's Ministry",
-    schedule: 'Sundays · During Service',
-    location: 'Cornerstone Church — Kids Wing',
-    leader: 'Kingdom Kids Team',
-    enrollment: 'open',
-    ctaText: 'Connect on Planning Center',
-    description: `Kingdom Kids is Cornerstone's children's ministry for kids from birth through 5th grade. Each Sunday, kids experience age-appropriate worship, Bible teaching, and community during the main service. Our nursery cares for infants and toddlers, while our elementary programming helps kids build a foundation of faith through interactive lessons and small group discussion.\n\nKingdom Kids runs concurrently with the Sunday morning service at 10:00am. No registration is required for Sunday attendance — just check in at the kids wing when you arrive. Use Planning Center to stay connected, receive updates, and get involved in the parent community.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/ministries/cornerstone-kid-s-parents',
-    gradient: 'linear-gradient(135deg,#1a1d2c,#2a2040)',
-    image: 'images/kingdom-kids.png',
-  },
-  'youth-group': {
-    name: 'Youth Group',
-    category: 'Ministries',
-    schedule: 'Wednesdays · 6:00pm',
-    location: 'Cornerstone Church',
-    leader: 'Youth Ministry Team',
-    enrollment: 'open',
-    ctaText: 'Join This Group',
-    description: `Cornerstone Youth is a weekly gathering for middle and high school students — a space for authentic worship, relevant teaching, and real friendships. Wednesday nights are built around community: students eat together, worship together, and dig into Scripture in small groups.\n\nWe believe teenagers are not the future of the church — they're the church right now. Youth Group is open to all middle and high schoolers in the East Longmeadow area. No signup required to attend, but connect on Planning Center to stay in the loop.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/ministries/youth-group',
-    gradient: 'linear-gradient(135deg,#0f1a1a,#1a3030)',
-    image: null,
-  },
-  'young-adults': {
-    name: 'Young Adults',
-    category: 'Ministries',
-    schedule: 'Select Fridays · 7:00pm',
-    location: 'Cornerstone Church',
-    leader: 'Young Adults Team',
-    enrollment: 'open',
-    ctaText: 'Join This Group',
-    description: `Cornerstone Young Adults is a community for college students and young professionals navigating their 20s and 30s. Gathering on select Friday nights, it's a space for real conversation about faith, purpose, and life — with worship, teaching, and time to connect with people in the same season.\n\nCheck the events page for upcoming Friday dates. New faces are always welcome — no signup required to attend. Connect on Planning Center to get notified about upcoming gatherings.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/ministries/young-adults',
-    gradient: 'linear-gradient(135deg,#1a0a1a,#2a1030)',
-    image: 'images/cornerstone-young-adults.png',
-  },
-  'high-praise-dance': {
-    name: 'High Praise Dance',
-    category: 'Ministries',
-    schedule: 'Rehearsal schedule varies',
-    location: 'Cornerstone Church',
-    leader: 'High Praise Dance Ministry',
-    enrollment: 'open',
-    ctaText: 'Get Involved',
-    description: `High Praise Dance is a worship dance ministry that expresses praise through movement — an offering of creativity and skill to God. The ministry leads at special services and events throughout the year, and hosts an annual summer dance camp open to all ages.\n\nNo professional experience required — just a heart for worship and a willingness to learn. Connect on Planning Center to get in touch with the team, learn about the next rehearsal cycle, or register for the summer camp.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/ministries/high-praise-dance',
-    gradient: 'linear-gradient(135deg,#1a160a,#332a10)',
-    image: 'images/high-praise-dance.png',
-  },
-  'worship-team': {
-    name: 'Worship Team',
-    category: 'Ministries',
-    schedule: 'Sundays · Rehearsal TBD',
-    location: 'Cornerstone Church',
-    leader: 'Cornerstone Worship',
-    enrollment: 'open',
-    ctaText: 'Audition on Planning Center',
-    description: `The Worship Team leads Cornerstone's Sunday morning services in song — a rotating team of musicians and vocalists who prepare weekly to create space for the congregation to encounter God.\n\nAuditions are currently open for vocalists and instrumentalists. If you have musical experience and a desire to serve, connect with us through Planning Center. Team members commit to regular rehearsals and a rotating Sunday schedule.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/ministries/worship-team',
-    gradient: 'linear-gradient(135deg,#1a0f0f,#2a1818)',
-    image: null,
-  },
-  'hospitality-team': {
-    name: 'Hospitality Team',
-    category: 'Serve at Cornerstone',
-    schedule: 'Sundays · Rotating schedule',
-    location: 'Cornerstone Church',
-    leader: 'Hospitality Team',
-    enrollment: 'open',
-    ctaText: 'Sign Up to Serve',
-    description: `The Hospitality Team is the first face people see when they walk through Cornerstone's doors — greeters, ushers, and the people who make sure every guest feels genuinely welcomed. It's a simple role with real impact: first impressions matter.\n\nTeam members serve on a rotating Sunday schedule. No special skills required — just a warm presence and a love for people. Sign up through Planning Center to get connected and receive your first serve date.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-at-cornerstone/hospitality-team',
-    gradient: 'linear-gradient(135deg,#0a1a1a,#103028)',
-    image: null,
-  },
-  'media-production': {
-    name: 'Media & Production',
-    category: 'Serve at Cornerstone',
-    schedule: 'Sundays · Setup from 8:30am',
-    location: 'Cornerstone Church',
-    leader: 'Media & Production Team',
-    enrollment: 'open',
-    ctaText: 'Sign Up to Serve',
-    description: `The Media & Production Team runs the technical side of Sunday services — sound, video, graphics, and live streaming for our online audience. This team keeps everything running smoothly so the rest of the church can focus on worship.\n\nWe're looking for people with any level of technical interest — whether you're an experienced audio engineer or just curious about how it all works, there's a role for you. Training is provided. Sign up through Planning Center to connect with the team.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-at-cornerstone/media-and-production',
-    gradient: 'linear-gradient(135deg,#1a1d2c,#2a2040)',
-    image: null,
-  },
-  'prayer-team': {
-    name: 'Prayer Team',
-    category: 'Serve at Cornerstone',
-    schedule: 'Wed 7pm · Thu 12pm · Fri 7pm',
-    location: 'Cornerstone Church & Remote',
-    leader: 'Prayer Coordinators',
-    enrollment: 'open',
-    ctaText: 'Join This Group',
-    description: `The Prayer Team is the intercession engine behind everything Cornerstone does. Members commit to regular prayer for the church, the pastoral staff, the community, and the region — and gather for corporate prayer throughout the week.\n\nPrayer times include Wednesday evenings at 7:00pm, Thursday afternoons at 12:00pm, and Friday evenings at 7:00pm. This is a flexible commitment — join when you can, grow as you go. Connect on Planning Center to be added to the prayer network.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-at-cornerstone/prayer-team',
-    gradient: 'linear-gradient(135deg,#1a160a,#332a10)',
-    image: null,
-  },
-  'christinas-house': {
-    name: "Christina's House",
-    category: 'Serve in Our Community',
-    schedule: 'Opportunities vary',
-    location: 'East Longmeadow, MA',
-    leader: 'Community Outreach Team',
-    enrollment: 'open',
-    ctaText: 'Sign Up to Serve',
-    description: `Christina's House provides transitional housing and support services for women and families experiencing housing crisis in the greater Springfield area. Cornerstone partners with this ministry through volunteer service, donation drives, and ongoing prayer.\n\nServe opportunities include move-in days, meal prep, and relational support. Sign up through Planning Center to be notified when the next serve opportunity opens — no prior experience needed.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-in-the-community/christinas-house',
-    gradient: 'linear-gradient(135deg,#0a1a1a,#103028)',
-    image: null,
-  },
-  'hills-food-fair': {
-    name: 'Hills Food Fair',
-    category: 'Serve in Our Community',
-    schedule: 'Monthly · Dates vary',
-    location: 'East Longmeadow, MA',
-    leader: 'Community Outreach Team',
-    enrollment: 'open',
-    ctaText: 'Sign Up to Serve',
-    description: `Hills Food Fair is a monthly food distribution that serves families in need across the East Longmeadow area. Volunteers help stock shelves, organize distributions, and connect with neighbors who rely on this resource.\n\nThis is one of Cornerstone's most tangible community touchpoints — a practical way to serve the neighborhood you live in. Sign up through Planning Center for the next available date.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-in-the-community/hills-food-fair',
-    gradient: 'linear-gradient(135deg,#1a1d2c,#2a2040)',
-    image: null,
-  },
-  'between-bridges': {
-    name: 'Between Bridges',
-    category: 'Serve in Our Community',
-    schedule: 'Opportunities vary',
-    location: 'Springfield, MA',
-    leader: 'Community Outreach Team',
-    enrollment: 'open',
-    ctaText: 'Sign Up to Serve',
-    description: `Between Bridges works to connect people experiencing homelessness with stable housing, community resources, and long-term support. Cornerstone's partnership involves regular volunteer teams, financial support, and relationship-based outreach in the Springfield area.\n\nThis is relational, on-the-ground work that requires a steady presence. Sign up through Planning Center to attend an orientation or join the next serve team.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-in-the-community/between-bridges',
-    gradient: 'linear-gradient(135deg,#1a160a,#332a10)',
-    image: null,
-  },
-  'irreplaceable-book-study': {
-    name: '"Irreplaceable" Book Study',
-    category: 'Unique Groups',
-    schedule: 'Tuesdays · 7:00pm · July – August',
-    location: 'Cornerstone Church',
-    leader: 'Study Facilitators',
-    enrollment: 'open',
-    ctaText: 'Join This Group',
-    description: `A summer book study running through July and August. Open to all — no prior sign-up required. Drop in any Tuesday night at 7:00pm.\n\nThis is a low-commitment, open-door gathering. Come once, come every week — the door is always open. Connect on Planning Center to stay updated on discussion materials and any schedule changes.`,
-    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/unique-groups/irreplaceable-book-study',
-    gradient: 'linear-gradient(135deg,#1a1d2c,#2a204a)',
-    image: null,
-  },
+const GROUPS_DATA = {};
+
+const GROUP_OVERRIDES = {
+  '807069':  { name: 'Kingdom Kids', image: 'images/kingdom-kids.png', description: "Kingdom Kids is Cornerstone's children's ministry for kids from birth through 5th grade. Each Sunday, kids experience age-appropriate worship, Bible teaching, and community during the main service.\n\nNo registration is required for Sunday attendance — just check in at the kids wing when you arrive. Join the parents group on Church Center to stay connected." },
+  '1711298': { image: 'images/cornerstone-young-adults.png' },
+  '1896063': { image: 'images/high-praise-dance.png' },
 };
 
-// Group detail modal
+const TYPE_FALLBACK_DESC = {
+  'Ministries': "Kids, youth, worship, and more — find where you're called to serve within the church.",
+  'Growth Groups': 'Small groups meeting in homes and at the church to grow together in Scripture and friendship.',
+  'Unique Groups': 'Specialty gatherings for specific seasons of life, interests, or growth goals.',
+};
+
+const GRADIENTS = [
+  'linear-gradient(135deg,#1a1d2c,#2a2040)', 'linear-gradient(135deg,#0f1a1a,#1a3030)', 'linear-gradient(135deg,#1a0a1a,#2a1030)',
+  'linear-gradient(135deg,#1a160a,#332a10)', 'linear-gradient(135deg,#1a0f0f,#2a1818)', 'linear-gradient(135deg,#0a1a1a,#103028)',
+  'linear-gradient(135deg,#0a1a2a,#102840)',
+];
+
+(function () {
+  const { esc } = window.PCO_UI;
+  const gradientFor = id => GRADIENTS[String(id).split('').reduce((n, c) => n + c.charCodeAt(0), 0) % GRADIENTS.length];
+  const monogram = name => name.split(/[\s|]+/).filter(w => /^[a-z0-9]/i.test(w) && !/^(and|of|the|at|in|our|for)$/i.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+  const JOIN = { open_signup: 'Open to join', request_to_join: 'Request to join' };
+  const PILL = { open: 'Open', full: 'Full', closed: 'Closed' };
+
+  function card(g, typeName) {
+    const o = GROUP_OVERRIDES[g.id] || {};
+    const name = o.name || g.name;
+    GROUPS_DATA[g.id] = {
+      name, category: typeName,
+      schedule: g.schedule || 'See Church Center for schedule',
+      location: g.location || 'Cornerstone Church',
+      enrollment: g.enrollment, strategy: g.strategy,
+      ctaText: g.enrollment === 'open' ? (g.strategy === 'open_signup' ? 'Join This Group' : 'Request to Join') : 'View on Church Center',
+      description: o.description || g.description || 'See Church Center for details.',
+      pcoUrl: g.pcoUrl, gradient: gradientFor(g.id), image: o.image || null,
+    };
+    const img = o.image
+      ? '<div class="group-card-image has-logo" style="background:' + gradientFor(g.id) + ';"><img src="' + esc(o.image) + '" alt="' + esc(name) + '"></div>'
+      : '<div class="group-card-image" style="background:' + gradientFor(g.id) + ';"><div class="group-card-monogram">' + esc(monogram(name)) + '</div></div>';
+    const pill = g.enrollment !== 'open' ? '<span class="group-card-pill pill-' + g.enrollment + '">' + PILL[g.enrollment] + '</span>' : '';
+    return '<div class="group-card" tabindex="0" role="button" data-group-id="' + esc(g.id) + '">' + img +
+      '<div class="group-card-body"><div class="group-card-day">' + esc(g.schedule || (g.enrollment === 'open' && JOIN[g.strategy]) || '') + pill + '</div>' +
+      '<div class="group-card-name">' + esc(name) + '</div>' +
+      '<div class="group-card-desc">' + esc(o.description || g.description || '') + '</div></div></div>';
+  }
+
+  function renderPage(snap) {
+    document.querySelectorAll('[data-pco-groups]').forEach(root => {
+      root.innerHTML = snap.groupTypes.map(t => {
+        const groups = snap.groups.filter(g => g.typeId === t.id);
+        const desc = t.description || TYPE_FALLBACK_DESC[t.name] || '';
+        return '<div id="' + esc(t.slug) + '">' +
+          '<div class="group-category-header" data-reveal><h2 class="group-category-title">' + esc(t.name) + '</h2>' +
+          '<span class="group-count-badge">' + groups.length + (groups.length === 1 ? ' group' : ' groups') + '</span></div>' +
+          (desc ? '<p class="group-category-desc">' + esc(desc) + '</p>' : '') +
+          '<div class="groups-grid" data-reveal-stagger>' + groups.map(g => card(g, t.name)).join('') + '</div></div>';
+      }).join('');
+      if (window.Blocks) window.Blocks.scan(root);
+    });
+    document.querySelectorAll('[data-pco-group-count]').forEach(el => { el.textContent = 'View all ' + snap.groups.length + ' groups →'; });
+  }
+
+  const ICON = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+
+  function renderTypeCards(snap) {
+    document.querySelectorAll('[data-pco-group-types]').forEach(root => {
+      root.innerHTML = snap.groupTypes.map((t, i) =>
+        '<a class="group-card" href="groups.html#' + esc(t.slug) + '">' +
+        '<div class="group-card-image"><div style="width:100%;height:100%;background:' + GRADIENTS[i % GRADIENTS.length] + ';display:flex;align-items:center;justify-content:center;">' + ICON + '</div></div>' +
+        '<div class="group-card-body"><div class="group-card-day">' + t.count + (t.count === 1 ? ' group' : ' groups') + '</div>' +
+        '<div class="group-card-name">' + esc(t.name) + '</div>' +
+        '<div class="group-card-desc">' + esc(t.description || TYPE_FALLBACK_DESC[t.name] || '') + '</div></div></a>'
+      ).join('');
+      if (window.Blocks) window.Blocks.scan(root.parentElement || root);
+    });
+  }
+
+  if (window.PCO) window.PCO.onData(snap => { renderPage(snap); renderTypeCards(snap); });
+}());
+
 const groupBackdrop = document.getElementById('group-modal-backdrop');
 if (groupBackdrop) {
   const groupBanner      = document.getElementById('group-modal-banner');
@@ -191,7 +114,7 @@ if (groupBackdrop) {
     // Meta
     groupSchedule.textContent = g.schedule;
     groupLocation.textContent = g.location;
-    groupLeader.textContent = g.leader;
+    groupLeader.parentElement.style.display = 'none';
 
     // Enrollment badge
     const labels = { open: 'Open to Join', full: 'Currently Full', closed: 'Enrollment Closed' };
@@ -199,10 +122,7 @@ if (groupBackdrop) {
     groupEnrollment.className = `group-modal-enrollment enrollment-${g.enrollment}`;
 
     // Description
-    groupDescription.innerHTML = g.description
-      .split('\n\n')
-      .map(p => `<p>${p}</p>`)
-      .join('');
+    groupDescription.innerHTML = window.PCO_UI.paragraphs(g.description);
 
     // CTA
     groupCta.textContent = g.ctaText;
@@ -225,13 +145,12 @@ if (groupBackdrop) {
     if (e.key === 'Escape' && groupBackdrop.classList.contains('open')) closeGroupModal();
   });
 
-  document.querySelectorAll('[data-group-id]').forEach(el => {
-    el.addEventListener('click', () => openGroupModal(el.dataset.groupId));
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openGroupModal(el.dataset.groupId);
-      }
-    });
+  document.addEventListener('click', e => {
+    const card = e.target.closest('[data-group-id]');
+    if (card) openGroupModal(card.dataset.groupId);
+  });
+  document.addEventListener('keydown', e => {
+    const card = e.target.closest('[data-group-id]');
+    if (card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openGroupModal(card.dataset.groupId); }
   });
 }

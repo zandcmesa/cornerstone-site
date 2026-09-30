@@ -27,6 +27,12 @@ cornerstone-site-upgrade/
     css/blocks.css       ← generic building blocks (reusable across client sites)
     css/style.css        ← Cornerstone page-specific styles
     js/main.js
+    js/pco.js            ← loader: snapshot first, then live worker fetch
+    js/pco-data.js       ← generated nightly snapshot (PCO_SNAPSHOT)
+    js/events.js         ← event/rhythm/next-step rendering + modal
+    js/groups.js         ← group rendering, overrides, modal
+    scripts/             ← pco-lib.mjs, sync-pco.mjs, tests, fixtures
+    worker/              ← Cloudflare Worker (live proxy)
     js/blocks.js         ← motion engine (reveals, dividers, hero choreography, parallax)
     js/sermons.js        ← all sermon data + filter/modal logic
     images/
@@ -78,11 +84,11 @@ To add more entries beyond ~129:
 
 ## Contact form
 
-`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. Replace `YOUR_FORM_ID` with the real form ID from formspree.io before launch.
+`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. The live form ID is set (`mnpnwblr`); the endpoint is also recorded in the Planning Center Key Google Doc.
 
-## Planning Center sync
+## Planning Center (live)
 
-`.github/workflows/sync-planning-center.yml` runs `scripts/sync-pco.js` nightly (08:00 UTC) and on demand. It pulls upcoming Calendar events, published Registrations, and open Groups, writes `js/pco-data.js`, and commits if anything changed. Needs repo secrets `PCO_APP_ID` and `PCO_SECRET` (a Planning Center Personal Access Token). `js/events.js` swaps the hand-written rows in any `[data-pco-events]` list for synced ones when `PCO_EVENTS` is non-empty; until the first sync runs the stub file keeps the hand-written rows. `PCO_GROUPS` is written but not rendered yet.
+`scripts/pco-lib.mjs` normalizes Calendar, Registrations signups, and Groups into one snapshot shape. Two consumers: `.github/workflows/sync-planning-center.yml` runs `scripts/sync-pco.mjs` nightly and commits `js/pco-data.js` (`PCO_SNAPSHOT`); `worker/` is a Cloudflare Worker serving the same shape live with a 5-minute cache. `js/pco.js` renders the snapshot on load, then fetches `PCO_WORKER_URL` and re-renders only if the data differs. `js/events.js` fills `[data-pco-rhythms]`, `[data-pco-events]`, `[data-pco-next-steps]`; `js/groups.js` fills `[data-pco-groups]` and `[data-pco-group-types]`. Curated images/copy for specific groups live in `GROUP_OVERRIDES` keyed by PCO group id. Planning Center photos are never rendered. Tests: `node --test 'scripts/*.test.mjs'` (fixtures in `scripts/fixtures/`, refresh with `scripts/capture-fixtures.mjs`). Deploy steps: `docs/planning-center-setup.md`. Repo secrets `PCO_APP_ID` / `PCO_SECRET` are set; the worker URL still needs pasting into `js/pco.js` after Zand deploys.
 
 ## Sermons page (main showpiece)
 
