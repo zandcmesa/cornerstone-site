@@ -54,7 +54,10 @@ YouTube blocks anonymous video downloads from servers. A logged-in cookie file w
 
 ```bash
 yt-dlp --cookies-from-browser chrome --cookies /tmp/yt-cookies.txt --skip-download "https://www.youtube.com/watch?v=TD_nPXueeeo"
+grep -E "^#|youtube\.com|google\.com" /tmp/yt-cookies.txt > /tmp/yt-cookies-small.txt
 ```
+
+The second line keeps only YouTube and Google cookies; the full Chrome export is too large for a GitHub secret (48 KB limit).
 
 Cookies last weeks to months. If the cut workflow starts failing with "Sign in to confirm you're not a bot" or 403, export again and update the secret.
 
@@ -65,8 +68,8 @@ Paste one line at a time from the repo folder:
 ```bash
 gh secret set VIMEO_TOKEN --body "$VIMEO_TOKEN"
 gh secret set ANTHROPIC_API_KEY --body paste-the-anthropic-key-here
-gh secret set YOUTUBE_COOKIES < /tmp/yt-cookies.txt
-rm /tmp/yt-cookies.txt
+gh secret set YOUTUBE_COOKIES < /tmp/yt-cookies-small.txt
+rm /tmp/yt-cookies.txt /tmp/yt-cookies-small.txt
 ```
 
 Variables (only if needed):
