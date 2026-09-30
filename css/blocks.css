@@ -122,14 +122,17 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .btn-ghost {
   background: transparent;
   color: var(--text-secondary);
-  padding: 13px 0;
 }
 .btn-ghost:hover { color: var(--text-primary); }
-.btn-flush { padding-left: 0; padding-right: 0; }
 .btn-sm {
   padding: 9px 20px;
   font-size: 12px;
 }
+/* Text buttons have no visible box, so horizontal padding only pushes them
+   out of alignment with the copy above. Must follow .btn-sm to win. */
+.btn-outline,
+.btn-ghost,
+.btn-flush { padding-left: 0; padding-right: 0; }
 .btn svg {
   width: 1.2em;
   height: 1.2em;
