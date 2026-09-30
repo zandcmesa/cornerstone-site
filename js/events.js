@@ -1,4 +1,34 @@
-const EVENTS_DATA = {};
+const EVENTS_DATA = {
+  'high-praise-dance': {
+    title: 'High Praise Dance',
+    dateMonth: 'Oct', dateDay: '8',
+    time: 'Thursdays', location: 'Cornerstone Church',
+    label: 'Registration Open',
+    description: `High Praise Dance is Cornerstone's worship dance ministry — expressing praise to God through movement. A new session begins Thursday, October 8, and is open to all skill levels, from first-timers to experienced dancers.\n\nRegister through Church Center to save your spot.`,
+    hasRegistration: true, ctaText: 'Register on Church Center',
+    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3895209',
+    gradient: 'linear-gradient(135deg,#1a0f1a,#2a1a2a)', wikiKeyword: null,
+  },
+  'youth-group': {
+    title: 'Youth Group Relaunch',
+    dateMonth: 'Oct', dateDay: '21',
+    time: 'Wednesdays · 6:00–8:00pm', location: 'Cornerstone Church',
+    label: 'Youth Ministry',
+    description: `Youth Group is back. Beginning Wednesday, October 21, students gather every week from 6 to 8pm for worship, friendship, and real conversations about faith.\n\nNo sign-up needed — just show up. Bring a friend.`,
+    hasRegistration: false, ctaText: null, pcoUrl: null,
+    gradient: 'linear-gradient(135deg,#0a1a2a,#102840)', wikiKeyword: null,
+  },
+  'kingdom-kids-volunteer': {
+    title: 'Kingdom Kids Volunteer',
+    dateMonth: 'Every', dateDay: 'Sun',
+    time: 'Sundays · 10:00am', location: 'Cornerstone Church',
+    label: 'Children\'s Ministry',
+    description: `Kingdom Kids is Cornerstone's children's ministry serving kids from infancy through 5th grade during Sunday morning service. We need volunteers to help create a safe, fun, and faith-building environment for the next generation.\n\nWhether you're great with toddlers or older kids, there's a place for you. Sign up through Church Center to join the team.`,
+    hasRegistration: true, ctaText: 'Sign Up on Church Center',
+    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/1733161',
+    gradient: 'linear-gradient(135deg,#0f1a0f,#1a301a)', wikiKeyword: 'Sunday school',
+  },
+};
 
 window.PCO_UI = (function () {
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -10,7 +40,6 @@ window.PCO_UI = (function () {
     PIN: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
   };
 }());
-
 (function () {
   const { esc, CLOCK, PIN } = window.PCO_UI;
   const LABELS = { rhythm: 'Weekly Gathering', event: 'Upcoming Event', signup: 'Registration Open' };
