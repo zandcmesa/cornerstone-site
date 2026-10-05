@@ -24,7 +24,7 @@ Three layers, loaded in order on every page:
 
 ## Tokens
 
-- Brand: `--brand` (#3689C5), `--brand-light`, `--brand-dim`, `--brand-border` — *renamed from the legacy `--gold*` names*
+- Brand: `--brand` (#3689C5) for icons, borders, badges and large numerals; `--brand-text` (#5AAEE0) for every blue *word* under 18px (eyebrows, dates, links, outline buttons) because `--brand` only reaches 4.3:1 on `--bg-elevated`; `--brand-light` (hover accents), `--brand-dim`, `--brand-border` — *renamed from the legacy `--gold*` names*
 - Surfaces: `--bg-base` → `--bg-surface` → `--bg-elevated` → `--bg-highlight`
 - Text: `--text-primary` (warm ivory), `--text-secondary`, `--text-muted`
 - Hairlines: `--border-subtle`, `--border-normal`, `--divider` (edge-fading section rules)
@@ -81,4 +81,4 @@ Every page keeps the same landmark skeleton: skip link → `<nav aria-label="Mai
 | `window.A11yModal` | `main.js` | `open(backdrop, { onEscape, initialFocus })` / `close(backdrop)`. Adds `.open`, moves focus into the `[role="dialog"]`, traps Tab (keydown + focus sentinels, so it also works around the Vimeo/Planning Center iframes), makes everything else `inert`, restores focus to the trigger on close. Every modal must have `role="dialog" aria-modal="true" aria-labelledby` on the dialog element, not the backdrop |
 | `[data-hero-video-toggle]` | `index.html` / `main.js` | Pause/play for the autoplaying hero video (WCAG 2.2.2); reduced-motion users start paused |
 
-Rules: decorative inline SVGs get `aria-hidden="true" focusable="false"`; skeleton placeholders get `aria-hidden="true"`; result counts and toasts are `aria-live="polite"`; links with `target="_blank"` get the new-tab note automatically from `main.js`; small brand-blue text on `--bg-elevated` uses `--brand-light` (plain `--brand` is 4.3:1 there).
+Rules: decorative inline SVGs get `aria-hidden="true" focusable="false"`; skeleton placeholders get `aria-hidden="true"`; result counts and toasts are `aria-live="polite"`; links with `target="_blank"` get the new-tab note automatically from `main.js`; blue text is always `--brand-text`, never `--brand`; card title buttons carry the bare title (no "(play video)" suffix) — the dialog that opens is the context.

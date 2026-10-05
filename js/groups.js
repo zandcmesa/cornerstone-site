@@ -44,7 +44,7 @@ const GRADIENTS = [
     return '<li><article class="group-card has-card-btn">' +
       '<div class="group-card-image' + inner + '</div>' +
       '<div class="group-card-body"><div class="group-card-day">' + esc(brief(g.schedule) || (g.enrollment === 'open' && JOIN[g.strategy]) || '') + '</div>' +
-      '<h3 class="group-card-name"><button type="button" class="card-btn" data-group-id="' + esc(g.id) + '">' + esc(name) + '<span class="sr-only"> (view details)</span></button></h3>' +
+      '<h3 class="group-card-name"><button type="button" class="card-btn" data-group-id="' + esc(g.id) + '">' + esc(name) + '</button></h3>' +
       '<div class="group-card-desc">' + esc(o.description || g.description || '') + '</div></div></article></li>';
   }
 

@@ -13,6 +13,7 @@
   /* Brand */
   --brand:        #3689C5;
   --brand-light:  #5AAEE0;
+  --brand-text:   #5AAEE0;   /* brand blue for text under 18px: 6:1+ on every surface */
   --brand-dim:    rgba(54, 137, 197, 0.15);
   --brand-border: rgba(54, 137, 197, 0.28);
 

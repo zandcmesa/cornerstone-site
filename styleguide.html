@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
-  <link rel="stylesheet" href="css/theme-cornerstone.css?v=2">
-  <link rel="stylesheet" href="css/blocks.css?v=3">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/theme-cornerstone.css?v=3">
+  <link rel="stylesheet" href="css/blocks.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=11">
   <style>
     /* Styleguide-only chrome */
     .sg-section { padding: 72px 0; }
@@ -84,12 +84,24 @@
       border-radius: var(--radius-md);
       padding: 24px;
     }
-    .sg-motion-card h4 {
+    .sg-motion-card h3 {
       font-family: var(--font-display);
       font-size: 19px;
       font-weight: 600;
       margin-bottom: 8px;
     }
+    .sg-a11y-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .sg-focus-demo { outline: 2px solid var(--brand-light); outline-offset: 3px; border-radius: 3px; }
+    .sg-focus-demo.btn { outline-offset: 2px; border-radius: var(--radius-pill); }
+    .sg-focus-card { outline: 2px solid var(--brand-light); outline-offset: 3px; border-color: var(--brand-border); }
+    .sg-focus-card .sermon-play-btn { opacity: 1; }
+    .sg-contrast { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .sg-contrast th, .sg-contrast td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary); }
+    .sg-contrast th { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+    .sg-contrast td:first-child { color: var(--text-primary); }
+    .sg-contrast .sg-pass { color: #6fcf97; font-weight: 500; }
+    .sg-landmarks { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; line-height: 1.9; color: var(--text-secondary); background: var(--bg-base); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px 20px; }
+    .sg-landmarks b { color: var(--brand-text); font-weight: 500; }
     .sg-motion-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
     .sg-motion-card code {
       display: inline-block;
@@ -148,15 +160,16 @@
     @media (max-width: 768px) {
       .sg-swatch-grid { grid-template-columns: repeat(2, 1fr); }
       .sg-type-row { grid-template-columns: 1fr; gap: 8px; }
-      .sg-card-demos, .sg-motion-grid { grid-template-columns: 1fr; }
+      .sg-card-demos, .sg-motion-grid, .sg-a11y-grid { grid-template-columns: 1fr; }
       .sg-easing-row { grid-template-columns: 1fr; gap: 10px; }
     }
   </style>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- ─── Nav ──────────────────────────────────────────────────── -->
-<nav class="nav scrolled">
+<nav class="nav scrolled" aria-label="Main">
   <div class="container">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo nav-logo-full">
@@ -174,6 +187,8 @@
     </div>
   </div>
 </nav>
+
+<main id="main" tabindex="-1">
 
 <!-- ─── Header ────────────────────────────────────────────────── -->
 <div class="page-header">
@@ -196,6 +211,10 @@
     <p class="sg-note mt-16" data-reveal>
       A deep night-sky base keeps photography and video luminous. Cornerstone blue is reserved
       for wayfinding — labels, links, and accents — so it always reads as a signal, never wallpaper.
+      Two blues, one rule: <strong style="color:var(--text-primary);font-weight:500;">Cornerstone Blue</strong> fills
+      icons, borders, badges and large numerals; <strong style="color:var(--text-primary);font-weight:500;">Blue Text</strong>
+      is every blue word under 18px — eyebrows, dates, links, outline buttons — because it clears 6:1 on every surface
+      where the base blue falls to 4.3:1 on elevated cards.
     </p>
     <div class="sg-block sg-swatch-grid" data-reveal-stagger>
       <div class="sg-swatch">
@@ -203,6 +222,13 @@
         <div class="sg-swatch-info">
           <div class="sg-swatch-name">Cornerstone Blue</div>
           <div class="sg-swatch-value">--brand · #3689C5</div>
+        </div>
+      </div>
+      <div class="sg-swatch">
+        <div class="sg-swatch-chip" style="background:var(--brand-text);"></div>
+        <div class="sg-swatch-info">
+          <div class="sg-swatch-name">Blue Text</div>
+          <div class="sg-swatch-value">--brand-text · #5AAEE0</div>
         </div>
       </div>
       <div class="sg-swatch">
@@ -301,7 +327,8 @@
       Pill-shaped, understated, one primary action per view. Hover shifts toward
       Cornerstone blue rather than filling — the dark canvas stays calm. Outline and
       ghost buttons are text only, so they carry no horizontal padding — they sit flush
-      with the copy or the container edge beside them.
+      with the copy or the container edge beside them. Every button and link shows the same
+      keyboard focus ring (last example); never remove an outline without replacing it.
     </p>
     <div class="sg-block sg-row" data-reveal>
       <a class="btn btn-primary" href="#">Primary — Watch Online</a>
@@ -309,6 +336,7 @@
       <a class="btn btn-primary btn-sm" href="#">Small primary</a>
       <a class="btn btn-outline btn-sm" href="#">Small outline</a>
       <a class="btn btn-ghost" href="#">Ghost action</a>
+      <a class="btn btn-primary sg-focus-demo" href="#">Keyboard focus</a>
     </div>
     <p class="sg-note mt-16" data-reveal>
       Icons are inline SVGs dropped straight into the button — the button sizes them.
@@ -357,50 +385,68 @@
     <h2 class="display-section-italic" data-reveal>Cards &amp; rows</h2>
     <p class="sg-note mt-16" data-reveal>
       Three workhorses: media cards for sermons and groups, list rows for events. All share the
-      same surface, hairline border, and a gentle lift + blue border on hover.
+      same surface, hairline border, and a gentle lift + blue border on hover. Grids are real lists,
+      each card's title is a heading, and when the whole card opens something the title is the
+      button — stretched over the card, so one tab stop, one accessible name. The second sermon
+      card shows that focus state.
     </p>
     <div class="sg-block sg-card-demos" data-reveal-stagger>
-      <article class="sermon-card">
+      <article class="sermon-card has-card-btn">
         <div class="sermon-thumb">
           <div class="sermon-thumb-placeholder" style="background:linear-gradient(135deg,#1a1d2c,#2a2040);"></div>
           <span class="sermon-series-badge">Series Name</span>
-          <div class="sermon-play-btn"><div class="sermon-play-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+          <div class="sermon-play-btn"><div class="sermon-play-icon"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
         </div>
         <div class="sermon-body">
           <div class="sermon-meta">
             <span class="sermon-speaker">Pastor Josh Eldridge</span>
             <span class="sermon-date">Jun 28, 2026</span>
           </div>
-          <h3 class="sermon-title">Sermon card title</h3>
-          <div class="sermon-scripture"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Romans 8:1–11</div>
-          <div class="sermon-topics"><span class="topic-tag">Hope</span><span class="topic-tag">Grace</span></div>
+          <h3 class="sermon-title"><button type="button" class="card-btn">Sermon card title</button></h3>
+          <div class="sermon-scripture"><svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <span class="sr-only">Scripture: </span>Romans 8:1–11</div>
+          <ul class="sermon-topics plain-list" aria-label="Topics"><li class="topic-tag">Hope</li><li class="topic-tag">Grace</li></ul>
+        </div>
+      </article>
+      <article class="sermon-card has-card-btn sg-focus-card">
+        <div class="sermon-thumb">
+          <div class="sermon-thumb-placeholder" style="background:linear-gradient(135deg,#1a160a,#332a10);"></div>
+          <div class="sermon-play-btn" aria-hidden="true"><div class="sermon-play-icon"><svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div></div>
+        </div>
+        <div class="sermon-body">
+          <div class="sermon-meta">
+            <span class="sermon-speaker">Pastor Christine Disibio</span>
+            <span class="sermon-date">Jun 21, 2026</span>
+          </div>
+          <h3 class="sermon-title"><button type="button" class="card-btn">Card with keyboard focus</button></h3>
+          <div class="sermon-scripture"><svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <span class="sr-only">Scripture: </span>Isaiah 61:1–3</div>
+          <ul class="sermon-topics plain-list" aria-label="Topics"><li class="topic-tag">Restoration</li></ul>
         </div>
       </article>
       <a class="group-card" href="#">
         <div class="group-card-image">
           <div style="width:100%;height:100%;background:linear-gradient(135deg,#0f1a1a,#1a3030);display:flex;align-items:center;justify-content:center;">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
         </div>
         <div class="group-card-body">
           <div class="group-card-day">Category · meta line</div>
-          <div class="group-card-name">Group card</div>
+          <h3 class="group-card-name">Group card (link)</h3>
           <div class="group-card-desc">Two lines of supporting copy that clamp cleanly when they run long.</div>
         </div>
       </a>
-      <div>
-        <div class="event-row">
+      <ul class="events-list plain-list" role="list">
+        <li class="event-row">
           <div class="event-date-block">
             <div class="event-date-month">Aug</div>
             <div class="event-date-day">10</div>
           </div>
           <div class="event-info">
-            <div class="event-info-title">Event list row</div>
-            <div class="event-info-meta"><span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Morning</span></div>
+            <h3 class="event-info-title">Event list row</h3>
+            <div class="event-info-meta"><span><span class="sr-only">When: </span><svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Morning</span></div>
           </div>
-          <button class="btn btn-primary btn-sm">Register</button>
-        </div>
-      </div>
+          <button type="button" class="btn btn-primary btn-sm card-btn-stretch" aria-label="Register: Event list row">Register</button>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
@@ -434,36 +480,37 @@
     <p class="sg-note mt-16" data-reveal>
       Everything on this page animated in using the system itself. Motion is slow, soft, and
       one-shot — it welcomes rather than performs. Users who prefer reduced motion get an
-      instant, motion-free experience.
+      instant, motion-free experience, and the home-page video starts paused for them. Any
+      video that autoplays carries a visible pause control.
     </p>
     <div class="sg-block sg-motion-grid" data-reveal-stagger>
       <div class="sg-motion-card">
-        <h4>Scroll reveal</h4>
+        <h3>Scroll reveal</h3>
         <p>Content fades up 24px over 0.65s the first time it enters the viewport, then leaves the DOM alone.</p>
         <code>data-reveal</code>
       </div>
       <div class="sg-motion-card">
-        <h4>Staggered groups</h4>
+        <h3>Staggered groups</h3>
         <p>Grids and lists cascade their children at 90ms intervals, capped so long lists never lag.</p>
         <code>data-reveal-stagger</code>
       </div>
       <div class="sg-motion-card">
-        <h4>Hero choreography</h4>
+        <h3>Hero choreography</h3>
         <p>Eyebrow, headline, copy, and actions enter in sequence; the arc draws itself; video drifts slowly.</p>
         <code>.hero-in · .kenburns</code>
       </div>
       <div class="sg-motion-card">
-        <h4>Hairline dividers</h4>
+        <h3>Hairline dividers</h3>
         <p>Semi-transparent rules draw outward from center over 1.4s as each section boundary appears.</p>
         <code>.divider-top / .divider-bottom</code>
       </div>
       <div class="sg-motion-card">
-        <h4>Parallax accents</h4>
+        <h3>Parallax accents</h3>
         <p>Decorative layers drift at a fraction of scroll speed. Reserved for atmosphere, never content.</p>
         <code>data-parallax="0.1"</code>
       </div>
       <div class="sg-motion-card">
-        <h4>Hover states</h4>
+        <h3>Hover states</h3>
         <p>Cards lift 2–3px with a blue hairline; imagery zooms 4.5% over 0.6s on the same soft curve.</p>
         <code>--ease-soft · 0.6s</code>
       </div>
@@ -472,10 +519,10 @@
     <div class="sg-block sg-easing" id="easing-demo" data-reveal>
       <div class="sg-easing-head">
         <div>
-          <h4 style="font-family:var(--font-display);font-size:19px;font-weight:600;">Easing &amp; tempo</h4>
+          <h3 style="font-family:var(--font-display);font-size:19px;font-weight:600;">Easing &amp; tempo</h3>
           <p style="font-size:13px;color:var(--text-secondary);">The three curves the whole system runs on — watch how each one arrives.</p>
         </div>
-        <button class="btn btn-outline btn-sm" id="easing-replay">Replay</button>
+        <button type="button" class="btn btn-outline btn-sm" id="easing-replay">Replay easing demo</button>
       </div>
       <div class="sg-easing-row">
         <div class="sg-spec" style="margin-bottom:0;">ease-out · 0.65s<br><span style="text-transform:none;letter-spacing:0;">content reveals</span></div>
@@ -497,6 +544,77 @@
   </div>
 </section>
 
+
+<!-- ─── Accessibility ─────────────────────────────────────────── -->
+<section class="sg-section divider-top" id="accessibility">
+  <div class="container">
+    <p class="label" data-reveal>Foundations</p>
+    <h2 class="display-section-italic" data-reveal>Accessibility</h2>
+    <p class="sg-note mt-16" data-reveal>
+      Built to WCAG 2.2 AA and checked with automated and keyboard testing on every page.
+      These are the rules every new block inherits, not a feature bolted on at the end.
+    </p>
+
+    <div class="sg-block sg-a11y-grid" data-reveal-stagger>
+      <div class="sg-motion-card">
+        <h3>Landmarks &amp; headings</h3>
+        <p>Every page uses the same skeleton so screen-reader users can jump straight to content. One <code>h1</code> per page; eyebrow labels sit beside headings, never instead of them; card titles are <code>h3</code>s under their section's <code>h2</code>.</p>
+        <div class="sg-landmarks" style="margin-top:14px;">
+          <b>skip link</b> → Skip to main content<br>
+          <b>nav</b> "Main"<br>
+          <b>main</b> · h1 · sections with h2 / h3<br>
+          <b>form</b> "Filter sermons" (search landmark)<br>
+          <b>footer</b> · nav "Explore" · nav "Get Involved" · address<br>
+          <b>dialog</b>s live outside main
+        </div>
+      </div>
+      <div class="sg-motion-card">
+        <h3>Keyboard &amp; focus</h3>
+        <p>Everything interactive is a real link or button, reachable with Tab and activated with Enter or Space. One focus ring everywhere: 2px Blue Light, 3px offset. Whole-card targets put the button in the title and stretch it over the card, so there is one tab stop per card and its name is the title.</p>
+        <div class="sg-row" style="margin-top:16px;margin-bottom:14px;gap:20px;">
+          <a class="btn btn-outline btn-sm sg-focus-demo" href="#">Link focus</a>
+          <button type="button" class="btn btn-primary btn-sm sg-focus-demo">Button focus</button>
+          <span class="sg-focus-demo" style="font-size:13px;color:var(--text-secondary);padding:2px 4px;">text link</span>
+        </div>
+        <code>:focus-visible · .card-btn · .has-card-btn</code>
+      </div>
+      <div class="sg-motion-card">
+        <h3>Dialogs</h3>
+        <p>Video, event, group, Planning Center and contact modals open through one helper. Focus moves into the dialog, Tab stays inside (including around the embedded players), the page behind goes inert, Escape closes, and focus returns to the card or button that opened it. Each dialog is labelled by its own title and has a named close button.</p>
+        <code>A11yModal.open(backdrop, { onEscape, initialFocus })</code>
+      </div>
+      <div class="sg-motion-card">
+        <h3>Names &amp; alternatives</h3>
+        <p>Decorative icons are hidden from assistive tech; meaningful images carry descriptive alt text. Form fields have labels (visually hidden where the design hides them). Icon-only controls and repeated buttons get a full name ("Register: High Praise Dance"). Links that open a new tab say so. Loading skeletons are silent; filter counts and toasts announce politely.</p>
+        <code>.sr-only · aria-hidden · aria-live="polite"</code>
+      </div>
+    </div>
+
+    <div class="sg-block" data-reveal>
+      <div class="sg-spec">Text contrast · WCAG AA needs 4.5:1 for body text, 3:1 for large text</div>
+      <table class="sg-contrast">
+        <thead>
+          <tr><th scope="col">Token</th><th scope="col">Used for</th><th scope="col">on Base</th><th scope="col">on Surface</th><th scope="col">on Elevated</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Warm Ivory <span style="color:var(--text-muted);">--text-primary</span></td><td>Headings, primary copy</td><td class="sg-pass">16.3</td><td class="sg-pass">15.3</td><td class="sg-pass">13.9</td></tr>
+          <tr><td>Stone <span style="color:var(--text-muted);">--text-secondary</span></td><td>Body copy, descriptions</td><td class="sg-pass">5.3</td><td class="sg-pass">5.0</td><td class="sg-pass">4.5</td></tr>
+          <tr><td>Muted <span style="color:var(--text-muted);">--text-muted</span></td><td>Captions, footer copy</td><td class="sg-pass">6.1</td><td class="sg-pass">5.7</td><td class="sg-pass">5.2</td></tr>
+          <tr><td>Blue Text <span style="color:var(--text-muted);">--brand-text</span></td><td>Eyebrows, dates, links, outline buttons</td><td class="sg-pass">7.8</td><td class="sg-pass">7.4</td><td class="sg-pass">6.7</td></tr>
+          <tr><td>Cornerstone Blue <span style="color:var(--text-muted);">--brand</span></td><td>Icons, borders, large numerals only</td><td>5.1</td><td>4.8</td><td>4.3 — not for small text</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="sg-note mt-16" data-reveal>
+      Known third-party limits: the Vimeo player and Planning Center pages handle their own keyboard
+      behavior inside the dialog; Tab out to the close button, then Escape. The public
+      <a href="accessibility.html" style="color:var(--brand-text);text-decoration:underline;text-underline-offset:3px;">accessibility statement</a>
+      explains how visitors can report a barrier.
+    </p>
+  </div>
+</section>
+
 <!-- ─── How it extends ────────────────────────────────────────── -->
 <div class="cta-panel divider-top">
   <div class="container cta-panel-inner" data-reveal-stagger>
@@ -510,6 +628,8 @@
     <a href="index.html" class="btn btn-primary">Back to the site</a>
   </div>
 </div>
+
+</main>
 
 <!-- ─── Footer ────────────────────────────────────────────────── -->
 <footer class="footer divider-top">

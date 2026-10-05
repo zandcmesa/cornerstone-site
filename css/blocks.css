@@ -76,7 +76,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
 }
 .body-text {
   font-size: 15px;
@@ -114,10 +114,10 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 }
 .btn-outline {
   background: transparent;
-  color: var(--brand);
+  color: var(--brand-text);
 }
 .btn-outline:hover {
-  color: var(--brand-light);
+  color: var(--text-primary);
 }
 .btn-ghost {
   background: transparent;
@@ -288,7 +288,7 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .cta-panel .gold-line { margin: 20px auto; }
 
 /* ─── 10. Utilities ──────────────────────────────────────────── */
-.text-gold { color: var(--brand); }
+.text-gold { color: var(--brand-text); }
 .text-secondary { color: var(--text-secondary); }
 .mt-8 { margin-top: 8px; }
 .mt-16 { margin-top: 16px; }

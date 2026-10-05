@@ -32,10 +32,11 @@ Scope: the ten public pages (`index`, `sermons`, `about`, `groups`, `events`, `a
 - `js/main.js`: `window.A11yModal` (focus into dialog, Tab trap with keydown plus focus sentinels for the iframe cases, `inert` on everything else, Escape, focus return). All five modals use it. Nav drawer gets Escape, `aria-controls`, and focus return; `aria-current="page"` is set; new-tab links get a visually hidden note; hero video pause/play toggle that starts paused under reduced motion; contact form marks empty fields `aria-invalid` and focuses the first one; toasts are a polite live region.
 - `js/sermons.js`, `index.html`, `js/groups.js`, `js/events.js`: cards render as `<ul>`/`<li>` with the title as a real `<button>` stretched over the card; chips are buttons; result count is a live region; `<time>` on dates; sr-only "Speaker/Scripture/Date/When/Where" prefixes; group sections are labelled `<section>`s.
 - HTML: landmark labels, `<main tabindex="-1">`, heading levels, footer `<nav>`s and `<address>`, `tel:` links, `<dl>` info band, labelled filter form, dialog roles and labels, descriptive close-button names, `aria-hidden` on decorative SVGs and skeletons, button `type` attributes, video modal moved out of `<main>`.
-- CSS: `.sr-only`, global `:focus-visible` ring, `.card-btn` pattern, `.plain-list`, focus-within card rings, skip-link and small-text contrast fixes.
+- CSS: `.sr-only`, global `:focus-visible` ring, `.card-btn` pattern, `.plain-list`, focus-within card rings, skip-link contrast fix, and a new `--brand-text` token (#5AAEE0) used for every blue text role so small blue text clears 6:1 on every surface while `--brand` stays on icons, borders and large numerals.
+- `styleguide.html`: new Accessibility section (landmarks, focus, dialogs, names, contrast table), Blue Text swatch, card demos updated to the list/button markup, and the page itself gets a skip link, `<main>` and labelled nav.
 
 ## Known limits
 
 - Keystrokes inside the Vimeo and Planning Center iframes are handled by those players; Escape only closes the modal once focus is back in the page (Tab out of the player first).
 - Vimeo's player accessibility and caption quality are the vendor's; auto-captions are noted on the accessibility statement.
-- `styleguide.html` and `proposal.html` are internal pitch pages and were not audited.
+- `proposal.html` is an internal pitch page and was not audited.

@@ -131,7 +131,7 @@ Nav CSS key: `.nav .container { max-width: none; width: 100%; }` — both proper
 
 ## Accessibility
 
-Audited Oct 2026 (axe-core clean, keyboard-tested). Conventions live in `DESIGN.md` → "Accessibility primitives": landmarks per page, `.sr-only`, `.card-btn` card pattern, `.plain-list` grids, and the shared `window.A11yModal` helper in `js/main.js` that every modal opens/closes through (focus trap, `inert`, focus return). Keep modals outside `<main>`, give every dialog `role="dialog" aria-modal="true" aria-labelledby`, and put `aria-hidden="true" focusable="false"` on decorative SVGs.
+Audited Oct 2026 (axe-core clean, keyboard-tested). Conventions live in `DESIGN.md` → "Accessibility primitives": landmarks per page, `.sr-only`, `.card-btn` card pattern, `.plain-list` grids, and the shared `window.A11yModal` helper in `js/main.js` that every modal opens/closes through (focus trap, `inert`, focus return). Keep modals outside `<main>`, give every dialog `role="dialog" aria-modal="true" aria-labelledby`, put `aria-hidden="true" focusable="false"` on decorative SVGs, and use `--brand-text` (not `--brand`) for any blue text.
 
 ## Speakers
 

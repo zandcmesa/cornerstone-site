@@ -57,7 +57,7 @@
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
   margin-top: 2px;
 }
 .nav-links {
@@ -77,7 +77,7 @@
   transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--text-primary); }
-.nav-links a.active { color: var(--brand); }
+.nav-links a.active { color: var(--brand-text); }
 .nav-actions {
   display: flex;
   align-items: center;
@@ -219,7 +219,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
   margin-bottom: 4px;
 }
 .info-band-value {
@@ -295,7 +295,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
   background: rgba(13, 15, 20, 0.85);
   backdrop-filter: blur(8px);
   padding: 4px 10px;
@@ -360,7 +360,7 @@
   gap: 4px;
   font-size: 11px;
   font-weight: 500;
-  color: var(--brand);
+  color: var(--brand-text);
   background: var(--brand-dim);
   border: 1px solid var(--brand-border);
   padding: 3px 8px;
@@ -495,7 +495,7 @@
   gap: 6px;
   font-size: 11px;
   font-weight: 500;
-  color: var(--brand);
+  color: var(--brand-text);
   background: var(--brand-dim);
   border: 1px solid var(--brand-border);
   padding: 3px 10px;
@@ -660,7 +660,7 @@
 }
 .group-card-day {
   font-size: 12px;
-  color: var(--brand);
+  color: var(--brand-text);
   font-weight: 500;
   margin-bottom: 4px;
 }
@@ -755,7 +755,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
 }
 .event-date-day {
   font-family: var(--font-display);
@@ -832,7 +832,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
   margin-bottom: 8px;
 }
 .announcement-title {
@@ -913,7 +913,7 @@
 .staff-title {
   font-size: 11px;
   font-weight: 500;
-  color: var(--brand);
+  color: var(--brand-text);
   letter-spacing: 0.06em;
 }
 
@@ -1090,7 +1090,7 @@ a.mission-item:hover { color: var(--text-primary); }
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
   margin-bottom: 16px;
 }
 .footer-links {
@@ -1241,7 +1241,7 @@ a.mission-item:hover { color: var(--text-primary); }
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--brand);
+  color: var(--brand-text);
   margin-bottom: 6px;
 }
 .video-modal-title {
@@ -1582,7 +1582,7 @@ a.mission-item:hover { color: var(--text-primary); }
 }
 .event-modal-date-month {
   font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--brand); line-height: 1; margin-bottom: 3px;
+  color: var(--brand-text); line-height: 1; margin-bottom: 3px;
 }
 .event-modal-date-day {
   font-family: var(--font-display); font-size: 22px; font-weight: 600;
@@ -1591,7 +1591,7 @@ a.mission-item:hover { color: var(--text-primary); }
 .event-modal-header-info { flex: 1; min-width: 0; }
 .event-modal-label {
   font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--brand); margin-bottom: 5px;
+  color: var(--brand-text); margin-bottom: 5px;
 }
 .event-modal-title {
   font-family: var(--font-display); font-size: 22px; font-weight: 400; font-style: italic;
@@ -1665,7 +1665,7 @@ a.mission-item:hover { color: var(--text-primary); }
     flex-shrink: 0;
     transition: color 0.15s;
   }
-  .nav-menu-btn:hover { color: var(--brand); }
+  .nav-menu-btn:hover { color: var(--brand-text); }
 
   /* Mobile drawer */
   .nav.menu-open {
@@ -1694,8 +1694,8 @@ a.mission-item:hover { color: var(--text-primary); }
     border-bottom: 1px solid var(--border-subtle);
     transition: color 0.15s;
   }
-  .nav-mobile-links a:hover { color: var(--brand); }
-  .nav-mobile-links a.active { color: var(--brand); }
+  .nav-mobile-links a:hover { color: var(--text-primary); }
+  .nav-mobile-links a.active { color: var(--brand-text); }
   .nav-mobile-cta { align-self: flex-start; margin-top: 4px; }
 }
 
@@ -1952,12 +1952,12 @@ a.mission-item:hover { color: var(--text-primary); }
   padding: 0;
   font-family: var(--font-body);
   font-size: 13px;
-  color: var(--brand);
+  color: var(--brand-text);
   cursor: pointer;
   text-decoration: underline;
   margin-left: 4px;
 }
-.toast-retry:hover { color: var(--brand-light); }
+.toast-retry:hover { color: var(--text-primary); }
 .toast-dismiss {
   flex-shrink: 0;
   background: none;
@@ -2032,10 +2032,10 @@ a.mission-item:hover { color: var(--text-primary); }
 .legal-prose p { margin-bottom: 16px; }
 .legal-prose ul { margin: 0 0 16px 20px; }
 .legal-prose li { margin-bottom: 8px; }
-.legal-prose a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+.legal-prose a { color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; }
 .legal-prose a:hover { color: var(--text-primary); }
 .legal-prose strong { color: var(--text-primary); font-weight: 500; }
-.legal-prose button { background: none; border: none; padding: 0; font: inherit; color: var(--brand); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.legal-prose button { background: none; border: none; padding: 0; font: inherit; color: var(--brand-text); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .legal-meta { font-size: 13px; color: var(--text-muted); margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border-subtle); }
 @media (max-width: 768px) {
   .legal-hero { padding: calc(var(--nav-height) + 48px) 0 32px; }
@@ -2073,8 +2073,6 @@ main:focus { outline: none; }
 /* Cards that open a modal: play overlay also shows on keyboard focus */
 .sermon-card:focus-within .sermon-play-btn { opacity: 1; }
 .sermon-card:focus-within, .group-card:focus-within { border-color: var(--brand-border); }
-/* Small brand-blue text on elevated surfaces fell just under 4.5:1 */
-.group-card-day, .staff-title { color: var(--brand-light); }
 /* Info band as a description list */
 .info-band-grid dt, .info-band-grid dd { margin: 0; }
 .info-band-value a { color: inherit; text-decoration: none; }
@@ -2095,7 +2093,4 @@ address.footer-contact { font-style: normal; }
 .info-band-item dt { position: relative; }
 .info-band-item .info-band-icon { position: absolute; top: 0; left: 0; }
 .info-band-item dt, .info-band-item dd { padding-left: 56px; }
-/* Brand-blue eyebrow on an elevated card background */
-.announcement-card .label { color: var(--brand-light); }
-/* Scripture pill text needs more contrast on its tinted background */
-.sermon-scripture { color: var(--brand-light); }
+

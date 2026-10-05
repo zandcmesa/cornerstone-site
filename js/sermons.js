@@ -456,7 +456,7 @@ function renderSermons() {
           <span class="sermon-speaker">${s.speaker}</span>
           <span class="sermon-date"><time datetime="${s.date}">${formatDate(s.date)}</time></span>
         </div>
-        <h3 class="sermon-title" id="sermon-title-${s.id}"><button type="button" class="card-btn">${highlight(s.title, activeFilters.search)}<span class="sr-only"> (play video)</span></button></h3>
+        <h3 class="sermon-title" id="sermon-title-${s.id}"><button type="button" class="card-btn">${highlight(s.title, activeFilters.search)}</button></h3>
         <div class="sermon-scripture">
           <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           <span class="sr-only">Scripture: </span>${s.scripture}
