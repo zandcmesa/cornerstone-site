@@ -733,6 +733,7 @@
   gap: 8px;
 }
 .event-row {
+  position: relative;
   display: grid;
   grid-template-columns: 80px 1fr auto;
   align-items: center;
@@ -2039,3 +2040,62 @@ a.mission-item:hover { color: var(--text-primary); }
 @media (max-width: 768px) {
   .legal-hero { padding: calc(var(--nav-height) + 48px) 0 32px; }
 }
+
+/* ─── Accessibility: page-specific ───────────────────────────── */
+.skip-link { background: var(--brand-light); color: var(--bg-base); }
+.skip-link:focus { outline-color: var(--text-primary); }
+main:focus { outline: none; }
+/* Hero background video pause/play control (WCAG 2.2.2) */
+.hero-video-toggle {
+  position: absolute;
+  right: 32px;
+  bottom: 28px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-normal);
+  background: rgba(13, 15, 20, 0.65);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(6px);
+  transition: border-color 0.2s, color 0.2s;
+}
+.hero-video-toggle:hover { border-color: var(--brand-border); color: var(--brand-light); }
+.hero-video-toggle .icon-play { display: none; }
+.hero-video-toggle[aria-pressed="true"] .icon-pause { display: none; }
+.hero-video-toggle[aria-pressed="true"] .icon-play { display: block; }
+@media (max-width: 768px) { .hero-video-toggle { right: 20px; bottom: 20px; } }
+/* Cards that open a modal: play overlay also shows on keyboard focus */
+.sermon-card:focus-within .sermon-play-btn { opacity: 1; }
+.sermon-card:focus-within, .group-card:focus-within { border-color: var(--brand-border); }
+/* Small brand-blue text on elevated surfaces fell just under 4.5:1 */
+.group-card-day, .staff-title { color: var(--brand-light); }
+/* Info band as a description list */
+.info-band-grid dt, .info-band-grid dd { margin: 0; }
+.info-band-value a { color: inherit; text-decoration: none; }
+.info-band-value a:hover { color: var(--brand-light); }
+/* Footer address block is not italic */
+address.footer-contact { font-style: normal; }
+.footer-contact-item a { color: inherit; }
+.footer-contact-item a:hover { color: var(--text-primary); }
+/* Active filter chips and clear button render as real buttons */
+.active-filter-chip, .clear-filters { font-family: var(--font-body); }
+/* Result count is a live region; keep it visible but unobtrusive */
+.filter-results[role="status"] { min-height: 1em; }
+/* Mission partner lists */
+.missions-col ul { list-style: none; margin: 0; padding: 0; }
+/* Info band: the icon sits inside <dt> so each <div> holds only dt/dd;
+   it is positioned to the left of the dt/dd stack */
+.info-band-item { display: block; }
+.info-band-item dt { position: relative; }
+.info-band-item .info-band-icon { position: absolute; top: 0; left: 0; }
+.info-band-item dt, .info-band-item dd { padding-left: 56px; }
+/* Brand-blue eyebrow on an elevated card background */
+.announcement-card .label { color: var(--brand-light); }
+/* Scripture pill text needs more contrast on its tinted background */
+.sermon-scripture { color: var(--brand-light); }

@@ -1,31 +1,148 @@
+// ─── Accessible modal helper ──────────────────────────────────
+// Shared by every modal on the site: adds the backdrop's .open class,
+// moves focus into the dialog, keeps Tab inside it, makes the rest of
+// the page inert, closes on Escape, and returns focus to the trigger.
+window.A11yModal = (function () {
+  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])';
+  const stack = [];
+
+  function focusables(root) {
+    return Array.from(root.querySelectorAll(FOCUSABLE)).filter(el => !el.dataset.sentinel && el.getClientRects().length > 0 && !el.closest('[aria-hidden="true"]'));
+  }
+
+  // Invisible tab stops at both ends of the dialog. Focus leaving an embedded
+  // iframe (where keydown can't be observed) lands on one of these and is
+  // wrapped back to the opposite end of the dialog.
+  function addSentinels(dialog) {
+    if (dialog.dataset.sentinels) return;
+    dialog.dataset.sentinels = '1';
+    ['start', 'end'].forEach(where => {
+      const s = document.createElement('span');
+      s.tabIndex = 0;
+      s.className = 'focus-sentinel';
+      s.dataset.sentinel = where;
+      if (where === 'start') dialog.prepend(s); else dialog.append(s);
+    });
+    dialog.addEventListener('focusin', e => {
+      const where = e.target.dataset && e.target.dataset.sentinel;
+      if (!where) return;
+      const items = focusables(dialog);
+      if (!items.length) { dialog.focus(); return; }
+      (where === 'start' ? items[items.length - 1] : items[0]).focus();
+    });
+  }
+
+  function onKeydown(e) {
+    const top = stack[stack.length - 1];
+    if (!top) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      if (top.onEscape) top.onEscape(); else close(top.backdrop);
+      return;
+    }
+    if (e.key !== 'Tab') return;
+    const items = focusables(top.dialog);
+    if (!items.length) { e.preventDefault(); top.dialog.focus(); return; }
+    const first = items[0], last = items[items.length - 1];
+    const active = document.activeElement;
+    const inside = top.dialog.contains(active);
+    if (e.shiftKey && (!inside || active === first || active === top.dialog)) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (!inside || active === last)) { e.preventDefault(); first.focus(); }
+  }
+
+  function setInert(backdrop, on) {
+    // Walk from the backdrop up to <body>, making every sibling at each level inert,
+    // so the modal stays usable wherever it sits in the DOM.
+    let node = backdrop;
+    while (node && node.parentElement) {
+      Array.from(node.parentElement.children).forEach(el => {
+        if (el === node || el.tagName === 'SCRIPT') return;
+        if (on) {
+          if (!el.hasAttribute('inert')) { el.setAttribute('inert', ''); el.dataset.a11yInert = '1'; }
+        } else if (el.dataset.a11yInert) {
+          el.removeAttribute('inert');
+          delete el.dataset.a11yInert;
+        }
+      });
+      node = node.parentElement;
+      if (node === document.body) break;
+    }
+  }
+
+  function open(backdrop, opts) {
+    opts = opts || {};
+    if (stack.some(s => s.backdrop === backdrop)) return;
+    const dialog = backdrop.querySelector('[role="dialog"]') || backdrop.firstElementChild;
+    if (!dialog.hasAttribute('tabindex')) dialog.setAttribute('tabindex', '-1');
+    addSentinels(dialog);
+    const entry = { backdrop, dialog, onEscape: opts.onEscape, trigger: document.activeElement };
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setInert(backdrop, true);
+    if (!stack.length) document.addEventListener('keydown', onKeydown, true);
+    stack.push(entry);
+    let target = null;
+    if (typeof opts.initialFocus === 'string') target = dialog.querySelector(opts.initialFocus);
+    else if (opts.initialFocus) target = opts.initialFocus;
+    requestAnimationFrame(() => { (target || dialog).focus(); });
+  }
+
+  function close(backdrop) {
+    const i = stack.findIndex(s => s.backdrop === backdrop);
+    backdrop.classList.remove('open');
+    if (i === -1) return;
+    const entry = stack.splice(i, 1)[0];
+    if (!stack.length) {
+      setInert(backdrop, false);
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKeydown, true);
+    }
+    const t = entry.trigger;
+    if (t && typeof t.focus === 'function' && t !== document.body && document.contains(t)) t.focus();
+  }
+
+  function isOpen(backdrop) { return stack.some(s => s.backdrop === backdrop); }
+
+  return { open, close, isOpen };
+}());
+
 // Nav scroll behavior + mobile menu
 const nav = document.querySelector('.nav');
 if (nav) {
+  const menuBtn = nav.querySelector('.nav-menu-btn');
+  const drawer = nav.querySelector('.nav-mobile-drawer');
+
+  function setMenu(open, returnFocus) {
+    nav.classList.toggle('menu-open', open);
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', String(open));
+    if (!open && returnFocus && menuBtn && drawer && drawer.contains(document.activeElement)) menuBtn.focus();
+  }
+
   const onScroll = () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
     // Close mobile menu on scroll
-    if (nav.classList.contains('menu-open')) {
-      nav.classList.remove('menu-open');
-      const menuBtn = nav.querySelector('.nav-menu-btn');
-      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-    }
+    if (nav.classList.contains('menu-open')) setMenu(false, true);
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
   // Hamburger toggle
-  const menuBtn = nav.querySelector('.nav-menu-btn');
   if (menuBtn) {
-    menuBtn.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('menu-open');
-      menuBtn.setAttribute('aria-expanded', isOpen);
-    });
+    menuBtn.addEventListener('click', () => setMenu(!nav.classList.contains('menu-open')));
     // Close drawer when a mobile link is clicked
     nav.querySelectorAll('.nav-mobile-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('menu-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', () => setMenu(false));
+    });
+    // Escape closes the drawer and returns focus to the menu button
+    nav.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && nav.classList.contains('menu-open')) {
+        setMenu(false);
+        menuBtn.focus();
+      }
+    });
+    // Tabbing out of the drawer closes it so focus never lands behind it
+    nav.addEventListener('focusout', e => {
+      if (nav.classList.contains('menu-open') && e.relatedTarget && !nav.contains(e.relatedTarget)) setMenu(false);
     });
   }
 }
@@ -36,33 +153,64 @@ document.querySelectorAll('.nav-links a, .nav-mobile-links a').forEach(link => {
   const href = link.getAttribute('href');
   if (href === currentPage || (currentPage === '' && href === 'index.html')) {
     link.classList.add('active');
+    link.setAttribute('aria-current', 'page');
   }
 });
 
-// Hero video cross-fade
+// Links that open a new tab say so to screen reader users
+document.querySelectorAll('a[target="_blank"]').forEach(a => {
+  if (a.querySelector('.sr-only')) return;
+  const label = a.getAttribute('aria-label');
+  if (label) {
+    if (!/new tab/i.test(label)) a.setAttribute('aria-label', label + ' (opens in a new tab)');
+  } else {
+    a.insertAdjacentHTML('beforeend', '<span class="sr-only"> (opens in a new tab)</span>');
+  }
+});
+
+// Hero video cross-fade + pause control
 const heroVideoA = document.querySelector('.hero-video-a');
 const heroVideoB = document.querySelector('.hero-video-b');
 if (heroVideoA && heroVideoB) {
   const HOLD_MS = 9000;
   const FADE_MS = 2500;
   let current = 'a';
+  let playing = true;
   heroVideoA.addEventListener('canplay', function() {
     const eyebrow = document.querySelector('.hero-eyebrow');
     if (eyebrow) eyebrow.classList.add('highlight-in');
   }, { once: true });
 
   setTimeout(function crossfade() {
-    if (current === 'a') {
-      heroVideoA.style.opacity = '0';
-      heroVideoB.style.opacity = '1';
-      current = 'b';
-    } else {
-      heroVideoB.style.opacity = '0';
-      heroVideoA.style.opacity = '1';
-      current = 'a';
+    if (playing) {
+      if (current === 'a') {
+        heroVideoA.style.opacity = '0';
+        heroVideoB.style.opacity = '1';
+        current = 'b';
+      } else {
+        heroVideoB.style.opacity = '0';
+        heroVideoA.style.opacity = '1';
+        current = 'a';
+      }
     }
     setTimeout(crossfade, HOLD_MS + FADE_MS);
   }, HOLD_MS);
+
+  const toggle = document.querySelector('[data-hero-video-toggle]');
+  const label = toggle ? toggle.querySelector('.hero-video-toggle-label') : null;
+  function setPlaying(on) {
+    playing = on;
+    [heroVideoA, heroVideoB].forEach(v => {
+      if (on) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+      else v.pause();
+    });
+    if (toggle) {
+      toggle.setAttribute('aria-pressed', String(!on));
+      if (label) label.textContent = on ? 'Pause video' : 'Play video';
+    }
+  }
+  if (toggle) toggle.addEventListener('click', () => setPlaying(!playing));
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPlaying(false);
 }
 
 // Sermon thumbnail color placeholders (cycling palette)
@@ -94,6 +242,7 @@ if (pcoBackdrop) {
 
     pcoTitle.textContent = title;
     pcoIframe.classList.remove('loaded');
+    pcoIframe.title = title ? title + ' – Planning Center' : 'Planning Center';
 
     if (isEmbeddable) {
       pcoLoading.style.display = 'flex';
@@ -106,15 +255,13 @@ if (pcoBackdrop) {
       pcoIframe.src = '';
     }
 
-    pcoBackdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    window.A11yModal.open(pcoBackdrop, { onEscape: closePCOModal, initialFocus: isEmbeddable ? null : '#pco-modal-fallback-link' });
   }
 
   function closePCOModal() {
-    pcoBackdrop.classList.remove('open');
+    window.A11yModal.close(pcoBackdrop);
     pcoIframe.src = '';
     pcoIframe.classList.remove('loaded');
-    document.body.style.overflow = '';
   }
 
   pcoIframe.addEventListener('load', () => {
@@ -128,20 +275,19 @@ if (pcoBackdrop) {
   pcoBackdrop.addEventListener('click', e => {
     if (e.target === pcoBackdrop) closePCOModal();
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && pcoBackdrop.classList.contains('open')) closePCOModal();
-  });
 
   document.querySelectorAll('[data-pco-url]').forEach(el => {
     el.addEventListener('click', () => {
       openPCOModal(el.dataset.pcoUrl, el.dataset.pcoTitle || '');
     });
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openPCOModal(el.dataset.pcoUrl, el.dataset.pcoTitle || '');
-      }
-    });
+    if (el.tagName !== 'BUTTON' && el.tagName !== 'A') {
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openPCOModal(el.dataset.pcoUrl, el.dataset.pcoTitle || '');
+        }
+      });
+    }
   });
 }
 
@@ -150,37 +296,37 @@ if (pcoBackdrop) {
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mnpnwblr';
   const modalHTML = `
 <div class="contact-modal-backdrop" id="contact-modal-backdrop">
-  <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+  <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" tabindex="-1">
     <div class="contact-modal-header">
       <div style="width:32px"></div>
-      <div class="contact-modal-title" id="contact-modal-title">Contact Us</div>
-      <button class="contact-modal-close" id="contact-modal-close" aria-label="Close">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <h2 class="contact-modal-title" id="contact-modal-title">Contact Us</h2>
+      <button type="button" class="contact-modal-close" id="contact-modal-close" aria-label="Close contact form">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="contact-modal-body">
-      <p class="contact-form-note">Fields marked with a <span>*</span> are required</p>
-      <form id="contact-form" novalidate>
+      <p class="contact-form-note" id="contact-form-note">Fields marked with a <span aria-hidden="true">*</span><span class="sr-only">star</span> are required</p>
+      <form id="contact-form" novalidate aria-describedby="contact-form-note">
         <div class="contact-field">
-          <label for="cf-type">Inquiry Type<span class="req">*</span></label>
-          <select id="cf-type" name="type" required>
-            <option value="" disabled selected></option>
+          <label for="cf-type">Inquiry Type<span class="req" aria-hidden="true">*</span></label>
+          <select id="cf-type" name="type" required aria-required="true">
+            <option value="" disabled selected>Select one</option>
             <option value="General">General</option>
             <option value="Prayer">Prayer</option>
             <option value="Testimony">Testimony</option>
           </select>
         </div>
         <div class="contact-field">
-          <label for="cf-name">Name<span class="req">*</span></label>
-          <input type="text" id="cf-name" name="name" required autocomplete="name">
+          <label for="cf-name">Name<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="cf-name" name="name" required aria-required="true" autocomplete="name">
         </div>
         <div class="contact-field">
-          <label for="cf-email">Email<span class="req">*</span></label>
-          <input type="email" id="cf-email" name="email" required autocomplete="email">
+          <label for="cf-email">Email<span class="req" aria-hidden="true">*</span></label>
+          <input type="email" id="cf-email" name="email" required aria-required="true" autocomplete="email">
         </div>
         <div class="contact-field">
-          <label for="cf-message">Message<span class="req">*</span></label>
-          <textarea id="cf-message" name="message" required></textarea>
+          <label for="cf-message">Message<span class="req" aria-hidden="true">*</span></label>
+          <textarea id="cf-message" name="message" required aria-required="true"></textarea>
         </div>
         <input type="text" id="cf-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
         <div class="contact-form-actions">
@@ -190,7 +336,7 @@ if (pcoBackdrop) {
     </div>
   </div>
 </div>
-<div class="toast-stack" id="toast-stack"></div>`;
+<div class="toast-stack" id="toast-stack" aria-live="polite"></div>`;
 
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 
@@ -198,6 +344,7 @@ if (pcoBackdrop) {
   const form = document.getElementById('contact-form');
   const submitBtn = document.getElementById('contact-submit');
   const toastStack = document.getElementById('toast-stack');
+  const FIELDS = ['cf-type', 'cf-name', 'cf-email', 'cf-message'];
 
   // Store field values for retry pre-fill
   let savedValues = {};
@@ -209,20 +356,15 @@ if (pcoBackdrop) {
       document.getElementById('cf-email').value = prefill.email || '';
       document.getElementById('cf-message').value = prefill.message || '';
     }
-    backdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    window.A11yModal.open(backdrop, { onEscape: closeContactModal, initialFocus: '#cf-type' });
   }
 
   function closeContactModal() {
-    backdrop.classList.remove('open');
-    document.body.style.overflow = '';
+    window.A11yModal.close(backdrop);
   }
 
   document.getElementById('contact-modal-close').addEventListener('click', closeContactModal);
   backdrop.addEventListener('click', e => { if (e.target === backdrop) closeContactModal(); });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && backdrop.classList.contains('open')) closeContactModal();
-  });
 
   // Toast system
   function showToast({ type, message, onRetry }) {
@@ -230,11 +372,11 @@ if (pcoBackdrop) {
     toast.className = `toast toast-${type}`;
 
     const iconSVG = type === 'success'
-      ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
-      : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`;
+      ? `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`
+      : `<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12.01" y1="16" x2="12.01" y2="16"/></svg>`;
 
     const retryHTML = onRetry
-      ? `<button class="toast-retry">Try again</button>`
+      ? `<button type="button" class="toast-retry">Try again</button>`
       : '';
 
     toast.innerHTML = `
@@ -242,8 +384,8 @@ if (pcoBackdrop) {
       <div class="toast-content">
         <span class="toast-msg">${message}${retryHTML}</span>
       </div>
-      <button class="toast-dismiss" aria-label="Dismiss">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <button type="button" class="toast-dismiss" aria-label="Dismiss notification">
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>`;
 
     toastStack.appendChild(toast);
@@ -278,9 +420,17 @@ if (pcoBackdrop) {
       message: document.getElementById('cf-message').value,
     };
 
-    // Simple required field check
-    if (!savedValues.type || !savedValues.name || !savedValues.email || !savedValues.message) {
+    // Simple required field check: flag empty fields and focus the first one
+    let firstEmpty = null;
+    FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      const empty = !el.value;
+      el.setAttribute('aria-invalid', empty ? 'true' : 'false');
+      if (empty && !firstEmpty) firstEmpty = el;
+    });
+    if (firstEmpty) {
       showToast({ type: 'error', message: 'Please fill in all required fields.' });
+      firstEmpty.focus();
       return;
     }
 
@@ -303,6 +453,7 @@ if (pcoBackdrop) {
       .then(() => {
         closeContactModal();
         form.reset();
+        FIELDS.forEach(id => document.getElementById(id).removeAttribute('aria-invalid'));
         savedValues = {};
         showToast({ type: 'success', message: 'Message sent — we\'ll be in touch.' });
       })
@@ -331,7 +482,7 @@ if (pcoBackdrop) {
       params.set('c', cb);
 
       btn.disabled = true;
-      btn.textContent = 'Subscribing\u2026';
+      btn.textContent = 'Subscribing…';
 
       const script = document.createElement('script');
       const cleanup = () => {
@@ -345,7 +496,7 @@ if (pcoBackdrop) {
         cleanup();
         if (data.result === 'success') {
           newsletterForm.reset();
-          showToast({ type: 'success', message: 'You\'re subscribed \u2014 check your inbox to confirm.' });
+          showToast({ type: 'success', message: 'You\'re subscribed — check your inbox to confirm.' });
         } else {
           // Mailchimp returns HTML in msg; strip tags for the toast
           const msg = String(data.msg || '').replace(/<[^>]*>/g, '');

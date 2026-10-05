@@ -61,8 +61,8 @@ window.PCO_UI = (function () {
 
   return {
     esc, linkify, paragraphs, brief,
-    CLOCK: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-    PIN: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+    CLOCK: '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    PIN: '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
   };
 }());
 (function () {
@@ -79,18 +79,19 @@ window.PCO_UI = (function () {
     };
     const primary = e.kind === 'signup' || e.ctaText === 'Register';
     const dayStyle = e.dateDay.length > 2 ? ' style="font-size:18px;line-height:1.4;"' : '';
-    return '<div class="event-row">' +
+    const cta = e.ctaText || 'Details';
+    return '<li class="event-row">' +
       '<div class="event-date-block"><div class="event-date-month">' + esc(e.dateMonth) + '</div><div class="event-date-day"' + dayStyle + '>' + esc(e.dateDay) + '</div></div>' +
-      '<div class="event-info"><div class="event-info-title">' + esc(e.title) + '</div>' +
-      '<div class="event-info-meta"><span>' + CLOCK + ' ' + esc(brief(e.time)) + '</span><span>' + PIN + ' ' + esc(e.location) + '</span></div></div>' +
-      '<button class="btn ' + (primary ? 'btn-primary' : 'btn-outline') + ' btn-sm" data-event-id="' + esc(e.id) + '">' + esc(e.ctaText || 'Details') + '</button></div>';
+      '<div class="event-info"><h3 class="event-info-title">' + esc(e.title) + '</h3>' +
+      '<div class="event-info-meta"><span><span class="sr-only">When: </span>' + CLOCK + ' ' + esc(brief(e.time)) + '</span><span><span class="sr-only">Where: </span>' + PIN + ' ' + esc(e.location) + '</span></div></div>' +
+      '<button type="button" class="btn ' + (primary ? 'btn-primary' : 'btn-outline') + ' btn-sm card-btn-stretch" data-event-id="' + esc(e.id) + '" aria-label="' + esc(cta + ': ' + e.title) + '">' + esc(cta) + '</button></li>';
   }
 
   function fill(selector, items, emptyText) {
     document.querySelectorAll(selector).forEach(list => {
       const limit = parseInt(list.dataset.pcoLimit) || items.length;
       const slice = items.slice(0, limit);
-      list.innerHTML = slice.length ? slice.map(row).join('') : '<p class="body-text" style="color:var(--text-muted);">' + esc(emptyText) + '</p>';
+      list.innerHTML = slice.length ? slice.map(row).join('') : '<li class="body-text" style="color:var(--text-muted);list-style:none;">' + esc(emptyText) + '</li>';
       if (window.Blocks) window.Blocks.scan(list.parentElement || list);
     });
   }
@@ -142,23 +143,17 @@ if (eventBackdrop) {
       eventFooter.style.display = 'none';
     }
 
-    eventBackdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    window.A11yModal.open(eventBackdrop, { onEscape: closeEventModal });
   }
 
   function closeEventModal() {
-    eventBackdrop.classList.remove('open');
-    document.body.style.overflow = '';
+    window.A11yModal.close(eventBackdrop);
   }
 
   document.getElementById('event-modal-close').addEventListener('click', closeEventModal);
   eventBackdrop.addEventListener('click', e => {
     if (e.target === eventBackdrop) closeEventModal();
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && eventBackdrop.classList.contains('open')) closeEventModal();
-  });
-
   document.addEventListener('click', e => {
     const btn = e.target.closest('[data-event-id]');
     if (btn) openEventModal(btn.dataset.eventId);

@@ -332,3 +332,47 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
     transition-delay: 0s !important;
   }
 }
+
+/* ─── 11. Accessibility primitives ───────────────────────────── */
+/* Visually hidden, still read by assistive tech */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* One visible focus ring for every keyboard-focused control */
+:focus-visible {
+  outline: 2px solid var(--brand-light);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+.btn:focus-visible { outline-offset: 2px; border-radius: var(--radius-pill); }
+/* Dialog containers receive focus programmatically; the modal itself is the cue */
+[role="dialog"]:focus { outline: none; }
+/* Content behind an open modal (inert fallback for older engines) */
+[inert] { pointer-events: none; user-select: none; }
+/* A button that reads as the card's title but makes the whole card clickable.
+   The card needs position: relative. */
+.card-btn {
+  background: none; border: 0; padding: 0; margin: 0;
+  font: inherit; color: inherit; letter-spacing: inherit; line-height: inherit;
+  text-align: inherit; cursor: pointer;
+}
+.card-btn::after { content: ''; position: absolute; inset: 0; }
+.card-btn:focus-visible { outline: none; }
+.has-card-btn { position: relative; }
+.has-card-btn:focus-within {
+  outline: 2px solid var(--brand-light);
+  outline-offset: 3px;
+}
+/* Lists used purely for layout: keep the semantics, drop the bullets */
+.plain-list { list-style: none; padding: 0; }
+.plain-list > li { list-style: none; margin: 0; padding: 0; min-width: 0; }
+/* A visible button that also makes its whole row/card clickable; the row needs position: relative */
+.card-btn-stretch::after { content: ''; position: absolute; inset: 0; }
+/* Focus sentinels bracket a dialog's content; they are never visible */
+.focus-sentinel { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }

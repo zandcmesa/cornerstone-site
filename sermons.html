@@ -9,14 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=2">
-  <link rel="stylesheet" href="css/blocks.css?v=2">
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/blocks.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- ─── Nav ──────────────────────────────────────────────────── -->
-<nav class="nav scrolled">
+<nav class="nav scrolled" aria-label="Main">
   <div class="container">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo nav-logo-full">
@@ -26,7 +26,7 @@
         <img src="images/cornerstone-icon.svg" alt="Cornerstone" height="36">
       </a>
       <ul class="nav-links">
-        <li><a href="sermons.html" class="active">Sermons</a></li>
+        <li><a href="sermons.html" class="active" aria-current="page">Sermons</a></li>
         <li><a href="about.html">About</a></li>
         
         <li><a href="groups.html">Groups</a></li>
@@ -37,11 +37,11 @@
       <div class="nav-actions">
         <a href="watch.html" class="btn btn-primary btn-sm">Watch Online</a>
       </div>
-      <button class="nav-menu-btn" aria-label="Open menu" aria-expanded="false">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <button type="button" class="nav-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-mobile-drawer">
+        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
-    <div class="nav-mobile-drawer">
+    <div class="nav-mobile-drawer" id="nav-mobile-drawer">
       <ul class="nav-mobile-links">
         <li><a href="sermons.html">Sermons</a></li>
         <li><a href="about.html">About</a></li>
@@ -54,7 +54,7 @@
     </div>
   </div>
 </nav>
-<main id="main">
+<main id="main" tabindex="-1">
 
 <!-- ─── Page Header ───────────────────────────────────────────── -->
 <div class="page-header">
@@ -70,88 +70,65 @@
 <!-- ─── Filter Bar ────────────────────────────────────────────── -->
 <div class="filter-bar">
   <div class="container">
-    <div class="filter-bar-inner">
+    <form class="filter-bar-inner" role="search" aria-label="Filter sermons" onsubmit="return false;">
       <div class="filter-search">
-        <svg class="filter-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg aria-hidden="true" focusable="false" class="filter-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
-        <input type="text" id="filter-search" aria-label="Search sermons" placeholder="Search messages, topics, scripture…">
+        <label for="filter-search" class="sr-only">Search sermons</label>
+        <input type="search" id="filter-search" placeholder="Search messages, topics, scripture…" autocomplete="off">
       </div>
 
       <div class="filter-select-wrap">
+        <label for="filter-series" class="sr-only">Series</label>
         <select class="filter-select" id="filter-series">
           <option value="">All Series</option>
         </select>
-        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" focusable="false" class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
 
       <div class="filter-select-wrap">
+        <label for="filter-speaker" class="sr-only">Speaker</label>
         <select class="filter-select" id="filter-speaker">
           <option value="">All Speakers</option>
         </select>
-        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" focusable="false" class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
 
       <div class="filter-select-wrap">
+        <label for="filter-topic" class="sr-only">Topic</label>
         <select class="filter-select" id="filter-topic">
           <option value="">All Topics</option>
         </select>
-        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" focusable="false" class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
 
       <div class="filter-select-wrap">
+        <label for="filter-book" class="sr-only">Scripture book</label>
         <select class="filter-select" id="filter-book">
           <option value="">All Scripture</option>
         </select>
-        <svg class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        <svg aria-hidden="true" focusable="false" class="filter-select-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
 
-      <span class="filter-results" id="filter-results"></span>
-    </div>
-    <div class="active-filters" id="active-filters"></div>
+      <span class="filter-results" id="filter-results" role="status" aria-live="polite"></span>
+    </form>
+    <div class="active-filters" id="active-filters" role="group" aria-label="Active filters"></div>
   </div>
 </div>
 
 <!-- ─── Sermons Grid ──────────────────────────────────────────── -->
 <div class="container">
-  <div class="sermons-archive-grid" id="sermons-grid">
+  <h2 class="sr-only" id="sermon-results-heading">Sermon results</h2>
+  <ul class="sermons-archive-grid plain-list" role="list" id="sermons-grid" aria-labelledby="sermon-results-heading">
     <!-- skeleton cards — replaced by sermons.js on load -->
-    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:130px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title"></div><div class="skel skel-line" style="width:65%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:88%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
-    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:115px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:78%;"></div><div class="skel skel-line" style="width:55%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:92%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
-    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:140px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:90%;"></div><div class="skel skel-line" style="width:60%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:85%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
-    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:120px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:82%;"></div><div class="skel skel-line" style="width:70%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:95%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
-    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:135px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:75%;"></div><div class="skel skel-line" style="width:58%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:90%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
-    <article class="sermon-card sermon-skeleton"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:110px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:88%;"></div><div class="skel skel-line" style="width:62%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:87%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></article>
-  </div>
-</div>
-
-<!-- ─── Video Modal ───────────────────────────────────────────── -->
-<div class="video-modal-backdrop" id="video-modal-backdrop">
-  <div class="video-modal" id="video-modal">
-    <div class="video-modal-player">
-      <iframe id="video-modal-iframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-    </div>
-    <div class="video-modal-meta">
-      <div class="video-modal-info">
-        <div class="video-modal-series" id="modal-series"></div>
-        <div class="video-modal-title" id="modal-title"></div>
-        <div class="video-modal-byline">
-          <span id="modal-speaker">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </span>
-          <span id="modal-scripture">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          </span>
-          <span id="modal-date">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </span>
-        </div>
-      </div>
-      <button class="video-modal-close" id="video-modal-close" aria-label="Close">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
+    <li class="sermon-card sermon-skeleton" aria-hidden="true"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:130px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title"></div><div class="skel skel-line" style="width:65%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:88%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></li>
+    <li class="sermon-card sermon-skeleton" aria-hidden="true"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:115px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:78%;"></div><div class="skel skel-line" style="width:55%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:92%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></li>
+    <li class="sermon-card sermon-skeleton" aria-hidden="true"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:140px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:90%;"></div><div class="skel skel-line" style="width:60%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:85%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></li>
+    <li class="sermon-card sermon-skeleton" aria-hidden="true"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:120px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:82%;"></div><div class="skel skel-line" style="width:70%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:95%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></li>
+    <li class="sermon-card sermon-skeleton" aria-hidden="true"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:135px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:75%;"></div><div class="skel skel-line" style="width:58%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:90%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></li>
+    <li class="sermon-card sermon-skeleton" aria-hidden="true"><div class="sermon-thumb"><div class="skel skel-thumb"></div></div><div class="sermon-body"><div class="sermon-meta"><div class="skel skel-line" style="width:110px;height:11px;"></div><div class="skel skel-line" style="width:80px;height:11px;"></div></div><div class="skel skel-line skel-title" style="width:88%;"></div><div class="skel skel-line" style="width:62%;height:11px;margin-bottom:10px;"></div><div class="skel skel-line" style="width:100%;height:11px;"></div><div class="skel skel-line" style="width:87%;height:11px;"></div><div class="skel skel-tags"><div class="skel skel-tag"></div><div class="skel skel-tag"></div></div></div></li>
+  </ul>
 </div>
 
 <!-- ─── Footer ────────────────────────────────────────────────── -->
@@ -166,56 +143,56 @@
         </a>
         <p class="footer-desc mt-16">To see our region forever transformed by the Gospel, cultivating fully devoted, fully equipped, fully effective disciples of Jesus.</p>
         <div class="footer-social">
-          <a href="https://www.facebook.com/CornerstoneChurchMA/" target="_blank" rel="noopener" title="Facebook">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <a href="https://www.facebook.com/CornerstoneChurchMA/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="https://www.instagram.com/cornerstonechurchma/" target="_blank" rel="noopener" title="Instagram">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          <a href="https://www.instagram.com/cornerstonechurchma/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
-          <a href="https://www.youtube.com/channel/UCl4J6MR32QrZOfk8M_n7wvA" target="_blank" rel="noopener" title="YouTube">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0d0f14"/></svg>
+          <a href="https://www.youtube.com/channel/UCl4J6MR32QrZOfk8M_n7wvA" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0d0f14"/></svg>
           </a>
-          <a href="https://vimeo.com/cornerstonechurchma" target="_blank" rel="noopener" title="Vimeo">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 8.3c-.1 2.4-1.8 5.7-5 9.9C13.4 22.5 10.7 24 8.4 24c-1.4 0-2.5-1.3-3.5-3.8L3.2 14c-.7-2.5-1.4-3.8-2.2-3.8-.2 0-.8.4-1.9 1.1L0 10.2c1.2-1 2.4-2.1 3.5-3.1 1.6-1.4 2.8-2.1 3.6-2.2 1.9-.2 3.1.9 3.5 3.3.5 2.7.8 4.3.9 4.9.5 2.3 1.1 3.4 1.7 3.4.5 0 1.2-.8 2.2-2.3 1-1.5 1.5-2.7 1.6-3.5.1-1.3-.4-2-1.6-2-.6 0-1.1.1-1.7.4 1.1-3.7 3.3-5.5 6.4-5.3 2.3.1 3.4 1.6 3.1 4.5z"/></svg>
+          <a href="https://vimeo.com/cornerstonechurchma" target="_blank" rel="noopener" aria-label="Vimeo">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 8.3c-.1 2.4-1.8 5.7-5 9.9C13.4 22.5 10.7 24 8.4 24c-1.4 0-2.5-1.3-3.5-3.8L3.2 14c-.7-2.5-1.4-3.8-2.2-3.8-.2 0-.8.4-1.9 1.1L0 10.2c1.2-1 2.4-2.1 3.5-3.1 1.6-1.4 2.8-2.1 3.6-2.2 1.9-.2 3.1.9 3.5 3.3.5 2.7.8 4.3.9 4.9.5 2.3 1.1 3.4 1.7 3.4.5 0 1.2-.8 2.2-2.3 1-1.5 1.5-2.7 1.6-3.5.1-1.3-.4-2-1.6-2-.6 0-1.1.1-1.7.4 1.1-3.7 3.3-5.5 6.4-5.3 2.3.1 3.4 1.6 3.1 4.5z"/></svg>
           </a>
         </div>
       </div>
-      <div>
-        <div class="footer-col-title">Explore</div>
+      <nav aria-label="Explore">
+        <h2 class="footer-col-title">Explore</h2>
         <ul class="footer-links">
           <li><a href="sermons.html">Sermons</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="groups.html">Groups</a></li>
           <li><a href="events.html">Events</a></li>
         </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Get Involved</div>
+      </nav>
+      <nav aria-label="Get Involved">
+        <h2 class="footer-col-title">Get Involved</h2>
         <ul class="footer-links">
           <li><a href="announcements.html">Announcements</a></li>
           <li><a href="give.html">Give</a></li>
           <li><a href="watch.html">Watch Online</a></li>
           <li><a href="groups.html">Serve</a></li>
           <li><a href="about.html#missions">Missions</a></li>
-          <li><button data-contact-modal>Contact Us</button></li>
+          <li><button type="button" data-contact-modal>Contact Us</button></li>
         </ul>
-      </div>
+      </nav>
       <div>
-        <div class="footer-col-title">Visit Us</div>
-        <div class="footer-contact">
+        <h2 class="footer-col-title">Visit Us</h2>
+        <address class="footer-contact">
           <div class="footer-contact-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             15 Kibbe Rd, East Longmeadow, MA 01028
           </div>
           <div class="footer-contact-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Sundays at 10:00am
           </div>
           <div class="footer-contact-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16.5z"/></svg>
-            413-525-8802
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16.5z"/></svg>
+            <a href="tel:+14135258802">413-525-8802</a>
           </div>
-        </div>
+        </address>
       </div>
     </div>
     <div class="footer-bottom">
@@ -227,6 +204,35 @@
     </div>
   </div>
 </footer>
+
+<!-- ─── Video Modal ─────────────────────────────────────────── -->
+<div class="video-modal-backdrop" id="video-modal-backdrop">
+  <div class="video-modal" id="video-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <div class="video-modal-player">
+      <iframe id="video-modal-iframe" title="Sermon video" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="video-modal-meta">
+      <div class="video-modal-info">
+        <div class="video-modal-series" id="modal-series"></div>
+        <h2 class="video-modal-title" id="modal-title"></h2>
+        <div class="video-modal-byline">
+          <span id="modal-speaker">
+            <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <span id="modal-scripture">
+            <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span id="modal-date">
+            <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+        </div>
+      </div>
+      <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">
+        <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
 
 <script src="js/main.js"></script>
 <script src="js/blocks.js"></script>

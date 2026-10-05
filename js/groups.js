@@ -39,13 +39,13 @@ const GRADIENTS = [
     };
     const pill = g.enrollment !== 'open' ? '<span class="group-card-pill pill-' + g.enrollment + '">' + PILL[g.enrollment] + '</span>' : '';
     const inner = o.image
-      ? ' has-logo" style="background:' + gradientFor(g.id) + ';">' + pill + '<img src="' + esc(o.image) + '" alt="' + esc(name) + '">'
-      : '" style="background:' + gradientFor(g.id) + ';">' + pill + '<div class="group-card-monogram">' + esc(monogram(name)) + '</div>';
-    return '<div class="group-card" tabindex="0" role="button" data-group-id="' + esc(g.id) + '">' +
+      ? ' has-logo" style="background:' + gradientFor(g.id) + ';">' + pill + '<img src="' + esc(o.image) + '" alt="">'
+      : '" style="background:' + gradientFor(g.id) + ';">' + pill + '<div class="group-card-monogram" aria-hidden="true">' + esc(monogram(name)) + '</div>';
+    return '<li><article class="group-card has-card-btn">' +
       '<div class="group-card-image' + inner + '</div>' +
       '<div class="group-card-body"><div class="group-card-day">' + esc(brief(g.schedule) || (g.enrollment === 'open' && JOIN[g.strategy]) || '') + '</div>' +
-      '<div class="group-card-name">' + esc(name) + '</div>' +
-      '<div class="group-card-desc">' + esc(o.description || g.description || '') + '</div></div></div>';
+      '<h3 class="group-card-name"><button type="button" class="card-btn" data-group-id="' + esc(g.id) + '">' + esc(name) + '<span class="sr-only"> (view details)</span></button></h3>' +
+      '<div class="group-card-desc">' + esc(o.description || g.description || '') + '</div></div></article></li>';
   }
 
   function renderPage(snap) {
@@ -53,27 +53,27 @@ const GRADIENTS = [
       root.innerHTML = snap.groupTypes.map(t => {
         const groups = snap.groups.filter(g => g.typeId === t.id);
         const desc = t.description || TYPE_FALLBACK_DESC[t.name] || '';
-        return '<div id="' + esc(t.slug) + '">' +
-          '<div class="group-category-header" data-reveal><h2 class="group-category-title">' + esc(t.name) + '</h2>' +
+        return '<section id="' + esc(t.slug) + '" aria-labelledby="' + esc(t.slug) + '-title">' +
+          '<div class="group-category-header" data-reveal><h2 class="group-category-title" id="' + esc(t.slug) + '-title">' + esc(t.name) + '</h2>' +
           '<span class="group-count-badge">' + groups.length + (groups.length === 1 ? ' group' : ' groups') + '</span></div>' +
           (desc ? '<p class="group-category-desc">' + esc(desc) + '</p>' : '') +
-          '<div class="groups-grid" data-reveal-stagger>' + groups.map(g => card(g, t.name)).join('') + '</div></div>';
+          '<ul class="groups-grid plain-list" role="list" data-reveal-stagger>' + groups.map(g => card(g, t.name)).join('') + '</ul></section>';
       }).join('');
       if (window.Blocks) window.Blocks.scan(root);
     });
     document.querySelectorAll('[data-pco-group-count]').forEach(el => { el.textContent = 'View all ' + snap.groups.length + ' groups →'; });
   }
 
-  const ICON = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
+  const ICON = '<svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3689C5" stroke-width="1.5" opacity="0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
 
   function renderTypeCards(snap) {
     document.querySelectorAll('[data-pco-group-types]').forEach(root => {
       root.innerHTML = snap.groupTypes.map((t, i) =>
-        '<a class="group-card" href="groups.html#' + esc(t.slug) + '">' +
+        '<li><a class="group-card" href="groups.html#' + esc(t.slug) + '">' +
         '<div class="group-card-image"><div style="width:100%;height:100%;background:' + GRADIENTS[i % GRADIENTS.length] + ';display:flex;align-items:center;justify-content:center;">' + ICON + '</div></div>' +
         '<div class="group-card-body"><div class="group-card-day">' + t.count + (t.count === 1 ? ' group' : ' groups') + '</div>' +
         '<div class="group-card-name">' + esc(t.name) + '</div>' +
-        '<div class="group-card-desc">' + esc(t.description || TYPE_FALLBACK_DESC[t.name] || '') + '</div></div></a>'
+        '<div class="group-card-desc">' + esc(t.description || TYPE_FALLBACK_DESC[t.name] || '') + '</div></div></a></li>'
       ).join('');
       if (window.Blocks) window.Blocks.scan(root.parentElement || root);
     });
@@ -129,29 +129,19 @@ if (groupBackdrop) {
     groupCta.textContent = g.ctaText;
     groupCta.href = g.pcoUrl;
 
-    groupBackdrop.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    window.A11yModal.open(groupBackdrop, { onEscape: closeGroupModal });
   }
 
   function closeGroupModal() {
-    groupBackdrop.classList.remove('open');
-    document.body.style.overflow = '';
+    window.A11yModal.close(groupBackdrop);
   }
 
   document.getElementById('group-modal-close').addEventListener('click', closeGroupModal);
   groupBackdrop.addEventListener('click', e => {
     if (e.target === groupBackdrop) closeGroupModal();
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && groupBackdrop.classList.contains('open')) closeGroupModal();
-  });
-
   document.addEventListener('click', e => {
     const card = e.target.closest('[data-group-id]');
     if (card) openGroupModal(card.dataset.groupId);
-  });
-  document.addEventListener('keydown', e => {
-    const card = e.target.closest('[data-group-id]');
-    if (card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openGroupModal(card.dataset.groupId); }
   });
 }

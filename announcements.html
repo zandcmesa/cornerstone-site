@@ -9,13 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=2">
-  <link rel="stylesheet" href="css/blocks.css?v=2">
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/blocks.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
 
-<nav class="nav scrolled">
+<nav class="nav scrolled" aria-label="Main">
   <div class="container">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo nav-logo-full">
@@ -30,17 +30,17 @@
         
         <li><a href="groups.html">Groups</a></li>
         <li><a href="events.html">Events</a></li>
-        <li><a href="announcements.html" class="active">Announcements</a></li>
+        <li><a href="announcements.html" class="active" aria-current="page">Announcements</a></li>
         <li><a href="give.html">Give</a></li>
       </ul>
       <div class="nav-actions">
         <a href="watch.html" class="btn btn-primary btn-sm">Watch Online</a>
       </div>
-      <button class="nav-menu-btn" aria-label="Open menu" aria-expanded="false">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <button type="button" class="nav-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav-mobile-drawer">
+        <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
-    <div class="nav-mobile-drawer">
+    <div class="nav-mobile-drawer" id="nav-mobile-drawer">
       <ul class="nav-mobile-links">
         <li><a href="sermons.html">Sermons</a></li>
         <li><a href="about.html">About</a></li>
@@ -53,7 +53,7 @@
     </div>
   </div>
 </nav>
-<main id="main">
+<main id="main" tabindex="-1">
 
 <div class="page-header">
   <div class="container" data-reveal-stagger>
@@ -65,73 +65,74 @@
 
 <section class="section" style="padding-top:48px;">
   <div class="container">
-    <div class="announcements-grid" data-reveal-stagger>
+    <ul class="announcements-grid plain-list" data-reveal-stagger>
 
-      <div class="announcement-card">
+      <li class="announcement-card">
         <div class="announcement-image">
           <img src="images/announcements/high-praise-dance.jpg" alt="Worship dancers with flowing banners in the Cornerstone sanctuary">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">Thursdays · From Oct 8</div>
-          <div class="announcement-title">High Praise Dance</div>
+          <h2 class="announcement-title">High Praise Dance</h2>
           <p class="announcement-desc">A worship dance ministry expressing praise through movement. A new session begins Thursday, October 8 — open to all skill levels. Register to save your spot.</p>
-          <button class="btn btn-primary btn-sm" data-event-id="high-praise-dance">Register Now</button>
+          <button type="button" class="btn btn-primary btn-sm" data-event-id="high-praise-dance">Register Now</button>
         </div>
-      </div>
+      </li>
 
-      <div class="announcement-card">
+      <li class="announcement-card">
         <div class="announcement-image">
           <img src="images/announcements/youth-group.jpg" alt="Teenagers laughing together in a circle of chairs">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">Wednesdays · 6–8pm · From Oct 21</div>
-          <div class="announcement-title">Youth Group Relaunch</div>
+          <h2 class="announcement-title">Youth Group Relaunch</h2>
           <p class="announcement-desc">Youth Group is back. Beginning Wednesday, October 21, students gather every week from 6 to 8pm for worship, friendship, and real conversations about faith.</p>
-          <button class="btn btn-outline btn-sm" data-event-id="youth-group">Details</button>
+          <button type="button" class="btn btn-outline btn-sm" data-event-id="youth-group">Details</button>
         </div>
-      </div>
+      </li>
 
-      <div class="announcement-card">
+      <li class="announcement-card">
         <div class="announcement-image">
           <img src="images/announcements/kids-ministry-volunteers.jpg" alt="A volunteer helping young children with a coloring craft">
         </div>
         <div class="announcement-body">
           <div class="announcement-date">Sunday Mornings</div>
-          <div class="announcement-title">Kids Ministry Volunteers Needed</div>
+          <h2 class="announcement-title">Kids Ministry Volunteers Needed</h2>
           <p class="announcement-desc">Help create a safe, fun, faith-building environment for kids from infancy through 5th grade. We need volunteers for Sunday morning service.</p>
-          <button class="btn btn-primary btn-sm" data-event-id="kingdom-kids-volunteer">Sign Up</button>
+          <button type="button" class="btn btn-primary btn-sm" data-event-id="kingdom-kids-volunteer">Sign Up</button>
         </div>
-      </div>
+      </li>
 
       <!-- Give CTA card -->
-      <div class="announcement-card" style="background:var(--bg-elevated);border-color:var(--brand-border);">
+      <li class="announcement-card" style="background:var(--bg-elevated);border-color:var(--brand-border);">
         <div class="announcement-body" style="padding:32px;display:flex;flex-direction:column;justify-content:center;min-height:240px;">
           <p class="label mb-16" data-reveal>Generosity</p>
-          <div class="announcement-title" style="font-size:24px;">Support Our Mission</div>
+          <h2 class="announcement-title" style="font-size:24px;">Support Our Mission</h2>
           <p class="announcement-desc">Your generosity makes everything we do possible — locally and globally. Give online through Planning Center.</p>
           <a href="give.html" class="btn btn-primary btn-sm" style="align-self:flex-start;">Give Online</a>
         </div>
-      </div>
+      </li>
 
       <!-- Newsletter signup -->
-      <div class="announcement-card" style="background:var(--bg-surface);">
+      <li class="announcement-card" style="background:var(--bg-surface);">
         <div class="announcement-body" style="padding:32px;display:flex;flex-direction:column;justify-content:center;min-height:240px;">
           <p class="label mb-16" data-reveal>Stay Connected</p>
-          <div class="announcement-title" style="font-size:24px;">Get Weekly Updates</div>
+          <h2 class="announcement-title" style="font-size:24px;">Get Weekly Updates</h2>
           <p class="announcement-desc">Sign up for the Cornerstone newsletter to receive announcements, event reminders, and more directly to your inbox.</p>
           <form id="newsletter-form" data-mc-action="https://cornerstonechurchma.us8.list-manage.com/subscribe/post-json?u=2ebc81879a1f4d07822e250f3&amp;id=4ffe74340e&amp;f_id=003933e3f0" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
-            <input type="email" name="EMAIL" required aria-label="Email address" placeholder="Your email" style="flex:1 1 140px;min-width:0;background:var(--bg-elevated);border:1px solid var(--border-normal);border-radius:var(--radius-pill);padding:9px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-primary);outline:none;">
+            <label for="newsletter-email" class="sr-only">Email address</label>
+            <input type="email" id="newsletter-email" name="EMAIL" required aria-required="true" autocomplete="email" placeholder="Your email" style="flex:1 1 140px;min-width:0;background:var(--bg-elevated);border:1px solid var(--border-normal);border-radius:var(--radius-pill);padding:9px 16px;font-family:var(--font-body);font-size:13px;color:var(--text-primary);outline:none;">
             <div style="position:absolute;left:-5000px;" aria-hidden="true"><input type="text" name="b_2ebc81879a1f4d07822e250f3_4ffe74340e" tabindex="-1" value=""></div>
             <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
           </form>
           <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-subtle);">
-            <p class="label" style="margin-bottom:8px;">Get Text Updates</p>
+            <h3 class="label" style="margin-bottom:8px;">Get Text Updates</h3>
             <p class="announcement-desc" style="margin:0;">Text <strong>CONNECTCC</strong> to <strong>97000</strong> to get church updates on your phone.</p>
           </div>
         </div>
-      </div>
+      </li>
 
-    </div>
+    </ul>
   </div>
 </section>
 
@@ -146,56 +147,56 @@
         </a>
         <p class="footer-desc mt-16">To see our region forever transformed by the Gospel, cultivating fully devoted, fully equipped, fully effective disciples of Jesus.</p>
         <div class="footer-social">
-          <a href="https://www.facebook.com/CornerstoneChurchMA/" target="_blank" rel="noopener" title="Facebook">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <a href="https://www.facebook.com/CornerstoneChurchMA/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="https://www.instagram.com/cornerstonechurchma/" target="_blank" rel="noopener" title="Instagram">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          <a href="https://www.instagram.com/cornerstonechurchma/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
           </a>
-          <a href="https://www.youtube.com/channel/UCl4J6MR32QrZOfk8M_n7wvA" target="_blank" rel="noopener" title="YouTube">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0d0f14"/></svg>
+          <a href="https://www.youtube.com/channel/UCl4J6MR32QrZOfk8M_n7wvA" target="_blank" rel="noopener" aria-label="YouTube">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#0d0f14"/></svg>
           </a>
-          <a href="https://vimeo.com/cornerstonechurchma" target="_blank" rel="noopener" title="Vimeo">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 8.3c-.1 2.4-1.8 5.7-5 9.9C13.4 22.5 10.7 24 8.4 24c-1.4 0-2.5-1.3-3.5-3.8L3.2 14c-.7-2.5-1.4-3.8-2.2-3.8-.2 0-.8.4-1.9 1.1L0 10.2c1.2-1 2.4-2.1 3.5-3.1 1.6-1.4 2.8-2.1 3.6-2.2 1.9-.2 3.1.9 3.5 3.3.5 2.7.8 4.3.9 4.9.5 2.3 1.1 3.4 1.7 3.4.5 0 1.2-.8 2.2-2.3 1-1.5 1.5-2.7 1.6-3.5.1-1.3-.4-2-1.6-2-.6 0-1.1.1-1.7.4 1.1-3.7 3.3-5.5 6.4-5.3 2.3.1 3.4 1.6 3.1 4.5z"/></svg>
+          <a href="https://vimeo.com/cornerstonechurchma" target="_blank" rel="noopener" aria-label="Vimeo">
+            <svg aria-hidden="true" focusable="false" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.7 8.3c-.1 2.4-1.8 5.7-5 9.9C13.4 22.5 10.7 24 8.4 24c-1.4 0-2.5-1.3-3.5-3.8L3.2 14c-.7-2.5-1.4-3.8-2.2-3.8-.2 0-.8.4-1.9 1.1L0 10.2c1.2-1 2.4-2.1 3.5-3.1 1.6-1.4 2.8-2.1 3.6-2.2 1.9-.2 3.1.9 3.5 3.3.5 2.7.8 4.3.9 4.9.5 2.3 1.1 3.4 1.7 3.4.5 0 1.2-.8 2.2-2.3 1-1.5 1.5-2.7 1.6-3.5.1-1.3-.4-2-1.6-2-.6 0-1.1.1-1.7.4 1.1-3.7 3.3-5.5 6.4-5.3 2.3.1 3.4 1.6 3.1 4.5z"/></svg>
           </a>
         </div>
       </div>
-      <div>
-        <div class="footer-col-title">Explore</div>
+      <nav aria-label="Explore">
+        <h2 class="footer-col-title">Explore</h2>
         <ul class="footer-links">
           <li><a href="sermons.html">Sermons</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="groups.html">Groups</a></li>
           <li><a href="events.html">Events</a></li>
         </ul>
-      </div>
-      <div>
-        <div class="footer-col-title">Get Involved</div>
+      </nav>
+      <nav aria-label="Get Involved">
+        <h2 class="footer-col-title">Get Involved</h2>
         <ul class="footer-links">
           <li><a href="announcements.html">Announcements</a></li>
           <li><a href="give.html">Give</a></li>
           <li><a href="watch.html">Watch Online</a></li>
           <li><a href="groups.html">Serve</a></li>
           <li><a href="about.html#missions">Missions</a></li>
-          <li><button data-contact-modal>Contact Us</button></li>
+          <li><button type="button" data-contact-modal>Contact Us</button></li>
         </ul>
-      </div>
+      </nav>
       <div>
-        <div class="footer-col-title">Visit Us</div>
-        <div class="footer-contact">
+        <h2 class="footer-col-title">Visit Us</h2>
+        <address class="footer-contact">
           <div class="footer-contact-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             15 Kibbe Rd, East Longmeadow, MA 01028
           </div>
           <div class="footer-contact-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Sundays at 10:00am
           </div>
           <div class="footer-contact-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16.5z"/></svg>
-            413-525-8802
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.9a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.5 16.5z"/></svg>
+            <a href="tel:+14135258802">413-525-8802</a>
           </div>
-        </div>
+        </address>
       </div>
     </div>
     <div class="footer-bottom">
@@ -208,7 +209,7 @@
   </div>
 </footer>
 <div id="event-modal-backdrop" class="event-modal-backdrop">
-  <div class="event-modal">
+  <div class="event-modal" role="dialog" aria-modal="true" aria-labelledby="event-modal-title" tabindex="-1">
     <div class="event-modal-header">
       <div class="event-modal-date-block">
         <div class="event-modal-date-month" id="event-modal-month"></div>
@@ -218,18 +219,18 @@
         <div class="event-modal-label" id="event-modal-label"></div>
         <h2 class="event-modal-title" id="event-modal-title"></h2>
       </div>
-      <button class="event-modal-close" id="event-modal-close" aria-label="Close">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <button type="button" class="event-modal-close" id="event-modal-close" aria-label="Close event details">
+        <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <div class="event-modal-scroll">
       <div class="event-modal-meta">
         <div class="event-modal-meta-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span id="event-modal-time"></span>
         </div>
         <div class="event-modal-meta-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <span id="event-modal-location"></span>
         </div>
       </div>
@@ -239,7 +240,7 @@
       <p class="event-modal-footer-note" id="event-modal-footer-note"></p>
       <a id="event-modal-cta" href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
         Register
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        <svg aria-hidden="true" focusable="false" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
     </div>
   </div>

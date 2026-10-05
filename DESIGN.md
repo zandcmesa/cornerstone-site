@@ -66,3 +66,19 @@ Section shell (`.section` + `.divider-top/-bottom`) · eyebrow label (`.label`) 
 ## Voice
 
 Warm, invitational, plain-spoken. Italic serif for the emotional register; sans caps for wayfinding. Blue is a signal, not a decoration.
+
+## Accessibility primitives
+
+Every page keeps the same landmark skeleton: skip link → `<nav aria-label="Main">` → `<main id="main" tabindex="-1">` → `<footer>` (with `<nav aria-label="Explore">`, `<nav aria-label="Get Involved">` and an `<address>` block). Modals live outside `<main>`. One `h1` per page, eyebrow labels are `<p class="label">` *beside* the heading (never instead of it); a section whose only title is an eyebrow uses `<h2 class="label">`.
+
+| Primitive | Where | Use |
+|---|---|---|
+| `.sr-only` | `blocks.css` | Visually hidden text for screen readers (field labels, "Scripture:" prefixes, "(opens in a new tab)") |
+| `:focus-visible` ring | `blocks.css` | Global 2px `--brand-light` outline; never set `outline: none` on a control without replacing it |
+| `.card-btn` inside `.has-card-btn` | `blocks.css` | A `<button>` in the card's `<h3>` whose `::after` stretches over the card, so the whole card is clickable but the tab stop and accessible name are the title. The card shows `:focus-within` instead of a button ring |
+| `.card-btn-stretch` | `blocks.css` | Same stretch for a visible pill button (event rows) |
+| `.plain-list` | `blocks.css` | `<ul role="list">` / `<ol>` for card grids; keeps list semantics (item counts, list navigation) without bullets |
+| `window.A11yModal` | `main.js` | `open(backdrop, { onEscape, initialFocus })` / `close(backdrop)`. Adds `.open`, moves focus into the `[role="dialog"]`, traps Tab (keydown + focus sentinels, so it also works around the Vimeo/Planning Center iframes), makes everything else `inert`, restores focus to the trigger on close. Every modal must have `role="dialog" aria-modal="true" aria-labelledby` on the dialog element, not the backdrop |
+| `[data-hero-video-toggle]` | `index.html` / `main.js` | Pause/play for the autoplaying hero video (WCAG 2.2.2); reduced-motion users start paused |
+
+Rules: decorative inline SVGs get `aria-hidden="true" focusable="false"`; skeleton placeholders get `aria-hidden="true"`; result counts and toasts are `aria-live="polite"`; links with `target="_blank"` get the new-tab note automatically from `main.js`; small brand-blue text on `--bg-elevated` uses `--brand-light` (plain `--brand` is 4.3:1 there).

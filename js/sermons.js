@@ -423,10 +423,11 @@ function renderSermons() {
 
   if (filtered.length === 0) {
     grid.innerHTML = `
-      <div class="no-results">
+      <li class="no-results">
         <p class="label">No results</p>
         <p class="body-text">Try adjusting your filters or search term.</p>
-      </div>`;
+      </li>`;
+    renderActiveFilters();
     return;
   }
 
@@ -439,32 +440,34 @@ function renderSermons() {
   ];
 
   grid.innerHTML = filtered.map((s, i) => `
-    <article class="sermon-card" style="cursor:pointer;" data-id="${s.id}">
+    <li>
+    <article class="sermon-card has-card-btn" data-id="${s.id}">
       <div class="sermon-thumb" style="background:${gradients[i % gradients.length]}">
         <img class="sermon-art" src="${sermonArt(s)}" alt="" onerror="this.remove()">
-        ${s.series ? `<span class="sermon-series-badge">${s.series}</span>` : ''}
-        <div class="sermon-play-btn">
+        ${s.series ? `<span class="sermon-series-badge"><span class="sr-only">Series: </span>${s.series}</span>` : ''}
+        <div class="sermon-play-btn" aria-hidden="true">
           <div class="sermon-play-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </div>
         </div>
       </div>
       <div class="sermon-body">
         <div class="sermon-meta">
           <span class="sermon-speaker">${s.speaker}</span>
-          <span class="sermon-date">${formatDate(s.date)}</span>
+          <span class="sermon-date"><time datetime="${s.date}">${formatDate(s.date)}</time></span>
         </div>
-        <h3 class="sermon-title">${highlight(s.title, activeFilters.search)}</h3>
+        <h3 class="sermon-title" id="sermon-title-${s.id}"><button type="button" class="card-btn">${highlight(s.title, activeFilters.search)}<span class="sr-only"> (play video)</span></button></h3>
         <div class="sermon-scripture">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          ${s.scripture}
+          <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span class="sr-only">Scripture: </span>${s.scripture}
         </div>
         <p class="sermon-description">${s.description}</p>
-        <div class="sermon-topics">
-          ${s.topics.map(t => `<span class="topic-tag">${t}</span>`).join('')}
-        </div>
+        <ul class="sermon-topics plain-list" aria-label="Topics">
+          ${s.topics.map(t => `<li class="topic-tag">${t}</li>`).join('')}
+        </ul>
       </div>
     </article>
+    </li>
   `).join('');
 
   renderActiveFilters();
@@ -491,10 +494,10 @@ function renderActiveFilters() {
   if (chips.length === 0) { wrap.innerHTML = ''; return; }
 
   wrap.innerHTML = chips.map(c => `
-    <span class="active-filter-chip" data-key="${c.key}">
-      ${c.label} <span class="chip-x">×</span>
-    </span>
-  `).join('') + `<span class="clear-filters">Clear all</span>`;
+    <button type="button" class="active-filter-chip" data-key="${c.key}" aria-label="Remove ${c.key} filter: ${c.label}">
+      ${c.label} <span class="chip-x" aria-hidden="true">×</span>
+    </button>
+  `).join('') + `<button type="button" class="clear-filters">Clear all filters</button>`;
 
   wrap.querySelectorAll('.active-filter-chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -537,25 +540,25 @@ function formatDate(dateStr) {
 
 function openVideoModal(sermon) {
   const backdrop = document.getElementById('video-modal-backdrop');
-  document.getElementById('video-modal-iframe').src =
+  const iframe = document.getElementById('video-modal-iframe');
+  iframe.title = 'Video: ' + sermon.title;
+  iframe.src =
     `https://player.vimeo.com/video/${sermon.vimeoId}?autoplay=1&color=3689C5&title=0&byline=0&portrait=0`;
   document.getElementById('modal-series').textContent = sermon.series || '';
   document.getElementById('modal-title').textContent = sermon.title;
   document.getElementById('modal-speaker').innerHTML =
-    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${sermon.speaker}`;
+    `<span class="sr-only">Speaker: </span><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${sermon.speaker}`;
   document.getElementById('modal-scripture').innerHTML =
-    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> ${sermon.scripture}`;
+    `<span class="sr-only">Scripture: </span><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> ${sermon.scripture}`;
   document.getElementById('modal-date').innerHTML =
-    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${formatDate(sermon.date)}`;
-  backdrop.classList.add('open');
-  document.body.style.overflow = 'hidden';
+    `<span class="sr-only">Date: </span><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${formatDate(sermon.date)}`;
+  window.A11yModal.open(backdrop, { onEscape: closeVideoModal });
 }
 
 function closeVideoModal() {
   const backdrop = document.getElementById('video-modal-backdrop');
-  backdrop.classList.remove('open');
+  window.A11yModal.close(backdrop);
   document.getElementById('video-modal-iframe').src = '';
-  document.body.style.overflow = '';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -565,10 +568,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('video-modal-backdrop')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) closeVideoModal();
   });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeVideoModal();
-  });
-
   const searchEl = document.getElementById('filter-search');
   let searchDebounce;
   searchEl?.addEventListener('input', e => {
