@@ -88,10 +88,10 @@ window.PCO_UI = (function () {
       pcoUrl: e.pcoUrl || null,
     };
     const primary = e.kind === 'signup' || e.ctaText === 'Register';
-    const dayStyle = e.dateDay.length > 2 ? ' style="font-size:18px;line-height:1.4;"' : '';
+    const dayClass = e.dateDay.length > 2 ? ' event-date-day-text' : '';
     const cta = e.ctaText || 'Details';
     return '<li class="event-row">' +
-      '<div class="event-date-block"><div class="event-date-month">' + esc(e.dateMonth) + '</div><div class="event-date-day"' + dayStyle + '>' + esc(e.dateDay) + '</div></div>' +
+      '<div class="event-date-block"><div class="event-date-month">' + esc(e.dateMonth) + '</div><div class="event-date-day' + dayClass + '">' + esc(e.dateDay) + '</div></div>' +
       '<div class="event-info"><h3 class="event-info-title">' + esc(e.title) + '</h3>' +
       '<div class="event-info-meta"><span><span class="sr-only">When: </span>' + CLOCK + ' ' + esc(brief(e.time)) + '</span><span><span class="sr-only">Where: </span>' + PIN + ' ' + esc(e.location) + '</span></div></div>' +
       '<button type="button" class="btn ' + (primary ? 'btn-primary' : 'btn-outline') + ' btn-sm card-btn-stretch" data-event-id="' + esc(e.id) + '" aria-label="' + esc(cta + ': ' + e.title) + '">' + esc(cta) + '</button></li>';

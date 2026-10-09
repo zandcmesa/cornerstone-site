@@ -426,7 +426,9 @@
       same surface, hairline border, and a gentle lift + blue border on hover. Grids are real lists,
       each card's title is a heading, and when the whole card opens something the title is the
       button — stretched over the card, so one tab stop, one accessible name. The second sermon
-      card shows that focus state.
+      card shows that focus state. The event row watches its own width, not the viewport: in a
+      narrow column like this one the date tightens and the action drops to a full-width compact
+      button, exactly as it does on a phone.
     </p>
     <div class="sg-block sg-card-demos" data-reveal-stagger>
       <article class="sermon-card has-card-btn">

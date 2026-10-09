@@ -735,13 +735,14 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  container-type: inline-size;
 }
 .event-row {
   position: relative;
   display: grid;
-  grid-template-columns: 80px 1fr auto;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   padding: 24px 28px;
   background: var(--bg-surface);
   border-radius: var(--radius-md);
@@ -751,22 +752,30 @@
 }
 .event-row:hover { border-color: var(--brand-border); }
 .event-date-block {
-  text-align: center;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  text-align: left;
 }
 .event-date-month {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  line-height: 1;
   color: var(--brand-text);
 }
 .event-date-day {
   font-family: var(--font-display);
   font-size: 36px;
   font-weight: 300;
-  line-height: 1;
+  line-height: 0.75;
   color: var(--text-primary);
+}
+.event-date-day-text {
+  font-size: 18px;
+  line-height: 0.9;
 }
 .event-row.skeleton { pointer-events: none; }
 .event-row.skeleton .event-date-block,
@@ -786,17 +795,38 @@
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
+  line-height: 1.2;
   color: var(--text-primary);
   margin-bottom: 4px;
 }
+.event-info { min-width: 0; }
 .event-info-meta {
   font-size: 13px;
   color: var(--text-secondary);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  gap: 4px 16px;
 }
 .event-info-meta span { display: flex; align-items: center; gap: 5px; }
+/* Compact row: driven by the list's own width, not the viewport, so a row in a
+   narrow column (home sidebar, style guide demo, phone) tightens the same way. */
+@container (max-width: 600px) {
+  .event-row {
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 14px 16px;
+    padding: 16px;
+    align-items: start;
+  }
+  .event-row > .btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    justify-content: center;
+    padding: 8px 16px;
+  }
+  .event-row > .btn-outline { border: 1px solid var(--border-subtle); }
+  .event-row > .btn-outline:hover { border-color: var(--brand-border); }
+}
 
 /* ─── Announcements ──────────────────────────────────────────── */
 .announcements-grid {
@@ -1746,18 +1776,6 @@ a.mission-item:hover { color: var(--text-primary); }
 
   /* Groups */
   .groups-grid { grid-template-columns: repeat(2, 1fr); }
-
-  /* Events */
-  .event-row {
-    grid-template-columns: 60px 1fr;
-    gap: 10px 14px;
-    padding: 16px;
-    align-items: start;
-  }
-  .event-row > :last-child {
-    grid-column: 2;
-    justify-self: start;
-  }
 
   /* Announcements */
   .announcements-grid { grid-template-columns: 1fr; }
