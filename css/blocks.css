@@ -374,5 +374,38 @@ button { cursor: pointer; font-family: var(--font-body); border: none; backgroun
 .plain-list > li { list-style: none; margin: 0; padding: 0; min-width: 0; }
 /* A visible button that also makes its whole row/card clickable; the row needs position: relative */
 .card-btn-stretch::after { content: ''; position: absolute; inset: 0; }
+/* One-line title: ellipsis at the end of the first line; the full text shows in a tooltip on hover/focus.
+   Works on the heading itself or on the .card-btn inside it. */
+.truncate, .truncate > .card-btn {
+  display: block; width: 100%; min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* Chip row that collapses to one line: main.js hides what overflows and appends a +N chip */
+[data-chip-row] { flex-wrap: wrap; }
+[data-chip-row] > .is-overflow { display: none; }
+.chip-more {
+  position: relative; z-index: 1;
+  font: inherit; cursor: pointer;
+  color: var(--text-primary);
+}
+.chip-more:hover, .chip-more:focus-visible { border-color: var(--brand-border); }
+/* Shared tooltip (window.Tooltip): one element, positioned above its anchor, flips below near the top */
+.tooltip {
+  position: fixed; z-index: 1200; max-width: 280px;
+  padding: 8px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  color: var(--text-primary);
+  font-family: var(--font-body); font-size: 12px; line-height: 1.45;
+  pointer-events: none;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity var(--dur-quick) var(--ease-out), transform var(--dur-quick) var(--ease-out);
+}
+.tooltip.is-below { transform: translateY(-4px); }
+.tooltip.is-visible { opacity: 1; transform: none; }
+.tooltip[hidden] { display: none; }
+.tooltip > ul { margin: 0; }
 /* Focus sentinels bracket a dialog's content; they are never visible */
 .focus-sentinel { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }

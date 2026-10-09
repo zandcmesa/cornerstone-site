@@ -44,7 +44,7 @@ const GRADIENTS = [
     return '<li><article class="group-card has-card-btn">' +
       '<div class="group-card-image' + inner + '</div>' +
       '<div class="group-card-body"><div class="group-card-day">' + esc(brief(g.schedule) || (g.enrollment === 'open' && JOIN[g.strategy]) || '') + '</div>' +
-      '<h3 class="group-card-name"><button type="button" class="card-btn" data-group-id="' + esc(g.id) + '">' + esc(name) + '</button></h3>' +
+      '<h3 class="group-card-name truncate"><button type="button" class="card-btn" data-group-id="' + esc(g.id) + '">' + esc(name) + '</button></h3>' +
       '<div class="group-card-desc">' + esc(o.description || g.description || '') + '</div></div></article></li>';
   }
 
@@ -72,7 +72,7 @@ const GRADIENTS = [
         '<li><a class="group-card" href="groups.html#' + esc(t.slug) + '">' +
         '<div class="group-card-image"><div style="width:100%;height:100%;background:' + GRADIENTS[i % GRADIENTS.length] + ';display:flex;align-items:center;justify-content:center;">' + ICON + '</div></div>' +
         '<div class="group-card-body"><div class="group-card-day">' + t.count + (t.count === 1 ? ' group' : ' groups') + '</div>' +
-        '<div class="group-card-name">' + esc(t.name) + '</div>' +
+        '<div class="group-card-name truncate">' + esc(t.name) + '</div>' +
         '<div class="group-card-desc">' + esc(t.description || TYPE_FALLBACK_DESC[t.name] || '') + '</div></div></a></li>'
       ).join('');
       if (window.Blocks) window.Blocks.scan(root.parentElement || root);

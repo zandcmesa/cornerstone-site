@@ -9,8 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=3">
-  <link rel="stylesheet" href="css/blocks.css?v=4">
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/blocks.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -355,7 +355,7 @@
 
   function renderCard(s) {
     const badge = s.series ? '<span class="sermon-series-badge"><span class="sr-only">Series: </span>' + s.series + '</span>' : '';
-    const topics = s.topics.slice(0, 3).map(t => '<li class="topic-tag">' + t + '</li>').join('');
+    const topics = s.topics.map(t => '<li class="topic-tag">' + t + '</li>').join('');
     const thumbImg = '<img class="sermon-art" src="' + sermonArt(s) + '" alt="" onerror="this.remove()">';
     return '<li><article class="sermon-card has-card-btn" data-sermon-id="' + s.id + '">' +
       '<div class="sermon-thumb">' +
@@ -368,9 +368,9 @@
           '<span class="sermon-speaker">' + s.speaker + '</span>' +
           '<span class="sermon-date"><time datetime="' + s.date + '">' + formatDate(s.date) + '</time></span>' +
         '</div>' +
-        '<h3 class="sermon-title"><button type="button" class="card-btn">' + s.title + '</button></h3>' +
+        '<h3 class="sermon-title truncate"><button type="button" class="card-btn">' + s.title + '</button></h3>' +
         '<div class="sermon-scripture">' + BOOK_SVG + ' <span class="sr-only">Scripture: </span>' + s.scripture + '</div>' +
-        '<ul class="sermon-topics plain-list" aria-label="Topics">' + topics + '</ul>' +
+        '<ul class="sermon-topics plain-list" aria-label="Topics" data-chip-row>' + topics + '</ul>' +
       '</div>' +
     '</article></li>';
   }

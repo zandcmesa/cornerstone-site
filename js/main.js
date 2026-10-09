@@ -513,3 +513,155 @@ if (pcoBackdrop) {
     });
   }
 }());
+
+// ─── Tooltip + one-line chip rows ─────────────────────────────
+// window.Tooltip.show(anchor, html, { pin }) / hide(force). One shared
+// element; .truncate titles show their full text on hover/focus, and
+// [data-chip-row] lists collapse to one line with a +N chip that lists
+// the rest. Works on content rendered later (MutationObserver), so
+// script order doesn't matter.
+window.Tooltip = (function () {
+  const tip = document.createElement('div');
+  tip.className = 'tooltip';
+  tip.id = 'site-tooltip';
+  tip.setAttribute('role', 'tooltip');
+  tip.hidden = true;
+  document.body.appendChild(tip);
+  let anchor = null, pinned = false, held = false;
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  function position() {
+    const r = anchor.getBoundingClientRect();
+    const t = tip.getBoundingClientRect();
+    const gap = 8, pad = 12;
+    let top = r.top - t.height - gap;
+    const below = top < pad;
+    tip.classList.toggle('is-below', below);
+    if (below) top = r.bottom + gap;
+    const left = Math.max(pad, Math.min(r.left + r.width / 2 - t.width / 2, window.innerWidth - t.width - pad));
+    tip.style.top = top + 'px';
+    tip.style.left = left + 'px';
+  }
+
+  // opts.pin: stays until clicked again / outside tap / Escape. opts.focus: stays until blur.
+  function show(el, html, opts) {
+    const pin = !!(opts && opts.pin), focus = !!(opts && opts.focus);
+    if (anchor === el && !tip.hidden) { pinned = pinned || pin; held = held || pin || focus; return; }
+    if (anchor) anchor.removeAttribute('aria-describedby');
+    anchor = el; pinned = pin; held = pin || focus;
+    tip.innerHTML = html;
+    tip.classList.remove('is-visible');
+    tip.hidden = false;
+    el.setAttribute('aria-describedby', tip.id);
+    position();
+    void tip.offsetWidth;
+    tip.classList.add('is-visible');
+  }
+
+  function hide(force) {
+    if (!anchor || (held && !force)) return;
+    anchor.removeAttribute('aria-describedby');
+    anchor = null; pinned = false; held = false;
+    tip.classList.remove('is-visible');
+    tip.hidden = true;
+  }
+
+  function onMove() { if (!anchor) return; if (held) position(); else hide(); }
+  document.addEventListener('scroll', onMove, { capture: true, passive: true });
+  window.addEventListener('resize', onMove);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(true); });
+  document.addEventListener('pointerdown', e => { if (anchor && !anchor.contains(e.target)) hide(true); });
+  document.documentElement.addEventListener('mouseleave', () => hide());
+
+  // Truncated titles: the card's title button stretches over the whole card,
+  // so test the pointer against the title's own box rather than the event target.
+  function textEl(title) { return title.querySelector('.card-btn') || title; }
+  function isTruncated(title) { const t = textEl(title); return t.scrollWidth > t.clientWidth + 1; }
+  let raf = 0;
+  document.addEventListener('pointermove', e => {
+    if (e.pointerType === 'touch' || raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const scope = e.target.closest ? e.target.closest('.has-card-btn, .truncate') : null;
+      const title = scope && (scope.matches('.truncate') ? scope : scope.querySelector('.truncate'));
+      if (title) {
+        const r = title.getBoundingClientRect();
+        const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        if (inside && isTruncated(title)) { show(title, esc(textEl(title).textContent.trim())); return; }
+      }
+      if (anchor && anchor.classList.contains('truncate')) hide();
+    });
+  });
+  document.addEventListener('focusin', e => {
+    const title = e.target.closest && e.target.closest('.truncate');
+    if (title && isTruncated(title)) show(title, esc(textEl(title).textContent.trim()), { focus: true });
+  });
+  document.addEventListener('focusout', e => {
+    if (anchor && e.target.closest && e.target.closest('.truncate') === anchor) hide(true);
+  });
+
+  // Chip rows
+  function fit(row) {
+    const old = row.querySelector('.chip-more-item');
+    if (old) old.remove();
+    const chips = Array.from(row.children);
+    chips.forEach(c => c.classList.remove('is-overflow'));
+    if (chips.length < 2 || row.clientWidth === 0) return;
+    const top = chips[0].offsetTop;
+    if (chips[chips.length - 1].offsetTop === top) return;
+
+    const item = document.createElement('li');
+    item.className = 'chip-more-item';
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = (chips[0].className.split(' ')[0] || 'chip') + ' chip-more';
+    item.appendChild(btn);
+    row.appendChild(item);
+
+    const hidden = [];
+    for (let i = chips.length - 1; i >= 0; i--) {
+      hidden.unshift(chips[i]);
+      chips[i].classList.add('is-overflow');
+      btn.textContent = '+' + hidden.length;
+      if (item.offsetTop === top) break;
+    }
+    const n = hidden.length;
+    btn.setAttribute('aria-label', n + ' more topic' + (n === 1 ? '' : 's'));
+    const html = '<ul class="' + esc(row.className) + '">' + hidden.map(c => '<li class="' + esc(c.className.replace('is-overflow', '').trim()) + '">' + esc(c.textContent.trim()) + '</li>').join('') + '</ul>';
+
+    btn.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') show(btn, html); });
+    btn.addEventListener('pointerleave', () => { if (anchor === btn) hide(); });
+    btn.addEventListener('focus', () => show(btn, html, { focus: true }));
+    btn.addEventListener('blur', () => { if (anchor === btn) hide(true); });
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (anchor === btn && pinned) hide(true); else show(btn, html, { pin: true });
+    });
+  }
+
+  const widths = new WeakMap();
+  const ro = new ResizeObserver(entries => {
+    entries.forEach(en => {
+      const w = Math.round(en.contentRect.width);
+      if (widths.get(en.target) === w) return;
+      widths.set(en.target, w);
+      fit(en.target);
+    });
+  });
+  function scan(root) {
+    const rows = root.querySelectorAll ? Array.from(root.querySelectorAll('[data-chip-row]')) : [];
+    if (root.matches && root.matches('[data-chip-row]')) rows.unshift(root);
+    rows.forEach(row => {
+      if (!row.dataset.chipRowReady) { row.dataset.chipRowReady = '1'; ro.observe(row); }
+      fit(row);
+    });
+  }
+  new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) scan(n); })))
+    .observe(document.body, { childList: true, subtree: true });
+  scan(document);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => document.querySelectorAll('[data-chip-row]').forEach(fit));
+
+  return { show, hide, fit };
+}());
