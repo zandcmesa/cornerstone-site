@@ -87,7 +87,20 @@ Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-
 
 ## Google Analytics
 
-`js/analytics.js` loads GA4 property `G-B1VETEFTP4` (the same property the old WordPress site used via Site Kit) on every page except `proposal.html`. It only fires when the hostname ends in `cornerstonechurchma.com`, so the GitHub Pages preview and local files stay out of the data. Pastor Josh is Admin on the property, Zand is Editor. The ad agency's Google Ads tag can share this loader later. No cookie banner: the privacy page discloses analytics and there is no legal trigger for a local MA church site.
+`js/analytics.js` loads GA4 property `G-B1VETEFTP4` (the same property the old WordPress site used via Site Kit) on every page except `proposal.html`. It only fires when the hostname ends in `cornerstonechurchma.com`, so the GitHub Pages preview and local files stay out of the data. Pastor Josh is Admin on the property, Zand is Editor. No cookie banner: the privacy page discloses analytics and there is no legal trigger for a local MA church site.
+
+`window.csTrack(name, params)` is the event helper — a safe no-op off the live domain. A delegated click listener on `document` classifies anchors by href, so dynamically rendered Planning Center links are covered without touching `events.js` or `groups.js`. Six conversion events:
+
+| Event | Fires on |
+| --- | --- |
+| `give_click` | any link to `churchcenter.com/giving` |
+| `registration_click` | `churchcenter.com/registrations` or `/sign-ups` |
+| `group_click` | `churchcenter.com/groups` |
+| `phone_click` | any `tel:` link |
+| `email_click` | any `mailto:` link |
+| `contact_submit` | Formspree success in `js/main.js`, with `inquiry_type` |
+
+`churchcenter.com/calendar` is deliberately untracked — browsing the calendar is not a conversion. Giving and registration complete on Church Center, which cannot host tags, so these measure intent (the click out), never the completed gift or signup. Missional Marketing imports these from GA4 as Google Ads conversions rather than putting their own tag on the site.
 
 ## Planning Center (live)
 

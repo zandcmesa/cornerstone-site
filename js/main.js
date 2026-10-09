@@ -451,6 +451,7 @@ if (pcoBackdrop) {
     })
       .then(r => { if (!r.ok) throw new Error(r.status); })
       .then(() => {
+        window.csTrack('contact_submit', { inquiry_type: savedValues.type });
         closeContactModal();
         form.reset();
         FIELDS.forEach(id => document.getElementById(id).removeAttribute('aria-invalid'));
