@@ -85,6 +85,10 @@ Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-
 
 `js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. The live form ID is set (`mnpnwblr`); the endpoint is also recorded in the Planning Center Key Google Doc.
 
+## Google Analytics
+
+`js/analytics.js` loads GA4 property `G-B1VETEFTP4` (the same property the old WordPress site used via Site Kit) on every page except `proposal.html`. It only fires when the hostname ends in `cornerstonechurchma.com`, so the GitHub Pages preview and local files stay out of the data. Pastor Josh is Admin on the property, Zand is Editor. The ad agency's Google Ads tag can share this loader later. No cookie banner: the privacy page discloses analytics and there is no legal trigger for a local MA church site.
+
 ## Planning Center (live)
 
 `scripts/pco-lib.mjs` normalizes Calendar, Registrations signups, and Groups into one snapshot shape. Two consumers: `.github/workflows/sync-planning-center.yml` runs `scripts/sync-pco.mjs` nightly and commits `js/pco-data.js` (`PCO_SNAPSHOT`); `worker/` is a Cloudflare Worker serving the same shape live with a 5-minute cache. `js/pco.js` renders the snapshot on load, then fetches `PCO_WORKER_URL` and re-renders only if the data differs. `js/events.js` fills `[data-pco-rhythms]`, `[data-pco-events]`, `[data-pco-next-steps]`; `js/groups.js` fills `[data-pco-groups]` and `[data-pco-group-types]`. Curated images/copy for specific groups live in `GROUP_OVERRIDES` keyed by PCO group id. Planning Center photos are never rendered. Tests: `node --test 'scripts/*.test.mjs'` (fixtures in `scripts/fixtures/`, refresh with `scripts/capture-fixtures.mjs`). Deploy steps: `docs/planning-center-setup.md`. Repo secrets `PCO_APP_ID` / `PCO_SECRET` are set; the worker URL still needs pasting into `js/pco.js` after Zand deploys.
