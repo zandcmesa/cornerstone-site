@@ -56,7 +56,7 @@ export function findReplay(date, deps = ytDeps) {
 }
 
 export function fetchTimedCaptions(youtubeId, dir) {
-  ytdlp(['--skip-download', '--write-auto-subs', '--sub-lang', 'en-orig,en', '--sub-format', 'json3', '-o', path.join(dir, 'captions'), `https://www.youtube.com/watch?v=${youtubeId}`], { quiet: true });
+  ytdlp(['--skip-download', '--write-auto-subs', '--sub-lang', 'en-orig,en', '--sub-format', 'json3', '-o', path.join(dir, 'captions'), `https://www.youtube.com/watch?v=${youtubeId}`]);
   const file = fs.readdirSync(dir).find(f => f.startsWith('captions') && f.endsWith('.json3'));
   if (!file) throw new Error('YouTube auto-captions are not available yet for this replay');
   return json3ToTimed(JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8')));
