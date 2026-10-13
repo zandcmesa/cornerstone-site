@@ -83,7 +83,13 @@ Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-
 
 ## Contact form
 
-`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. The live form ID is set (`mnpnwblr`); the endpoint is also recorded in the Planning Center Key Google Doc.
+`js/main.js` posts the contact modal to Formspree (`FORMSPREE_ENDPOINT` at the top of the modal IIFE). Includes a `_gotcha` honeypot. The live form ID is set (`mnpnwblr`); the endpoint is also recorded in the Planning Center Key Google Doc. Any page opened with `#contact` opens the modal on load.
+
+## Legacy URL redirects
+
+`about/`, `announcements/`, `staff/`, `contact/` hold redirect stubs for the old WordPress trailing-slash URLs, which GitHub Pages would otherwise 404. Don't delete them: the Clearstream microsite (`clr.io/site/crjzg`, linked from the sanctuary tap tags) points "Upcoming Events" at `/announcements/`. `/contact/` lands on `index.html#contact`.
+
+`404.html` catches every other old URL (WordPress sermon/event pages, `/jobs/`, `/next-steps/`). GitHub Pages serves it at any depth, so it uses `<base href="/">` (swapped to `/cornerstone-site/` on the Pages preview) to keep its asset paths working.
 
 ## Google Analytics
 
