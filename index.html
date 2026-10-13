@@ -346,7 +346,6 @@
 <script>
 (function () {
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const BOOK_SVG = '<svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
   const PLAY_SVG = '<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
 
   function formatDate(str) {
@@ -356,7 +355,6 @@
 
   function renderCard(s) {
     const badge = s.series ? '<span class="sermon-series-badge"><span class="sr-only">Series: </span>' + s.series + '</span>' : '';
-    const topics = s.topics.map(t => '<li class="topic-tag">' + t + '</li>').join('');
     const thumbImg = '<img class="sermon-art" src="' + sermonArt(s) + '" alt="" onerror="this.remove()">';
     return '<li><article class="sermon-card has-card-btn" data-sermon-id="' + s.id + '">' +
       '<div class="sermon-thumb">' +
@@ -370,8 +368,8 @@
           '<span class="sermon-date"><time datetime="' + s.date + '">' + formatDate(s.date) + '</time></span>' +
         '</div>' +
         '<h3 class="sermon-title truncate"><button type="button" class="card-btn">' + s.title + '</button></h3>' +
-        '<div class="sermon-scripture">' + BOOK_SVG + ' <span class="sr-only">Scripture: </span>' + s.scripture + '</div>' +
-        '<ul class="sermon-topics plain-list" aria-label="Topics" data-chip-row>' + topics + '</ul>' +
+        scriptureRow(s) +
+        topicRow(s) +
       '</div>' +
     '</article></li>';
   }

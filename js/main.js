@@ -628,7 +628,8 @@ window.Tooltip = (function () {
       if (item.offsetTop === top) break;
     }
     const n = hidden.length;
-    btn.setAttribute('aria-label', n + ' more topic' + (n === 1 ? '' : 's'));
+    const noun = row.dataset.chipRow || 'topic';
+    btn.setAttribute('aria-label', n + ' more ' + noun + (n === 1 ? '' : 's'));
     const html = '<ul class="' + esc(row.className) + '">' + hidden.map(c => '<li class="' + esc(c.className.replace('is-overflow', '').trim()) + '">' + esc(c.textContent.trim()) + '</li>').join('') + '</ul>';
 
     btn.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') show(btn, html); });
