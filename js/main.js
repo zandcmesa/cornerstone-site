@@ -473,6 +473,8 @@ if (pcoBackdrop) {
     el.addEventListener('click', () => openContactModal());
   });
 
+  if (location.hash === '#contact') openContactModal();
+
   const newsletterForm = document.getElementById('newsletter-form');
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', e => {
