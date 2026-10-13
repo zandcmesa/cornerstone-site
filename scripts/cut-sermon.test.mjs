@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, UPLOAD_PRIVACY } from './cut-sermon.mjs';
+import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, ytdlpError, YouTubeLoginError, UPLOAD_PRIVACY } from './cut-sermon.mjs';
 
 test('matchReplay picks the stream released on the target Sunday in New York time', () => {
   const list = [
@@ -37,6 +37,26 @@ test('findReplay skips streams whose timestamp lookup fails (upcoming scheduled 
     releaseTs: id => { if (id === 'upcoming') throw new Error('This live event will begin in 3 days'); return 1786887996; },
   });
   assert.equal(r.id, 'aug16');
+});
+
+const BOT_BLOCK = 'ERROR: [youtube] IPTGFqIqXFI: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication.';
+
+test('ytdlpError names the expired YouTube login instead of a generic failure', () => {
+  const e = ytdlpError(`WARNING: something minor\n${BOT_BLOCK}\n`);
+  assert.ok(e instanceof YouTubeLoginError);
+  assert.match(e.message, /YOUTUBE_COOKIES/);
+  assert.match(e.message, /IPTGFqIqXFI/);
+  assert.doesNotMatch(e.message, /WARNING/);
+  const other = ytdlpError('ERROR: [youtube] abc: Video unavailable\n');
+  assert.ok(!(other instanceof YouTubeLoginError));
+  assert.equal(other.message, 'ERROR: [youtube] abc: Video unavailable');
+});
+
+test('findReplay reports a login block instead of "no replay found"', () => {
+  assert.throws(() => findReplay('2026-10-11', {
+    listIds: () => ['oct11'],
+    releaseTs: () => { throw ytdlpError(BOT_BLOCK); },
+  }), YouTubeLoginError);
 });
 
 test('uploads are unlisted so the reviewer can preview them', () => {

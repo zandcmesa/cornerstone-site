@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { json3ToTimed, formatTimed, previousSunday, localDate, validateBounds, sermonDateFromVideo, hms, parseArchive, archiveContext } from './sermon-lib.mjs';
 import * as vimeo from './vimeo.mjs';
@@ -21,7 +21,23 @@ export function ytBaseArgs(env = process.env) {
   return ['--cookies', file];
 }
 
-const ytdlp = (args, opts = {}) => execFileSync('yt-dlp', [...ytBaseArgs(), ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', opts.quiet ? 'ignore' : 'inherit'], maxBuffer: 64 * 1024 * 1024 }).trim();
+export class YouTubeLoginError extends Error {}
+
+export function ytdlpError(stderr) {
+  const detail = stderr.split('\n').filter(l => l.startsWith('ERROR:')).join(' ') || stderr.trim() || 'yt-dlp failed';
+  if (/Sign in to confirm|cookies are no longer valid/i.test(stderr)) {
+    return new YouTubeLoginError(`YouTube blocked yt-dlp and asked it to sign in: the saved login in the YOUTUBE_COOKIES secret has expired or been flagged. Export fresh YouTube cookies and update the secret. (${detail})`);
+  }
+  return new Error(detail);
+}
+
+const ytdlp = (args, opts = {}) => {
+  const r = spawnSync('yt-dlp', [...ytBaseArgs(), ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 * 1024 * 1024 });
+  if (!opts.quiet && r.stderr) process.stderr.write(r.stderr);
+  if (r.error) throw r.error;
+  if (r.status !== 0) throw ytdlpError(r.stderr || '');
+  return r.stdout.trim();
+};
 
 export function matchReplay(list, date) {
   return list.find(v => v.release_timestamp && localDate(new Date(v.release_timestamp * 1000)) === date) || null;
@@ -50,7 +66,7 @@ const ytDeps = {
 
 export function findReplay(date, deps = ytDeps) {
   const list = deps.listIds().map(id => {
-    try { return { id, release_timestamp: deps.releaseTs(id) }; } catch { return { id, release_timestamp: 0 }; }
+    try { return { id, release_timestamp: deps.releaseTs(id) }; } catch (e) { if (e instanceof YouTubeLoginError) throw e; return { id, release_timestamp: 0 }; }
   });
   return matchReplay(list, date);
 }
