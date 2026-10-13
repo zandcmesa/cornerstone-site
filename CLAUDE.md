@@ -89,6 +89,8 @@ Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-
 
 `about/`, `announcements/`, `staff/`, `contact/` hold redirect stubs for the old WordPress trailing-slash URLs, which GitHub Pages would otherwise 404. Don't delete them: the Clearstream microsite (`clr.io/site/crjzg`, linked from the sanctuary tap tags) points "Upcoming Events" at `/announcements/`. `/contact/` lands on `index.html#contact`.
 
+`404.html` catches every other old URL (WordPress sermon/event pages, `/jobs/`, `/next-steps/`). GitHub Pages serves it at any depth, so it uses `<base href="/">` (swapped to `/cornerstone-site/` on the Pages preview) to keep its asset paths working.
+
 ## Google Analytics
 
 `js/analytics.js` loads GA4 property `G-B1VETEFTP4` (the same property the old WordPress site used via Site Kit) on every page except `proposal.html`. It only fires when the hostname ends in `cornerstonechurchma.com`, so the GitHub Pages preview and local files stay out of the data. Pastor Josh is Admin on the property, Zand is Editor. No cookie banner: the privacy page discloses analytics and there is no legal trigger for a local MA church site.
