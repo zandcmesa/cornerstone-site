@@ -11,11 +11,14 @@ const SRC = fs.readFileSync(new URL('../js/sermons.js', import.meta.url), 'utf8'
 
 test('parseArchive reads every row of the real archive', () => {
   const a = parseArchive(SRC);
-  assert.equal(a.entries.length, 128);
-  assert.equal(a.maxId, 128);
-  assert.deepEqual({ ...a.entries[0], line: undefined }, { id: 1, date: '2026-06-28', vimeoId: '1205525119', series: null, speaker: 'Pastor Christine Disibio', line: undefined });
-  assert.equal(a.entries[6].series, 'Leadership Lessons');
-  assert.ok(a.entries[0].line.startsWith('  { id: 1,'));
+  const ids = a.entries.map(e => e.id);
+  assert.equal(a.entries.length, SRC.match(/^\s*\{ id: \d+,/gm).length);
+  assert.equal(new Set(ids).size, ids.length);
+  assert.equal(a.maxId, a.entries.length);
+  const first = a.entries.find(e => e.id === 1);
+  assert.deepEqual({ ...first, line: undefined }, { id: 1, date: '2026-06-28', vimeoId: '1205525119', series: null, speaker: 'Pastor Christine Disibio', line: undefined });
+  assert.equal(a.entries.find(e => e.id === 7).series, 'Leadership Lessons');
+  assert.ok(first.line.startsWith('  { id: 1,'));
   assert.equal(SRC.slice(0, a.insertAt).trimEnd().endsWith('const SERMON_DATA = ['), true);
 });
 
@@ -98,5 +101,5 @@ test('archiveContext gives Claude the known series, speakers and three example r
   assert.ok(ctx.knownSeries.includes('Leadership Lessons'));
   assert.ok(ctx.knownSpeakers.includes('Pastor Christine Disibio'));
   assert.equal(ctx.examples.length, 3);
-  assert.ok(ctx.examples[0].startsWith('  { id: 1,'));
+  assert.ok(ctx.examples.every(l => /^\s*\{ id: \d+,/.test(l)));
 });
