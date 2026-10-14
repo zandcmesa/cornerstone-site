@@ -23,7 +23,7 @@ test('groups page renders one section per type with every public group and no Pl
   snap.groupTypes.forEach(t => assert.ok(html.includes(`id="${t.slug}"`), t.slug));
   assert.equal((html.match(/data-group-id="/g) || []).length, snap.groups.length);
   assert.ok(!html.includes('s3.amazonaws.com'), 'no PCO header images');
-  assert.equal((html.match(/<img /g) || []).length, 3, 'only the three curated override images');
+  assert.equal((html.match(/<img /g) || []).length, 6, 'only the curated ministry photos and marks');
   assert.ok(html.includes('class="group-card-pill pill-full">Full<'), 'full groups get a pill');
   assert.ok(!html.includes('Staff'));
   assert.ok(!/group-card-monogram">[^<]*[—\-|]/.test(html), 'monogram skips punctuation');
@@ -42,10 +42,21 @@ test('home category cards link to the section slugs with live counts', () => {
   assert.equal(els['[data-pco-group-count]'].textContent, `View all ${snap.groups.length} groups →`);
 });
 
+test('ministry cards share one art treatment: photo, scrim, then a mark or wordmark', () => {
+  const { els } = render();
+  const html = els['[data-pco-groups]'].innerHTML;
+  assert.equal((html.match(/class="group-card-image ministry-art"/g) || []).length, 4);
+  assert.equal((html.match(/class="ministry-photo"/g) || []).length, 4);
+  assert.ok(html.includes('src="images/ministries/kingdom-kids-mark.png"'));
+  assert.ok(html.includes('src="images/ministries/high-praise-dance-mark.png"'));
+  assert.ok(html.includes('class="ministry-wordmark"><span>Cornerstone</span>Youth<'));
+  assert.ok(html.includes('class="ministry-wordmark"><span>Cornerstone</span>Young Adults<'));
+});
+
 test('modal data uses overrides and strategy-based CTA text', () => {
   const { GROUPS_DATA } = render();
   assert.equal(GROUPS_DATA['807069'].name, 'Kingdom Kids');
-  assert.equal(GROUPS_DATA['807069'].image, 'images/kingdom-kids.png');
+  assert.equal(GROUPS_DATA['807069'].image, 'images/ministries/kingdom-kids.jpg');
   assert.equal(GROUPS_DATA['1711298'].ctaText, 'Request to Join');
   assert.equal(GROUPS_DATA['1711298'].category, 'Ministries');
   const full = Object.values(GROUPS_DATA).find(g => g.enrollment === 'full');

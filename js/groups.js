@@ -1,9 +1,10 @@
 const GROUPS_DATA = {};
 
 const GROUP_OVERRIDES = {
-  '807069':  { name: 'Kingdom Kids', image: 'images/kingdom-kids.png', description: "Kingdom Kids is Cornerstone's children's ministry for kids from birth through 5th grade. Each Sunday, kids experience age-appropriate worship, Bible teaching, and community during the main service.\n\nNo registration is required for Sunday attendance — just check in at the kids wing when you arrive. Join the parents group on Church Center to stay connected." },
-  '1711298': { image: 'images/cornerstone-young-adults.png' },
-  '1896063': { image: 'images/high-praise-dance.png' },
+  '807069':  { name: 'Kingdom Kids', image: 'images/ministries/kingdom-kids.jpg', mark: 'images/ministries/kingdom-kids-mark.png', markSize: '50%', description: "Kingdom Kids is Cornerstone's children's ministry for kids from birth through 5th grade. Each Sunday, kids experience age-appropriate worship, Bible teaching, and community during the main service.\n\nNo registration is required for Sunday attendance — just check in at the kids wing when you arrive. Join the parents group on Church Center to stay connected." },
+  '1711298': { image: 'images/ministries/young-adults.jpg', wordmark: 'Young Adults' },
+  '807059':  { image: 'images/ministries/youth.jpg', wordmark: 'Youth' },
+  '1896063': { image: 'images/ministries/high-praise-dance.jpg', mark: 'images/ministries/high-praise-dance-mark.png', markSize: '42%' },
 };
 
 const TYPE_FALLBACK_DESC = {
@@ -38,8 +39,11 @@ const GRADIENTS = [
       pcoUrl: g.pcoUrl, gradient: gradientFor(g.id), image: o.image || null,
     };
     const pill = g.enrollment !== 'open' ? '<span class="group-card-pill pill-' + g.enrollment + '">' + PILL[g.enrollment] + '</span>' : '';
+    const art = o.mark
+      ? '<img class="ministry-mark" src="' + esc(o.mark) + '" alt="" style="height:' + esc(o.markSize) + ';">'
+      : '<span class="ministry-wordmark"><span>Cornerstone</span>' + esc(o.wordmark || '') + '</span>';
     const inner = o.image
-      ? ' has-logo" style="background:' + gradientFor(g.id) + ';">' + pill + '<img src="' + esc(o.image) + '" alt="">'
+      ? ' ministry-art">' + pill + '<img class="ministry-photo" src="' + esc(o.image) + '" alt="" onerror="this.remove()">' + art
       : '" style="background:' + gradientFor(g.id) + ';">' + pill + '<div class="group-card-monogram" aria-hidden="true">' + esc(monogram(name)) + '</div>';
     return '<li><article class="group-card has-card-btn">' +
       '<div class="group-card-image' + inner + '</div>' +
