@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /proposal.html
+Disallow: /styleguide.html
+Disallow: /concepts/
+Disallow: /previews/
+Disallow: /scripts/
+Disallow: /worker/
+Disallow: /docs/
+Allow: /docs/Statement-of-Faith-1.pdf
+
+Sitemap: https://cornerstonechurchma.com/sitemap.xml
