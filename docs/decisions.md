@@ -62,3 +62,13 @@
 ### YouTube source
 - Channel `UCl4J6MR32QrZOfk8M_n7wvA`, replays are public, ~2h15m, titled "Cornerstone Online MM/DD/YYYY" (one stray "Live Stream - [...]" on Aug 30). Match by release date, not title.
 - yt-dlp on Actions can hit bot checks; a cookies secret is the fallback, not the default.
+
+## Launch (2026-10-14)
+
+- Decision: Flip DNS on Wed Oct 14, 2026 with Josh's written OK in hand and the church reachable by phone. The Oct 13 target slipped by a day.
+- Decision: Pitch and working files (`proposal.html`, `styleguide.html`, `concepts/`, `previews/`, `scripts/`, `worker/`, `docs/`) stay in the public repo but are blocked in `robots.txt`; `proposal.html` and `styleguide.html` also carry a `noindex` meta. `media/` stays crawlable because the home hero video lives there, and the Statement of Faith PDF is allowed through because About links to it.
+- Why: Zand wasn't worried about them being reachable, only about them showing up in search.
+- Decision: Add `robots.txt`, `sitemap.xml`, a canonical tag, and a meta description on every public page in the launch PR. Home canonical is the bare domain, every other page is its `.html` URL.
+- Decision: Add a `sermons/` redirect stub so the old WordPress `/sermons/` index lands on `sermons.html`. Individual old sermon URLs still fall to the 404 page.
+- Decision: Verify the domain at the GitHub account level (one extra TXT record in DreamHost) so nobody else can claim it on Pages.
+- Decision: Flywheel stays up for 30 days after launch; Rose and Gold keeps uploading to Vimeo in that window.
