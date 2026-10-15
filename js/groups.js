@@ -1,7 +1,7 @@
 const GROUPS_DATA = {};
 
 const GROUP_OVERRIDES = {
-  '807069':  { name: 'Kingdom Kids', image: 'images/ministries/kingdom-kids.jpg', mark: 'images/ministries/kingdom-kids-mark.png', markSize: '50%', description: "Kingdom Kids is Cornerstone's children's ministry for kids ages 2 to 12. Each Sunday, kids experience age-appropriate worship, Bible teaching, and community during the main service.\n\nNo registration is required for Sunday attendance — just check in at the kids wing when you arrive. Join the parents group on Church Center to stay connected." },
+  '807069':  { name: 'Kingdom Kids', image: 'images/ministries/kingdom-kids.jpg', mark: 'images/ministries/kingdom-kids-mark.png', markSize: '50%', description: "Kingdom Kids is Cornerstone's children's ministry for kids ages 2 to 13. Each Sunday, kids experience age-appropriate worship, Bible teaching, and community during the main service.\n\nNo registration is required for Sunday attendance — just check in at the kids wing when you arrive. Join the parents group on Church Center to stay connected." },
   '1711298': { image: 'images/ministries/young-adults.jpg', wordmark: 'Young Adults' },
   '807059':  { image: 'images/ministries/youth.jpg', wordmark: 'Youth' },
   '1896063': { image: 'images/ministries/high-praise-dance.jpg', mark: 'images/ministries/high-praise-dance-mark.png', markSize: '42%' },

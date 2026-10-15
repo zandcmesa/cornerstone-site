@@ -34,7 +34,7 @@ const EVENTS_DATA = {
     dateMonth: 'Every', dateDay: 'Sun',
     time: 'Sundays · 10am', location: 'Cornerstone Church',
     label: 'Children\'s Ministry',
-    description: `Kingdom Kids is Cornerstone's children's ministry serving kids ages 2 to 12 during Sunday morning service. We need volunteers to help create a safe, fun, and faith-building environment for the next generation.\n\nWhether you're great with toddlers or older kids, there's a place for you. Sign up through Church Center to join the team.`,
+    description: `Kingdom Kids is Cornerstone's children's ministry serving kids ages 2 to 13 during Sunday morning service. We need volunteers to help create a safe, fun, and faith-building environment for the next generation.\n\nWhether you're great with toddlers or older kids, there's a place for you. Sign up through Church Center to join the team.`,
     hasRegistration: true, ctaText: 'Sign Up on Church Center',
     pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-opportunities-at-cornerstone/kingdom-kid-s-church-teachers-and-assistants',
     gradient: 'linear-gradient(135deg,#0f1a0f,#1a301a)', wikiKeyword: 'Sunday school',
