@@ -111,7 +111,6 @@ window.PCO_UI = (function () {
     fill('[data-pco-rhythms]', snap.rhythms, 'Weekly gatherings will appear here.');
     const now = Date.now();
     fill('[data-pco-events]', snap.events.filter(e => !e.startsAt || new Date(e.startsAt).getTime() > now), 'No upcoming events yet. Check back soon.');
-    fill('[data-pco-next-steps]', snap.nextSteps, 'Nothing open right now.');
     document.querySelectorAll('[data-pco-month]').forEach(el => {
       el.textContent = new Date().toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'America/New_York' });
     });
