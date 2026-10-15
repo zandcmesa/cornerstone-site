@@ -19,7 +19,7 @@
 - Decision: Home "Find your people" section shows one category card per visible group type with live counts and PCO type descriptions (hand-written fallback copy when PCO's is blank).
 
 ### Events
-- Decision: Everything on the events page is PCO-driven: weekly rhythms from recurring Calendar events, dated upcoming events from Calendar plus dated Registrations signups, and a Next Steps section from open Registrations signups with no date.
+- Decision: Everything on the events page is PCO-driven: weekly rhythms from recurring Calendar events, dated upcoming events from Calendar plus dated Registrations signups. Undated open signups are not shown: a Next Steps section built from them surfaced a stale Kingdom Kids signup (Oct 2026), so it was removed until the church curates a real list.
 - Decision: Respect `visible_in_church_center` on Calendar events and `open`/`archived` on signups. Hidden items never render.
 - Decision: Registrations use the `/registrations/v2/signups` endpoint (the older `/events` path 404s on this account). Dates come from `signup_times`, location from `signup_location`.
 - Decision: URLs inside event descriptions get linkified (e.g. the Josh Baldwin concert ticket link lives only in the description).
