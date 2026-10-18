@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=3">
   <link rel="stylesheet" href="css/blocks.css?v=5">
-  <link rel="stylesheet" href="css/style.css?v=13">
+  <link rel="stylesheet" href="css/style.css?v=14">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -69,7 +69,7 @@
       Open in Church Online Platform
     </a>
 
-    <div class="watch-embed-wrap" role="region" aria-label="Livestream">
+    <div class="watch-embed-wrap" role="region" aria-label="Livestream" data-watch-embed>
       <div style="display:flex;flex-direction:column;align-items:center;gap:16px;color:var(--text-muted);">
         <svg aria-hidden="true" focusable="false" class="watch-live-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round">
           <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/>
@@ -79,6 +79,10 @@
         <p style="font-size:14px;">Join us Sunday mornings at 10am — the service will appear right here when we go live.</p>
       </div>
     </div>
+    <p class="watch-embed-note" data-watch-live-only hidden>
+      Not seeing the stream? <a href="https://www.youtube.com/channel/UCl4J6MR32QrZOfk8M_n7wvA/live" target="_blank" rel="noopener">Watch on YouTube</a>
+      or join the chat on <a href="https://cornerstonema.online.church/" target="_blank" rel="noopener">Church Online Platform</a>.
+    </p>
 
     <ul class="watch-info-grid plain-list" data-reveal-stagger>
       <li class="watch-info-card">
@@ -180,6 +184,7 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script src="js/watch.js"></script>
 <script src="js/blocks.js"></script>
 </body>
 </html>

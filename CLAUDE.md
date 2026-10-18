@@ -121,6 +121,10 @@ Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-
 - **Video modal:** Vimeo iframe embed, opens on card click, closes on backdrop click / Escape
 - **Null-safe series:** `series: null` for unaffiliated sermons; `populateFilters` uses `.filter(Boolean)` so null doesn't appear in the dropdown; search uses `(s.series || '')`
 
+## Watch page (livestream)
+
+`watch.html` + `js/watch.js`. Church Online Platform cannot be iframed, so the player is YouTube's channel live embed (`youtube.com/embed/live_stream?channel=UCl4J6MR32QrZOfk8M_n7wvA`), the same channel the sermon cutter reads. `watch.js` mounts it into `[data-watch-embed]` only during the service window (Sundays 9:30am–12:30pm America/New_York, DST-aware) because outside a broadcast YouTube shows a grey "unavailable" box; the rest of the week the pulsing placeholder stays. A tab opened early re-checks every minute. Append `#live` (or `?live`) to force the embed for testing or an off-schedule stream. The "Not seeing the stream?" note under the player links to the channel's `/live` page and Church Online Platform (chat and hosts still live there).
+
 ## Nav pattern (all 8 pages)
 
 ```html
