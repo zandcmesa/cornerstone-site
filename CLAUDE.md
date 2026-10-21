@@ -68,14 +68,14 @@ Transcripts live in `../transcripts/{vimeoId}.txt` (one file per sermon, VTT str
 
 - **v2 (public, no auth):** `https://vimeo.com/api/v2/cornerstonechurchma/videos.json?page=N`
 - **v3 (requires OAuth):** text tracks at `GET /videos/{id}/texttracks`
-- **Token:** stored in `../vimeo-token.rtf` (parent dir, not in site/). Value is a Personal Access Token with Public + Private scopes. Never commit it.
+- **Token:** a Personal Access Token on the church account, scopes `private edit upload public`. See the path note below. Never commit it.
 - Transcripts were fetched with a bash script hitting the v3 text tracks endpoint, downloading VTT, and stripping it to plain text.
 
 ### Adding more sermon data
 
 Automated. `.github/workflows/sync-sermons.yml` runs `scripts/sync-sermons.mjs` (Mon–Wed) which lists the church's Vimeo videos, pulls auto-caption transcripts, extracts metadata with the Claude API (`scripts/sermon-ai.mjs`), flags missing art (art is added at review time with the `/sermon-art` skill through the Artlist connector; `scripts/sermon-art.mjs` is a Gemini path used only if a billed `GEMINI_API_KEY` exists), and force-pushes one `sermon-sync` branch with an open PR. From Oct 4, 2026 `.github/workflows/cut-sermon.yml` runs `scripts/cut-sermon.mjs` on Mondays: finds the Sunday live replay on YouTube (channel `UCl4J6MR32QrZOfk8M_n7wvA`), finds the sermon start/end from timed captions with Claude, downloads and cuts it, uploads privately to Vimeo with captions, then runs the sync. `publish-sermons.yml` flips those uploads public on merge. Setup and secrets: `docs/sermon-automation-setup.md`. Pure helpers live in `scripts/sermon-lib.mjs`; tests run with `npm test`. New entries get `id = maxId + 1` and `loadSermons()` sorts by date, so ids no longer encode order.
 
-Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf` (the `../vimeo-token.rtf` path above is historical). It belongs to Josh Eldridge's personal Vimeo user, not the `cornerstonechurchma` account that holds the videos; Stage B needs an upload-scoped token minted as the church account.
+Vimeo token lives at `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf` (the `../vimeo-token.rtf` path above is historical), with a copy at `~/Documents/cornerstone-vimeo-personal-access-token.rtf`. Since Oct 4, 2026 it belongs to the `cornerstonechurchma` account itself (`/users/15827873`), scopes `private edit upload public`, so uploads and renames land in the church's own library. Leave `VIMEO_USER` unset.
 
 ## Sermon art
 
