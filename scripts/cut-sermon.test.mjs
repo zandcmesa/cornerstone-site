@@ -24,11 +24,12 @@ test('rebaseVtt produces a VTT starting at zero', () => {
   assert.equal(vtt, 'WEBVTT\n\n00:00:00.000 --> 00:00:04.000\nb\n\n00:00:04.000 --> 00:00:08.000\nc\n');
 });
 
-test('ytBaseArgs adds a cookies file only when YOUTUBE_COOKIES is set', () => {
-  assert.deepEqual(ytBaseArgs({}), []);
+test('ytBaseArgs always allows the EJS solver and adds cookies only when set', () => {
+  assert.deepEqual(ytBaseArgs({}), ['--remote-components', 'ejs:npm']);
   const args = ytBaseArgs({ YOUTUBE_COOKIES: '# Netscape HTTP Cookie File\n.youtube.com\tTRUE\t/\tTRUE\t0\tSID\tabc\n' });
-  assert.equal(args[0], '--cookies');
-  assert.match(args[1], /cookies\.txt$/);
+  assert.deepEqual(args.slice(0, 2), ['--remote-components', 'ejs:npm']);
+  assert.equal(args[2], '--cookies');
+  assert.match(args[3], /cookies\.txt$/);
 });
 
 test('findReplay skips streams whose timestamp lookup fails (upcoming scheduled streams)', () => {

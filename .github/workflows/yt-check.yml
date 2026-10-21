@@ -1,0 +1,44 @@
+name: Check YouTube access
+
+on:
+  workflow_dispatch:
+    inputs:
+      video:
+        description: YouTube video id to test against. Defaults to a known past replay.
+        required: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: python3 -m pip install --quiet --upgrade yt-dlp
+
+      - name: Write cookies
+        env:
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+        run: printf '%s' "$YOUTUBE_COOKIES" > /tmp/cookies.txt
+
+      - name: Pull 20 seconds of real video
+        continue-on-error: true
+        run: |
+          yt-dlp --cookies /tmp/cookies.txt --remote-components ejs:npm \
+            -f 'bv*[height<=480][ext=mp4]/bv*[ext=mp4]/b[ext=mp4]/b' \
+            --download-sections '*120-140' --force-keyframes-at-cuts \
+            --no-progress -o /tmp/check.mp4 \
+            "https://www.youtube.com/watch?v=${{ inputs.video || 'EJQj-0P4fxs' }}" 2>&1 | tail -20
+
+      - name: Report
+        run: |
+          if [ -s /tmp/check.mp4 ]; then
+            echo "## ✅ YouTube access is working" >> $GITHUB_STEP_SUMMARY
+            echo "Pulled $(stat -c%s /tmp/check.mp4) bytes. Monday's cut should run fine." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## ❌ YouTube access is blocked" >> $GITHUB_STEP_SUMMARY
+            echo "Almost always the \`YOUTUBE_COOKIES\` secret has rotated. Re-export per \`docs/sermon-automation-setup.md\`." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
