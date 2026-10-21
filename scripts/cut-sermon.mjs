@@ -15,10 +15,13 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const UPLOAD_PRIVACY = { view: 'unlisted', embed: 'public' };
 
 export function ytBaseArgs(env = process.env) {
-  if (!env.YOUTUBE_COOKIES) return [];
+  // YouTube signs its media URLs with a JS challenge; solving it needs the EJS
+  // components, which yt-dlp will not fetch unless explicitly allowed.
+  const args = ['--remote-components', 'ejs:npm'];
+  if (!env.YOUTUBE_COOKIES) return args;
   const file = path.join(os.tmpdir(), 'cookies.txt');
   fs.writeFileSync(file, env.YOUTUBE_COOKIES, { mode: 0o600 });
-  return ['--cookies', file];
+  return [...args, '--cookies', file];
 }
 
 export class YouTubeLoginError extends Error {}

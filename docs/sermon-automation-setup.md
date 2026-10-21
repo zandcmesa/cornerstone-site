@@ -45,16 +45,25 @@ If `GEMINI_API_KEY` is set to a key with billing enabled, the workflow generates
 
 ### 4. YouTube cookies (cut workflow only)
 
-YouTube blocks anonymous video downloads from servers. A logged-in cookie file works. Export it from Chrome while signed in to the channel's Google account:
+GitHub's runners sit on datacenter IPs that YouTube distrusts, so the cut needs two things that a laptop does not:
+
+1. **A logged-in cookie file** (`YOUTUBE_COOKIES`), which clears the "Sign in to confirm you're not a bot" check.
+2. **A JavaScript runtime plus the EJS solver.** YouTube signs its media URLs with a JS challenge. The workflow installs Deno and `ytBaseArgs()` passes `--remote-components ejs:npm`. Without both, yt-dlp gets past the bot check and then reports "Requested format is not available" — which looks like an unrelated problem but is the same root cause.
+
+Export the cookies with Chrome **quit** (macOS locks the cookie DB while it runs):
 
 ```bash
 yt-dlp --cookies-from-browser chrome --cookies /tmp/yt-cookies.txt --skip-download "https://www.youtube.com/watch?v=TD_nPXueeeo"
 grep -E "^#|youtube\.com|google\.com" /tmp/yt-cookies.txt > /tmp/yt-cookies-small.txt
+gh secret set YOUTUBE_COOKIES < /tmp/yt-cookies-small.txt
+rm /tmp/yt-cookies.txt /tmp/yt-cookies-small.txt
 ```
 
-The second line keeps only YouTube and Google cookies; the full Chrome export is too large for a GitHub secret (48 KB limit).
+The grep keeps only YouTube and Google cookies; a full Chrome export is too large for a GitHub secret (48 KB limit).
 
-Cookies last weeks to months. If the cut workflow starts failing with "Sign in to confirm you're not a bot" or 403, export again and update the secret.
+Cookies rotate. A normal browser session rotates them every couple of weeks, and once they rotate the exported copy dies with the message "The provided YouTube account cookies are no longer valid." To get a set that lasts much longer, log in inside a **private/incognito window**, export from that profile, then close the window **without logging out** — the session is never refreshed, so the exported cookies stay valid. Prefer a throwaway Google account over a personal one or the church's: the replays are public, so no special access is needed, and a flagged throwaway costs nothing.
+
+To check whether the cookies are still good without waiting for Monday, run the **Check YouTube access** workflow (Actions → Check YouTube access → Run workflow). It pulls 20 seconds of real video and takes about a minute.
 
 ### 5. Repo secrets and variables
 
