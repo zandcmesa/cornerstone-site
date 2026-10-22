@@ -19,6 +19,16 @@ const EVENTS_DATA = {
     pcoUrl: 'https://cornerstonechurchma.churchcenter.com/registrations/events/3958853',
     gradient: 'linear-gradient(135deg,#141414,#262626)', wikiKeyword: null,
   },
+  'salt-and-light': {
+    title: 'Salt & Light',
+    dateMonth: 'Nov', dateDay: '14',
+    time: 'Saturday', location: 'Local Laundromat',
+    label: 'Serve Opportunity',
+    description: `Salt & Light is Cornerstone's outreach ministry — being the hands and feet of Jesus in our community through love in action. On Saturday, November 14, the team heads to a local laundromat to cover wash loads, fold alongside families, and share a kind word with our neighbors.\n\nRegister through Church Center to join the team and get the details.`,
+    hasRegistration: true, ctaText: 'Register on Church Center',
+    pcoUrl: 'https://cornerstonechurchma.churchcenter.com/groups/serve-opportunities-in-our-community/salt-and-light-ministry',
+    gradient: 'linear-gradient(135deg,#0f1a1f,#1a2e38)', wikiKeyword: null,
+  },
   'youth-group': {
     title: 'Youth Group Relaunch',
     dateMonth: 'Oct', dateDay: '21',
