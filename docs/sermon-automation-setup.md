@@ -1,9 +1,10 @@
 # Sermon archive automation: setup
 
-Two GitHub Actions keep `js/sermons.js` current. Nothing publishes without you: each run opens or updates one PR on the `sermon-sync` branch, and you merge it.
+Four GitHub Actions keep `js/sermons.js` current. Nothing publishes without you: each run opens or updates one PR on the `sermon-sync` branch, and you merge it.
 
 - **Sync sermons** (Mon–Wed 5am ET, or run by hand). Looks at the church's Vimeo library, finds Sunday sermons not yet in the archive, reads the auto-captions, has Claude write the title, scripture, series, topics and description, generates the typographic art, and opens the PR.
-- **Cut Sunday sermon** (Mon 6am ET, or run by hand). From Oct 4, 2026 onward. Finds Sunday's live replay on YouTube, uses the captions to locate where the sermon starts and ends, downloads and cuts that section, uploads it privately to Vimeo with captions, then runs the sync so the PR appears the same morning.
+- **Cut Sunday sermon** (every hour Monday from about 7am to 2pm ET, plus Tuesday morning, on the Mac mini; or run by hand, or by commenting on the PR). From Oct 4, 2026 onward. Finds Sunday's live replay on YouTube, uses the captions to locate where the sermon starts and ends, downloads and cuts that section, uploads it privately to Vimeo with captions, then runs the sync so the PR appears as soon as the cut is done. Once Sunday has a sermon on Vimeo, the later hourly runs do nothing.
+- **Check YouTube access** (Sundays about 7am ET, on the Mac mini). Pulls 20 seconds of real video. If it goes red, YouTube has changed something and the Monday cut is at risk; see "If something is off".
 - **Publish merged sermons** (on merge). Flips any private Vimeo upload in the merged archive to public.
 
 ## One-time setup
@@ -43,27 +44,38 @@ Claude lists the entries missing art, generates each on your Artlist plan (Nano 
 
 If `GEMINI_API_KEY` is set to a key with billing enabled, the workflow generates art itself and the command is only needed for retries. The current key is free-tier and does nothing.
 
-### 4. YouTube cookies (cut workflow only)
+### 4. The Mac mini runner (cut workflow only)
 
-GitHub's runners sit on datacenter IPs that YouTube distrusts, so the cut needs two things that a laptop does not:
+YouTube blocks GitHub's own servers, so the cut runs on the Mac mini at home instead. The mini is registered with this repo as a self-hosted runner: GitHub hands it the job, and it does the download and cut over a normal home connection. No YouTube login or cookies are involved.
 
-1. **A logged-in cookie file** (`YOUTUBE_COOKIES`), which clears the "Sign in to confirm you're not a bot" check.
-2. **A JavaScript runtime plus the EJS solver.** YouTube signs its media URLs with a JS challenge. The workflow installs Deno and `ytBaseArgs()` passes `--remote-components ejs:npm`. Without both, yt-dlp gets past the bot check and then reports "Requested format is not available" — which looks like an unrelated problem but is the same root cause.
+- It lives in `~/actions-runner` on the mini and runs as a background service for whoever is signed in.
+- To see it, open the repo on GitHub, then Settings → Actions → Runners. It is named `sermon-mini` and should say Idle (or Active mid-job). Offline means the mini is off, asleep, or signed out.
+- It runs on the mini's own copy of yt-dlp, which is upgraded at the start of every cut.
 
-Export the cookies with Chrome **quit** (macOS locks the cookie DB while it runs):
+Control it from a terminal on the mini:
 
 ```bash
-yt-dlp --cookies-from-browser chrome --cookies /tmp/yt-cookies.txt --skip-download "https://www.youtube.com/watch?v=TD_nPXueeeo"
-grep -E "^#|youtube\.com|google\.com" /tmp/yt-cookies.txt > /tmp/yt-cookies-small.txt
-gh secret set YOUTUBE_COOKIES < /tmp/yt-cookies-small.txt
-rm /tmp/yt-cookies.txt /tmp/yt-cookies-small.txt
+cd ~/actions-runner
+./svc.sh status
+./svc.sh stop
+./svc.sh start
 ```
 
-The grep keeps only YouTube and Google cookies; a full Chrome export is too large for a GitHub secret (48 KB limit).
+FileVault is on and auto-login is off. After a reboot or a macOS update, sign in at the mini once; the runner comes back with the login. If the mini restarts overnight and nobody signs in, Monday's cut waits (Tuesday's run is the backstop).
 
-Cookies rotate. A normal browser session rotates them every couple of weeks, and once they rotate the exported copy dies with the message "The provided YouTube account cookies are no longer valid." To get a set that lasts much longer, log in inside a **private/incognito window**, export from that profile, then close the window **without logging out** — the session is never refreshed, so the exported cookies stay valid. Prefer a throwaway Google account over a personal one or the church's: the replays are public, so no special access is needed, and a flagged throwaway costs nothing.
+One manual repo setting protects the mini: Settings → Actions → General → "Require approval for all external contributors". Leave it on so a stranger's pull request can never run code on the mini. The workflows also never use `pull_request` triggers.
 
-To check whether the cookies are still good without waiting for Monday, run the **Check YouTube access** workflow (Actions → Check YouTube access → Run workflow). It pulls 20 seconds of real video and takes about a minute.
+The **Check YouTube access** workflow runs every Sunday about 7am ET and pulls 20 seconds of real video, so a YouTube change shows up the day before the cut instead of during it. A green check means Monday should be fine. A red check, or the runner showing Offline, is the signal to look at the mini.
+
+The first fix for any YouTube error (the check turning red, or a cut failing with "Requested format is not available" or a sign-in message) is to upgrade yt-dlp on the mini:
+
+```bash
+brew upgrade yt-dlp
+```
+
+Then re-run Actions → Check YouTube access → Run workflow. It takes about a minute.
+
+If `YOUTUBE_COOKIES` is ever set again (as a secret passed to the cut step), the cut script still honors it.
 
 ### 5. Repo secrets and variables
 
@@ -72,8 +84,6 @@ Paste one line at a time from the repo folder:
 ```bash
 gh secret set VIMEO_TOKEN --body "$VIMEO_TOKEN"
 gh secret set ANTHROPIC_API_KEY
-gh secret set YOUTUBE_COOKIES < /tmp/yt-cookies-small.txt
-rm /tmp/yt-cookies.txt /tmp/yt-cookies-small.txt
 ```
 
 Variables (only if needed):
@@ -89,20 +99,58 @@ Already done for this repo (Settings → Actions → General → "Allow GitHub A
 
 1. Go to the repo's Actions tab, pick **Sync sermons**, click Run workflow.
 2. A PR titled "Sermon archive: N new sermons" appears within a few minutes. Open it, check titles and art, edit anything in the PR, merge.
-3. After Oct 4, watch for the Monday **Cut Sunday sermon** run (it retries Tuesday if YouTube's captions weren't ready). Its PR lists the cut timestamps and an unlisted Vimeo link so you can preview the cut before merging. The cut workflow refuses to run while `VIMEO_USER` is set, because that means the token isn't the church's and the upload would land in the wrong library.
+3. After Oct 4, a PR appears on Monday morning by itself once the cut finishes (it retries every hour until YouTube's captions are ready, and once more Tuesday). Its PR lists the cut timestamps and an unlisted Vimeo link so you can preview the cut before merging. The cut workflow refuses to run while `VIMEO_USER` is set, because that means the token isn't the church's and the upload would land in the wrong library.
+
+## From your phone
+
+The whole Monday flow works from the GitHub app or a phone browser.
+
+1. **The PR arrives.** Sometime Monday morning, a PR titled "Sermon archive: 2026-10-25" (the Sunday's date) shows up. The hourly runs are quiet when there is nothing to do, so no PR yet means the captions are not ready; check back in an hour.
+2. **Judge the cut.** The top of the PR has an unlisted Vimeo link. Open it and scrub the start and the end. The PR also shows what the first and last spoken lines are (Starts: and Ends:) and the cut times, so you can check at a glance without watching.
+3. **Add art if needed**, then **merge**. If the cut is right, merging publishes the sermon.
+
+If the cut is wrong (it starts in the worship set, or runs into the closing announcements), recut it **before you merge**. There are two ways in. Try the first, and use the second if Claude on your phone says it does not have permission to run workflows.
+
+**Door A: start the workflow directly.** Ask Claude on your phone to run these, with the Sunday's date and the right times (minutes:seconds into the replay, or hours:minutes:seconds):
+
+```bash
+gh workflow run cut-sermon.yml -f date=2026-10-25 -f start=42:10 -f end=1:19:00
+gh run watch --exit-status
+```
+
+**Door B: comment on the PR.** Write a comment that begins with `recut` and gives a start and an end:
+
+```bash
+gh pr comment 31 --body "recut start 42:10 end 1:19:00"
+```
+
+or just type `recut start 42:10 end 1:19:00` in the PR's comment box in the app. Only comments from the repo owner (your account) are accepted. The mini reacts with an eyes emoji right away, then posts "Recut done" with the new Vimeo link, or "Recut failed" with the reason. If it can't read your comment, it replies with what is missing.
+
+The date is optional in the comment; it defaults to the PR's Sunday. These all work if you want to name it: `recut Oct 25 start 42:10 end 1:19:00`, `recut 10/25 start 42:10 end 1:19:00`, `recut 2026-10-25 start 42:10 end 1:19:00`. `from` and `to` also work in place of `start` and `end`.
+
+Either door re-cuts from the replay, uploads a new private Vimeo video, retires the old one (it is renamed "Superseded sermon …"), and updates the same PR. Open the new Vimeo link, check it, and merge.
+
+**Recut only works while the sermon is still an open PR.** Once you merge, the Sunday is published and a recut is refused with "already published on the site". To fix a published sermon, edit it by hand in `js/sermons.js`, or ask Claude to open a fix.
+
+## If something is off
+
+- **No PR by Monday afternoon.** Open Actions → Cut Sunday sermon and read the latest run. "Captions for ... are not ready yet" means YouTube has not produced captions for the replay; the hourly run keeps trying until Tuesday. "No YouTube live replay found" means the Sunday stream was not recorded or titled as usual; run it by hand with the video id (see "Running by hand"). "Already on Vimeo" means the agency uploaded it and the regular sync handles it.
+- **Runner shows Offline, or the Sunday check is red.** Go to the mini and sign in (see section 4). If it is signed in and still red, run `brew upgrade yt-dlp` there, then re-run the check.
+- **"Recut failed" on a PR.** The comment includes the last line of the log. A time outside 15 to 90 minutes long is refused; fix the times and try again. "Already published" means the PR was merged; see above.
+- **Cut works but art or titles look wrong.** Edit them in the PR as usual; they are separate from the cut.
 
 ## Running by hand
 
-Cut a specific Sunday, or override where the sermon starts and ends (seconds into the replay):
+Cut a specific Sunday, or override where the sermon starts and ends (`42:10` or `1:19:00`, or plain seconds):
 
-Actions → Cut Sunday sermon → Run workflow → fill in `date`, and optionally `youtube`, `start`, `end`.
+Actions → Cut Sunday sermon → Run workflow → fill in `date`, and optionally `youtube`, `start`, `end`. It runs on the mini like any other cut.
 
-Locally, with the same env vars exported:
+On a laptop, with the same env vars exported (this is where you would be using your own network, so YouTube rarely objects):
 
 ```bash
 node scripts/sync-sermons.mjs --dry-run
 node scripts/cut-sermon.mjs --date 2026-10-04 --dry-run
-node scripts/cut-sermon.mjs --date 2026-10-04 --start 2710 --end 5150 --skip-upload --keep
+node scripts/cut-sermon.mjs --date 2026-10-04 --start 42:10 --end 1:19:00 --skip-upload --keep
 ```
 
 ## Notes
