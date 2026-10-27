@@ -1,6 +1,6 @@
 # Sermon pipeline on the Mac mini: design
 
-Date: 2026-10-27. Status: reviewed, awaiting one answer from Zach.
+Date: 2026-10-27. Status: approved 2026-10-27.
 
 ## Intent
 
@@ -44,7 +44,7 @@ The user's always-on Mac mini (macOS 26.6, with ffmpeg, yt-dlp, deno, node, gh, 
 ### 1. Self-hosted GitHub Actions runner on the Mac mini
 
 - Register one repository-level runner on the mini, installed as a launchd service with the runner's `svc.sh install` so it restarts whenever Zach's user is logged in. Labels: `self-hosted`, `macOS`, plus a custom label `sermon-mini`.
-- **Reboots.** The mini has FileVault on and no auto-login, so after a power cut or an OS update the runner is offline until someone logs in at the mini. Decision pending from Zach (see "Open question"); the runbook's Offline section depends on it.
+- **Reboots.** The mini has FileVault on and no auto-login, so after a power cut or an OS update the runner is offline until someone logs in at the mini. See Decision 8.
 - **Health check.** `yt-check.yml` (moved to the runner, below) also gets a weekly schedule, Sunday 6am ET. If the runner is offline the Monday cut will queue; the Sunday check turning red is the early warning. Document how to read it.
 - `cut-sermon.yml` changes `runs-on: ubuntu-latest` → `runs-on: [self-hosted, macOS, sermon-mini]`. Drop the apt/pip install steps, the `setup-deno` step, and the `YOUTUBE_COOKIES` env. Keep `actions/checkout`. Drop `actions/setup-node` and use the mini's node (verify `node --version` ≥ 20 at the start of the job; fail fast with a clear message otherwise). Keep `npm ci`.
 - `ytBaseArgs()` in `scripts/cut-sermon.mjs` already only adds `--cookies` when `YOUTUBE_COOKIES` is set; leave that so a cookie can be re-added if YouTube ever changes its mind. Keep `--remote-components ejs:npm` (deno is on the mini).
@@ -107,9 +107,30 @@ Multi-sermon PRs (the rare catch-up case) repeat the block per sermon. The YouTu
 - **Disk.** Cuts are made in a temp dir and removed unless `--keep`. The runner's `_work` directory keeps the checkout; nothing else accumulates.
 - **Concurrency.** The cut gets its own group, `sermon-cut`, instead of sharing `sermon-sync`. Sharing would mean a cut queued behind an offline mini holds the group and GitHub cancels the pending hosted sync behind it. The remaining race (a hosted sync and a cut both pushing `sermon-sync` within the same minute) is benign: both build from `origin/main` and the same Vimeo list, so whichever lands second produces the same branch. `publish-sermons.yml` and `sync-sermons.yml` keep `sermon-sync`.
 
+### 6. Timing: poll through Monday instead of guessing one hour
+
+YouTube's replay and its auto-captions appear some hours after the stream ends, and the gap varies. The cron is 6am ET, but GitHub's scheduler has actually started the last four runs between 10:30am and 12:45pm ET, so nobody knows when the job really fires. Instead of picking a time:
+
+- Schedule: `0 11-18 * * 1` (hourly, 7am to 2pm ET on Mondays, allowing for DST drift) plus the existing Tuesday run as a backstop. Each run is cheap on the mini and idempotent: once the Sunday is on Vimeo it exits with "already on Vimeo."
+- "Auto-captions are not available yet" currently throws and paints the run red. Make it a clean exit with status `captions-not-ready` and exit code 0, logged in one line, so the hourly polling does not produce a wall of failures. The same for "no YouTube live replay found." Only real errors stay red.
+- Record in the PR body (see 4) what time the cut actually happened, so Zach learns the typical Monday hour over a few weeks.
+
+### 7. Boundary finder: the welcome is not the sermon
+
+The Oct 26 run chose 0:17:16 → 0:59:09 with high confidence because Josh said "Morning everybody" at 17:16. That was the welcome before worship; the cut was welcome, worship, and offering. Two cheap fixes:
+
+- Add the service order to the prompt in `scripts/sermon-ai.mjs`: the preacher often greets the room before worship and again after the offering and kids dismissal; the sermon is the second appearance, normally in the second half of the recording, and lasts 30 to 50 minutes. If the chosen span contains singing or an offering, it is wrong.
+- Return the caption line at `start` and at `end` alongside the bounds, and print both in the PR body under the Vimeo link ("Starts: 'Open your Bibles to Colossians 3…' · Ends: '…in Jesus' name, amen.'"). Those two lines let Zach judge the cut from the PR text before pressing play.
+
+Keep `validateBounds` as the hard check; the prompt change is a nudge, not a guarantee.
+
+### 8. Reboots: auto-login stays off (my call)
+
+Zach did not pick, so the default is the safer one: FileVault stays locked and auto-login stays off. The runbook says: after any reboot or macOS update, sign in at the mini once; the runner service comes back with the login. The Sunday health check (Decision 1) is the reminder. If this bites more than once a quarter, flip auto-login on and delete this paragraph.
+
 ### Seam for the edit (future design)
 
-`cutSermon()` currently goes `downloadSection()` → upload. The cinematic edit will be a function between them: input `sermon-<date>.mp4`, output the same path, run on the mini. Keep that line of code obvious and don't build the edit here.
+`cutSermon()` currently goes `downloadSection()` → upload. The cinematic edit will be a function between them: input `sermon-<date>.mp4`, output the same path, run on the mini. Keep that line of code obvious and don't build the edit here. Assets for that design: the new logo is on the mini's desktop as `cornerstone-logo-display.png` (1714×1022, flat on navy) and as vector `21_CornerstoneChurch_Logo_Final.ai`; the vector is the one to render bumpers from.
 
 ## Left to the builder
 
