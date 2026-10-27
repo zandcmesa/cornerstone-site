@@ -2352,13 +2352,13 @@ address.footer-contact { font-style: normal; }
   background: var(--bg-highlight);
 }
 .visit-kids-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.visit-kids-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.visit-kids-list { list-style: none; margin: 48px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .visit-kids-item {
   display: grid;
   grid-template-columns: 56px 1fr;
   gap: 18px;
   align-items: start;
-  padding: 22px;
+  padding: 24px;
   background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -2460,6 +2460,7 @@ address.footer-contact { font-style: normal; }
 
 @media (max-width: 1024px) {
   .visit-steps { grid-template-columns: repeat(2, 1fr); }
+  .visit-kids-item { grid-template-columns: 1fr; gap: 12px; }
   .visit-start-grid { grid-template-columns: 1fr; }
   .visit-hero-grid, .visit-two-col { gap: 48px; }
 }
@@ -2468,6 +2469,7 @@ address.footer-contact { font-style: normal; }
   .visit-hero-grid { grid-template-columns: 1fr; gap: 32px; }
   .visit-hero-photo { aspect-ratio: 16 / 10; }
   .visit-two-col { grid-template-columns: 1fr; gap: 32px; }
+  .visit-kids-list { grid-template-columns: 1fr; gap: 16px; }
   .visit-steps { grid-template-columns: 1fr; }
   .visit-expect-grid { grid-template-columns: 1fr; }
   .faq-item summary { font-size: 19px; padding: 18px 0; }
