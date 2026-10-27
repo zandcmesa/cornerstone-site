@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { vttToText } from './sermon-lib.mjs';
+import { vttToText, retireVideoFields } from './sermon-lib.mjs';
 
 const API = 'https://api.vimeo.com';
 const CHUNK = 64 * 1024 * 1024;
@@ -92,4 +92,13 @@ export async function uploadTextTrack(vimeoId, vtt, { language = 'en', name = 'E
 
 export async function setPrivacy(vimeoId, view) {
   return api(`/videos/${vimeoId}`, { method: 'PATCH', body: { privacy: { view } } });
+}
+
+export async function getVideo(vimeoId) {
+  return api(`/videos/${vimeoId}?fields=name,description`);
+}
+
+export async function retireVideo(vimeoId) {
+  const video = await getVideo(vimeoId);
+  await api(`/videos/${vimeoId}`, { method: 'PATCH', body: { ...retireVideoFields(video), privacy: { view: 'nobody' } } });
 }

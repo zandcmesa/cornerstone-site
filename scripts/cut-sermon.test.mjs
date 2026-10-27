@@ -1,6 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, ytdlpError, YouTubeLoginError, UPLOAD_PRIVACY } from './cut-sermon.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, ytdlpError, YouTubeLoginError, UPLOAD_PRIVACY, cutSermon } from './cut-sermon.mjs';
 
 test('matchReplay picks the stream released on the target Sunday in New York time', () => {
   const list = [
@@ -62,4 +64,81 @@ test('findReplay reports a login block instead of "no replay found"', () => {
 
 test('uploads are unlisted so the reviewer can preview them', () => {
   assert.equal(UPLOAD_PRIVACY.view, 'unlisted');
+});
+
+function fakeDeps(over = {}) {
+  const calls = [], dirs = new Set(), seen = {};
+  const rec = (name, fn) => (...a) => { calls.push(name); return fn(...a); };
+  const deps = {
+    me: rec('me', async () => ({ name: 'x', link: 'y' })),
+    listVideos: rec('listVideos', async () => [{ vimeoId: '123', name: 'Old', description: 'Sermon date: 2026-10-25' }]),
+    findReplay: rec('findReplay', () => ({ id: 'yt1' })),
+    fetchTimedCaptions: (id, dir) => { calls.push('fetchTimedCaptions'); dirs.add(dir); return [{ t: 0, text: 'pre' }, { t: 2500, text: 'Open your Bibles' }, { t: 4800, text: 'amen' }]; },
+    findSermonBounds: rec('findSermonBounds', async () => ({ start: 2500, end: 4800, confidence: 'high', note: 'ai' })),
+    extractMetadata: rec('extractMetadata', async () => ({ title: 'T', speaker: 'Pastor Josh Eldridge', scripture: 'John 3', description: 'd' })),
+    readArchive: rec('readArchive', () => ({ entries: [{ date: '2026-10-18', vimeoId: 'X' }], maxId: 1 })),
+    downloadSection: (id, start, end, out) => { calls.push('downloadSection'); dirs.add(path.dirname(out)); fs.writeFileSync(out, 'x'); return out; },
+    uploadVideo: rec('uploadVideo', async () => '999'),
+    uploadTextTrack: rec('uploadTextTrack', async () => {}),
+    retireVideo: async id => { calls.push(`retireVideo:${id}`); },
+    syncSermons: async arg => { calls.push('syncSermons'); seen.sync = arg; },
+    log: () => {},
+    ...over,
+  };
+  const cleanup = () => { for (const d of dirs) fs.rmSync(d, { recursive: true, force: true }); };
+  return { deps, calls, seen, cleanup };
+}
+
+test('without bounds, a Sunday already on Vimeo exits before any download or sync', async () => {
+  const { deps, calls, cleanup } = fakeDeps();
+  try {
+    const r = await cutSermon({ date: '2026-10-25' }, deps);
+    assert.equal(r.status, 'already-on-vimeo');
+    assert.ok(!calls.includes('downloadSection'));
+    assert.ok(!calls.includes('syncSermons'));
+  } finally { cleanup(); }
+});
+
+test('captions not ready is a quiet status, not an error', async () => {
+  const f = fakeDeps({ listVideos: async () => [] });
+  f.deps.fetchTimedCaptions = (id, dir) => { f.calls.push('fetchTimedCaptions'); return null; };
+  try {
+    const r = await cutSermon({ date: '2026-10-25' }, f.deps);
+    assert.equal(r.status, 'captions-not-ready');
+    assert.ok(!f.calls.includes('findSermonBounds'));
+    assert.ok(!f.calls.includes('syncSermons'));
+  } finally { f.cleanup(); }
+});
+
+test('explicit bounds replace: upload first, then retire the old video, then sync', async () => {
+  const { deps, calls, seen, cleanup } = fakeDeps();
+  try {
+    const r = await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
+    assert.equal(r.status, 'replaced');
+    assert.equal(r.vimeoId, '999');
+    const up = calls.indexOf('uploadVideo'), retire = calls.indexOf('retireVideo:123'), sync = calls.indexOf('syncSermons');
+    assert.ok(up >= 0 && up < retire && retire < sync, calls.join(' '));
+    const p = seen.sync.previewOverride['999'];
+    assert.equal(p.start, 2530);
+    assert.equal(p.end, 4740);
+    assert.equal(p.startLine, 'Open your Bibles');
+    assert.equal(p.endLine, 'amen');
+  } finally { cleanup(); }
+});
+
+test('explicit bounds for a date already on main are refused before touching Vimeo', async () => {
+  const { deps, calls, cleanup } = fakeDeps();
+  try {
+    await assert.rejects(cutSermon({ date: '2026-10-18', start: '42:10', end: '1:19:00' }, deps), /already published/);
+    assert.ok(!calls.some(c => c.startsWith('retireVideo')));
+    assert.ok(!calls.includes('uploadVideo'));
+  } finally { cleanup(); }
+});
+
+test('bounds accept H:MM:SS on the CLI path', async () => {
+  const { deps, cleanup } = fakeDeps();
+  try {
+    const r = await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00', dryRun: true }, deps);
+    assert.equal(r.bounds.start, 2530);
+  } finally { cleanup(); }
 });

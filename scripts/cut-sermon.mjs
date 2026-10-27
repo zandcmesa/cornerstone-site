@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { json3ToTimed, formatTimed, previousSunday, localDate, validateBounds, sermonDateFromVideo, hms, parseArchive, archiveContext } from './sermon-lib.mjs';
+import { json3ToTimed, formatTimed, previousSunday, localDate, validateBounds, sermonDateFromVideo, hms, parseArchive, archiveContext, parseTimestamp } from './sermon-lib.mjs';
 import * as vimeo from './vimeo.mjs';
 import * as ai from './sermon-ai.mjs';
 import { syncSermons } from './sync-sermons.mjs';
@@ -77,7 +77,7 @@ export function findReplay(date, deps = ytDeps) {
 export function fetchTimedCaptions(youtubeId, dir) {
   ytdlp(['--skip-download', '--write-auto-subs', '--sub-lang', 'en-orig,en', '--sub-format', 'json3', '-o', path.join(dir, 'captions'), `https://www.youtube.com/watch?v=${youtubeId}`], { quiet: true });
   const file = fs.readdirSync(dir).find(f => f.startsWith('captions') && f.endsWith('.json3'));
-  if (!file) throw new Error('YouTube auto-captions are not available yet for this replay');
+  if (!file) return null;
   return json3ToTimed(JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8')));
 }
 
@@ -90,30 +90,42 @@ export function downloadSection(youtubeId, start, end, out) {
   return out;
 }
 
-export async function cutSermon({ date, youtubeId, start, end, dryRun = false, skipUpload = false, keep = false, log = console.log } = {}) {
+const readArchive = () => parseArchive(fs.readFileSync(path.join(ROOT, 'js/sermons.js'), 'utf8'));
+
+const cutDeps = {
+  listVideos: vimeo.listVideos, uploadVideo: vimeo.uploadVideo, uploadTextTrack: vimeo.uploadTextTrack, retireVideo: vimeo.retireVideo, me: vimeo.me,
+  findReplay, fetchTimedCaptions, downloadSection, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, log: console.log,
+};
+
+export async function cutSermon({ date, youtubeId, start, end, dryRun = false, skipUpload = false, keep = false } = {}, deps = cutDeps) {
+  const d = { ...cutDeps, ...deps }, log = d.log;
   date ||= previousSunday();
+  const manual = start != null && end != null;
   if (process.env.VIMEO_USER && process.env.VIMEO_USER !== 'me' && !dryRun) {
-    const who = await vimeo.me();
+    const who = await d.me();
     throw new Error(`VIMEO_USER is set to "${process.env.VIMEO_USER}" but the token belongs to ${who.name} (${who.link}). Uploads go to the token's own library, so the cut workflow needs a token minted as the church account and VIMEO_USER unset.`);
   }
   if (date < CUT_START) { log(`${date} is before the cutover date ${CUT_START}; nothing to do`); return { status: 'before-cutover' }; }
-  const existing = (await vimeo.listVideos({ perPage: 25, pages: 1 })).find(v => sermonDateFromVideo(v) === date);
-  if (existing) { log(`${date} is already on Vimeo (${existing.vimeoId}); nothing to do`); return { status: 'already-on-vimeo', vimeoId: existing.vimeoId }; }
+  if (manual && d.readArchive().entries.some(e => e.date === date)) throw new Error(`${date} is already published on the site; a recut only replaces a sermon still waiting in its PR`);
+  const videos = await d.listVideos({ perPage: 25, pages: 1 });
+  const existing = videos.find(v => sermonDateFromVideo(v) === date);
+  if (existing && !manual && !dryRun) { log(`${date} is already on Vimeo (${existing.vimeoId}); nothing to do`); return { status: 'already-on-vimeo', vimeoId: existing.vimeoId }; }
 
   if (!youtubeId) {
-    const replay = findReplay(date);
+    const replay = d.findReplay(date);
     if (!replay) { log(`no YouTube live replay found for ${date}`); return { status: 'no-replay' }; }
     youtubeId = replay.id;
   }
   log(`replay for ${date}: youtube.com/watch?v=${youtubeId}`);
 
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sermon-'));
-  const segments = fetchTimedCaptions(youtubeId, dir);
+  const segments = d.fetchTimedCaptions(youtubeId, dir);
+  if (!segments) { fs.rmSync(dir, { recursive: true, force: true }); log(`captions for ${youtubeId} are not ready yet`); return { status: 'captions-not-ready', youtubeId }; }
   log(`${segments.length} caption lines, ${hms(segments.at(-1)?.t || 0)} long`);
 
   let bounds;
-  if (start != null && end != null) bounds = { start: +start, end: +end, confidence: 'manual', note: 'bounds given on the command line' };
-  else bounds = await ai.findSermonBounds(formatTimed(segments));
+  if (manual) bounds = { start: parseTimestamp(start), end: parseTimestamp(end), confidence: 'manual', note: 'bounds given on the command line' };
+  else bounds = await d.findSermonBounds(formatTimed(segments));
   const check = validateBounds(bounds);
   log(`sermon ${hms(bounds.start)} → ${hms(bounds.end)} (${bounds.confidence}): ${bounds.note}`);
   if (!check.ok) throw new Error(`refusing to cut: ${check.reason}`);
@@ -121,11 +133,11 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
 
   const inside = sliceSegments(segments, bounds.start, bounds.end);
   const transcript = inside.map(s => s.text).join(' ');
-  const meta = await ai.extractMetadata(transcript, { ...archiveContext(parseArchive(fs.readFileSync(path.join(ROOT, 'js/sermons.js'), 'utf8'))), date });
+  const meta = await d.extractMetadata(transcript, { ...archiveContext(d.readArchive()), date });
   log(`title: ${meta.title} — ${meta.speaker}`);
 
   const out = path.join(keep ? process.cwd() : dir, `sermon-${date}.mp4`);
-  downloadSection(youtubeId, bounds.start, bounds.end, out);
+  d.downloadSection(youtubeId, bounds.start, bounds.end, out);
   log(`cut saved: ${out} (${Math.round(fs.statSync(out).size / 1048576)} MB)`);
   if (skipUpload) return { status: 'cut-only', youtubeId, bounds, meta, file: out };
 
@@ -133,19 +145,24 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
     [meta.speaker, meta.scripture].filter(Boolean).join(' · '), '', meta.description, '',
     `Sermon date: ${date}`, `Source: https://www.youtube.com/watch?v=${youtubeId} (${hms(bounds.start)}–${hms(bounds.end)})`,
   ].join('\n');
-  const vimeoId = await vimeo.uploadVideo({ filePath: out, name: meta.title, description, privacy: UPLOAD_PRIVACY });
+  const vimeoId = await d.uploadVideo({ filePath: out, name: meta.title, description, privacy: UPLOAD_PRIVACY });
   log(`uploaded (unlisted) to vimeo.com/${vimeoId}`);
-  try { await vimeo.uploadTextTrack(vimeoId, rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER)); } catch (e) { log(`caption upload failed: ${e.message}`); }
+  try { await d.uploadTextTrack(vimeoId, rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER)); } catch (e) { log(`caption upload failed: ${e.message}`); }
   if (!keep) fs.rmSync(dir, { recursive: true, force: true });
+  if (manual) for (const v of videos.filter(v => sermonDateFromVideo(v) === date)) { await d.retireVideo(v.vimeoId); log(`retired vimeo.com/${v.vimeoId}`); }
 
-  await syncSermons({ transcriptOverride: { [vimeoId]: transcript }, metaOverride: { [vimeoId]: meta } });
-  return { status: 'uploaded', youtubeId, bounds, meta, vimeoId };
+  const nearest = t => segments.reduce((a, b) => Math.abs(b.t - t) < Math.abs(a.t - t) ? b : a, segments[0])?.text;
+  const startLine = nearest(bounds.start), endLine = nearest(bounds.end), cutAt = new Date().toISOString();
+  await d.syncSermons({ transcriptOverride: { [vimeoId]: transcript }, metaOverride: { [vimeoId]: meta }, previewOverride: { [vimeoId]: { youtubeId, start: bounds.start, end: bounds.end, startLine, endLine, cutAt } } });
+  return { status: manual ? 'replaced' : 'uploaded', youtubeId, bounds, meta, vimeoId, startLine, endLine, cutAt };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   const args = process.argv.slice(2);
   const flag = n => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : undefined; };
-  cutSermon({ date: flag('--date'), youtubeId: flag('--youtube'), start: flag('--start'), end: flag('--end'), dryRun: args.includes('--dry-run'), skipUpload: args.includes('--skip-upload'), keep: args.includes('--keep') })
+  const stamp = n => flag(n) == null ? undefined : parseTimestamp(flag(n));
+  Promise.resolve()
+    .then(() => cutSermon({ date: flag('--date'), youtubeId: flag('--youtube'), start: stamp('--start'), end: stamp('--end'), dryRun: args.includes('--dry-run'), skipUpload: args.includes('--skip-upload'), keep: args.includes('--keep') }))
     .then(r => console.log(r.status))
     .catch(e => { console.error(e.message || e); process.exit(1); });
 }
