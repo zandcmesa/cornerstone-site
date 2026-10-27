@@ -1,8 +1,10 @@
+# Runs on the Mac mini. Never add pull_request triggers to a self-hosted workflow.
 name: Cut Sunday sermon
 
 on:
   schedule:
-    - cron: '0 10 * * 1,2'
+    - cron: '0 11-18 * * 1'
+    - cron: '0 10 * * 2'
   workflow_dispatch:
     inputs:
       date:
@@ -17,44 +19,83 @@ on:
       end:
         description: Sermon end in seconds (manual override)
         required: false
+  issue_comment:
+    types: [created]
 
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 concurrency:
-  group: sermon-sync
+  group: sermon-cut
   cancel-in-progress: false
 
 jobs:
-  cut:
+  parse:
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request && github.event.comment.author_association == 'OWNER' && (startsWith(github.event.comment.body, 'recut') || startsWith(github.event.comment.body, 'Recut'))
     runs-on: ubuntu-latest
+    outputs:
+      date: ${{ steps.recut.outputs.date }}
+      start: ${{ steps.recut.outputs.start }}
+      end: ${{ steps.recut.outputs.end }}
+      error: ${{ steps.recut.outputs.error }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - run: gh api -X POST repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f content=eyes
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - id: recut
+        run: node scripts/recut-comment.mjs
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          PR_TITLE: ${{ github.event.issue.title }}
+      - if: steps.recut.outputs.error != ''
+        run: |
+          gh api -X POST repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f content=confused
+          gh pr comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "$ERROR The expected form is: recut start 42:10 end 1:19:00"
+        env:
+          ERROR: ${{ steps.recut.outputs.error }}
+
+  cut:
+    needs: [parse]
+    if: always() && (github.event_name != 'issue_comment' || needs.parse.outputs.start != '')
+    runs-on: [self-hosted, macOS, sermon-mini]
     timeout-minutes: 90
+    env:
+      PATH: /opt/homebrew/bin:/usr/bin:/bin
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-      - run: python3 -m pip install --quiet --upgrade yt-dlp
+      - run: brew upgrade yt-dlp || true
+      - run: node --version
       - run: npm ci
-      - run: >
+      - id: cut
+        shell: bash
+        run: >
           node scripts/cut-sermon.mjs
-          ${{ inputs.date && format('--date {0}', inputs.date) || '' }}
+          ${{ inputs.date && format('--date {0}', inputs.date) || needs.parse.outputs.date && format('--date {0}', needs.parse.outputs.date) || '' }}
           ${{ inputs.youtube && format('--youtube {0}', inputs.youtube) || '' }}
-          ${{ inputs.start && format('--start {0}', inputs.start) || '' }}
-          ${{ inputs.end && format('--end {0}', inputs.end) || '' }}
+          ${{ inputs.start && format('--start {0}', inputs.start) || needs.parse.outputs.start && format('--start {0}', needs.parse.outputs.start) || '' }}
+          ${{ inputs.end && format('--end {0}', inputs.end) || needs.parse.outputs.end && format('--end {0}', needs.parse.outputs.end) || '' }}
+          2>&1 | tee "$RUNNER_TEMP/cut.log"
         env:
           VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
-          VIMEO_USER: ${{ vars.VIMEO_USER }}
-          SERMON_CUT_START: ${{ vars.SERMON_CUT_START }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+          SERMON_CUT_START: ${{ vars.SERMON_CUT_START }}
+          GH_TOKEN: ${{ github.token }}
+      - if: always() && github.event_name == 'issue_comment'
+        run: |
+          id=$(grep '^vimeo=' "$RUNNER_TEMP/cut.log" 2>/dev/null | tail -n 1 | cut -d= -f2)
+          last=$(tail -n 1 "$RUNNER_TEMP/cut.log" 2>/dev/null || true)
+          if [ "$OUTCOME" = success ] && [ -n "$id" ]; then body="Recut done: https://vimeo.com/$id"
+          elif [ "$OUTCOME" = success ]; then body="Recut finished without a new upload: $last"
+          else body="Recut failed: $last"; fi
+          gh pr comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "$body"
+        env:
+          OUTCOME: ${{ steps.cut.outcome }}
           GH_TOKEN: ${{ github.token }}

@@ -163,6 +163,6 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const stamp = n => flag(n) == null ? undefined : parseTimestamp(flag(n));
   Promise.resolve()
     .then(() => cutSermon({ date: flag('--date'), youtubeId: flag('--youtube'), start: stamp('--start'), end: stamp('--end'), dryRun: args.includes('--dry-run'), skipUpload: args.includes('--skip-upload'), keep: args.includes('--keep') }))
-    .then(r => console.log(r.status))
+    .then(r => { console.log(r.status); if (r.vimeoId) console.log(`vimeo=${r.vimeoId}`); })
     .catch(e => { console.error(e.message || e); process.exit(1); });
 }
