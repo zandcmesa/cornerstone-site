@@ -52,6 +52,35 @@ export function hms(sec) {
   return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
 }
 
+const span = sec => hms(sec).replace(/^0:/, '');
+
+const cutTime = iso => {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true, weekday: 'short', month: 'short', day: 'numeric' }).formatToParts(new Date(iso)).map(x => [x.type, x.value]));
+  return `${p.hour}:${p.minute}${p.dayPeriod.toLowerCase()} ET ${p.weekday} ${p.month} ${p.day}`;
+};
+
+export function buildPrBody(entries, skipped = [], previews = {}) {
+  const blocks = entries.map(e => {
+    const pv = previews[e.vimeoId];
+    const lines = [
+      `**Watch the cut:** https://vimeo.com/${e.vimeoId}  (unlisted until merge)`,
+      `**${e.title}** — ${e.speaker}${e.series ? ` · ${e.series}` : ''} · ${e.date}`,
+    ];
+    const ref = [e.scripture, pv && `${span(pv.start)}–${span(pv.end)} of the YouTube replay`].filter(Boolean).join(' · ');
+    if (ref) lines.push(ref);
+    if (e.description) lines.push(e.description);
+    if (pv) lines.push(`Starts: "${pv.startLine}" · Ends: "${pv.endLine}"`, `Cut at ${cutTime(pv.cutAt)}`);
+    lines.push(`To fix the cut, comment: \`recut start ${pv ? span(pv.start) : 'M:SS'} end ${pv ? span(pv.end) : 'H:MM:SS'}\``);
+    if (!e.art) lines.push(e.series
+      ? `Art missing for the series "${e.series}": run /sermon-art.`
+      : 'No series and no art: if this belongs to an existing series, fix the series name here; otherwise run /sermon-art.');
+    return lines.join('\n');
+  });
+  return [...blocks.join('\n\n---\n\n').split('\n'), '', 'Merging publishes the video and the site.',
+    ...(skipped.length ? ['', 'Skipped this run:', ...skipped.map(s => `- ${s.date} (vimeo.com/${s.vimeoId}): ${s.reason}`)] : []),
+    '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
+}
+
 export function formatTimed(segments, chunk = 15) {
   const lines = [];
   let cur = null;

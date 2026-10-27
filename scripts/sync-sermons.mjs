@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { parseArchive, pickCandidates, buildEntryLine, insertEntries, artFile, archiveContext } from './sermon-lib.mjs';
+import { parseArchive, pickCandidates, buildEntryLine, insertEntries, artFile, archiveContext, buildPrBody } from './sermon-lib.mjs';
 import * as vimeo from './vimeo.mjs';
 import * as ai from './sermon-ai.mjs';
 import * as art from './sermon-art.mjs';
@@ -50,7 +50,7 @@ const defaultDeps = {
   log: (...a) => console.log(...a),
 };
 
-export async function syncSermons({ dryRun = false, limit = Infinity, transcriptOverride = {}, metaOverride = {} } = {}, deps = {}) {
+export async function syncSermons({ dryRun = false, limit = Infinity, transcriptOverride = {}, metaOverride = {}, previewOverride = {} } = {}, deps = {}) {
   const d = { ...defaultDeps, ...deps };
   d.git.fetch();
   const baseSrc = d.git.show('origin/main', 'js/sermons.js');
@@ -120,15 +120,10 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
 
   const newSrc = insertEntries(baseSrc, entries);
   files.unshift({ path: 'js/sermons.js', content: newSrc });
-  const rows = entries.map(e => {
+  const body = buildPrBody(entries.map(e => {
     const meta = e.line.match(/title: ("(?:[^"\\]|\\.)*").*?speaker: ("[^"]*")/);
-    const title = meta ? JSON.parse(meta[1]) : e.title;
-    const speaker = meta ? JSON.parse(meta[2]) : e.speaker;
-    return `- **${e.date}** — ${title} (${speaker}) · [vimeo.com/${e.vimeoId}](https://vimeo.com/${e.vimeoId})${e.art ? '' : ' · _art missing_'}`;
-  });
-  const body = [`${entries.length} new sermon${entries.length === 1 ? '' : 's'} from Vimeo. Review titles, series, and art, then merge.`, '', ...rows,
-    ...(skipped.length ? ['', 'Skipped this run:', ...skipped.map(s => `- ${s.date} (vimeo.com/${s.vimeoId}): ${s.reason}`)] : []),
-    '', '🤖 Generated with [Claude Code](https://claude.com/claude-code)'].join('\n');
+    return { ...e, title: meta ? JSON.parse(meta[1]) : e.title, speaker: meta ? JSON.parse(meta[2]) : e.speaker };
+  }), skipped, previewOverride);
   const title = `Sermon archive: ${entries.length === 1 ? entries[0].date : `${entries.length} new sermons`}`;
   const message = `Add ${entries.length} sermon${entries.length === 1 ? '' : 's'} to the archive\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`;
 

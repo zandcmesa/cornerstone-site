@@ -57,7 +57,7 @@ test('art failure is logged, not fatal', async () => {
   const { deps, calls } = fakes({ generateArt: async () => { throw new Error('quota'); } });
   const r = await syncSermons({}, deps);
   assert.equal(r.entries[1].art, null);
-  assert.match(calls.published.body, /art missing/i);
+  assert.match(calls.published.body, /no series and no art/i);
 });
 
 test('nothing pending publishes nothing', async () => {
@@ -70,9 +70,12 @@ test('nothing pending publishes nothing', async () => {
 test('overrides supply transcript and metadata for a just-uploaded video', async () => {
   const { deps, calls } = fakes({ getTranscript: async () => null });
   const meta = { title: 'Cut One', speaker: 'Pastor Josh Eldridge', series: null, scripture: '', scriptureBook: '', topics: [], description: '', artMood: 'x' };
-  const r = await syncSermons({ metaOverride: { N: meta } }, deps);
+  const previewOverride = { N: { youtubeId: 'yt', start: 60, end: 2400, startLine: 'Good morning', endLine: 'amen', cutAt: '2026-10-26T15:12:00Z' } };
+  const r = await syncSermons({ metaOverride: { N: meta }, previewOverride }, deps);
   assert.deepEqual(r.entries.map(e => e.vimeoId), ['D', 'N']);
   assert.equal(calls.extract, 0);
+  assert.ok(calls.published.body.startsWith('**Watch the cut:**'));
+  assert.match(calls.published.body, /Starts:/);
 });
 
 test('a failing sermon is skipped with its error and the rest still publish', async () => {

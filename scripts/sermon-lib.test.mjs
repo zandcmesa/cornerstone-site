@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import {
   parseArchive, sermonDateFromVideo, vttToText, json3ToTimed, formatTimed,
   buildEntryLine, insertEntries, pickCandidates, previousSunday, artFile, validateBounds, archiveContext,
-  parseTimestamp, parseRecutComment, retireVideoFields,
+  parseTimestamp, parseRecutComment, retireVideoFields, buildPrBody,
 } from './sermon-lib.mjs';
 
 const fx = name => fs.readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
@@ -135,4 +135,24 @@ test('retireVideoFields makes a video invisible to sermonDateFromVideo', () => {
   assert.equal(sermonDateFromVideo(cutter), null);
   assert.equal(cutter.name, 'Superseded: Wonderful, Beautiful');
   assert.match(cutter.description, /Superseded sermon date: 2026-10-25/);
+});
+
+test('buildPrBody leads with the Vimeo link and shows the cut edges', () => {
+  const body = buildPrBody([{ date: '2026-10-25', title: 'T', speaker: 'Pastor Josh Eldridge', series: 'Seek First the Kingdom', scripture: 'John 15', description: 'D.', vimeoId: '999', art: 'images/sermons/series-seek-first-the-kingdom.jpg' }], [],
+    { '999': { youtubeId: 'abc', start: 2530, end: 4740, startLine: 'Open your Bibles', endLine: 'amen', cutAt: '2026-10-26T15:12:00Z' } });
+  assert.ok(body.startsWith('**Watch the cut:** https://vimeo.com/999  (unlisted until merge)'));
+  assert.match(body, /\*\*T\*\* — Pastor Josh Eldridge · Seek First the Kingdom/);
+  assert.match(body, /John 15 · 42:10–1:19:00 of the YouTube replay/);
+  assert.match(body, /Starts: "Open your Bibles" · Ends: "amen"/);
+  assert.match(body, /Cut at 11:12am ET Mon Oct 26/);
+  assert.match(body, /To fix the cut, comment: `recut start 42:10 end 1:19:00`/);
+  assert.match(body, /Merging publishes the video and the site\./);
+  assert.doesNotMatch(body, /\bart\b/i);
+});
+
+test('buildPrBody names the missing art by series or by its absence', () => {
+  const withSeries = buildPrBody([{ date: '2026-11-01', title: 'T', speaker: 'S', series: 'New Series', scripture: '', description: '', vimeoId: '1', art: null }]);
+  assert.match(withSeries, /Art missing for the series "New Series": run \/sermon-art\./);
+  const noSeries = buildPrBody([{ date: '2026-11-01', title: 'T', speaker: 'S', series: null, scripture: '', description: '', vimeoId: '1', art: null }]);
+  assert.match(noSeries, /No series and no art: if this belongs to an existing series, fix the series name here; otherwise run \/sermon-art\./);
 });
