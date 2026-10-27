@@ -56,15 +56,11 @@ export function chunkRanges(size, chunk = CHUNK) {
   return out;
 }
 
-export async function uploadVideo({ filePath, name, description, privacy = { view: 'nobody', embed: 'public' } }) {
-  const size = fs.statSync(filePath).size;
-  const created = await api('/me/videos', { method: 'POST', body: { upload: { approach: 'tus', size: String(size) }, name, description, privacy } });
-  const link = created.upload.upload_link;
-  const fd = fs.openSync(filePath, 'r');
-  try {
-    for (const [start, end] of chunkRanges(size)) {
-      const buf = Buffer.alloc(end - start);
-      fs.readSync(fd, buf, 0, end - start, start);
+export const UPLOAD_RETRIES = 4;
+
+async function sendChunk(link, start, end, buf, attempts = UPLOAD_RETRIES, sleep = ms => new Promise(r => setTimeout(r, ms))) {
+  for (let i = 1; ; i++) {
+    try {
       const res = await fetch(link, {
         method: 'PATCH',
         headers: { 'Tus-Resumable': '1.0.0', 'Upload-Offset': String(start), 'Content-Type': 'application/offset+octet-stream' },
@@ -73,6 +69,34 @@ export async function uploadVideo({ filePath, name, description, privacy = { vie
       if (!res.ok) throw new Error(`Vimeo upload chunk at ${start} → ${res.status}: ${(await res.text()).slice(0, 300)}`);
       const offset = +res.headers.get('Upload-Offset');
       if (offset !== end) throw new Error(`Vimeo upload offset mismatch: expected ${end}, got ${offset}`);
+      return;
+    } catch (e) {
+      if (i >= attempts) throw new Error(`Vimeo upload chunk at ${start} failed after ${attempts} attempts: ${e.message}`);
+      const head = await fetch(link, { method: 'HEAD', headers: { 'Tus-Resumable': '1.0.0' } }).catch(() => null);
+      const done = head ? +head.headers.get('Upload-Offset') : NaN;
+      if (done === end) return;
+      if (done > start && done < end) { buf = buf.subarray(done - start); start = done; }
+      await sleep(2000 * i);
+    }
+  }
+}
+
+export { sendChunk };
+
+export async function uploadVideo({ filePath, name, description, privacy = { view: 'nobody', embed: 'public' } }) {
+  const size = fs.statSync(filePath).size;
+  let created;
+  for (let i = 1; ; i++) {
+    try { created = await api('/me/videos', { method: 'POST', body: { upload: { approach: 'tus', size: String(size) }, name, description, privacy } }); break; }
+    catch (e) { if (!(e instanceof TypeError) || i >= UPLOAD_RETRIES) throw e; await new Promise(r => setTimeout(r, 2000 * i)); }
+  }
+  const link = created.upload.upload_link;
+  const fd = fs.openSync(filePath, 'r');
+  try {
+    for (const [start, end] of chunkRanges(size)) {
+      const buf = Buffer.alloc(end - start);
+      fs.readSync(fd, buf, 0, end - start, start);
+      await sendChunk(link, start, end, buf);
     }
   } finally {
     fs.closeSync(fd);

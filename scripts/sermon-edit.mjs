@@ -28,7 +28,7 @@ export function cardSpecs({ title, speaker, date, series }) {
   return { intro: { width: 1920, height: 1080, lines: intro }, outro: { width: 1920, height: 1080, lines: outro } };
 }
 
-const VIDEO = ['-c:v', 'h264_videotoolbox', '-b:v', '8M', '-profile:v', 'high', '-pix_fmt', 'yuv420p'];
+const VIDEO = ['-c:v', 'h264_videotoolbox', '-b:v', '5M', '-profile:v', 'high', '-pix_fmt', 'yuv420p'];
 const AUDIO = ['-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-ac', '2'];
 
 export function buildBumperArgs({ kind, output, assets, card }) {
