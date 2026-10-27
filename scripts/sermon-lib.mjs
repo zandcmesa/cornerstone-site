@@ -113,3 +113,40 @@ export function validateBounds({ start, end }) {
   if (len > 5400) return { ok: false, reason: `sermon span is ${Math.round(len / 60)} minutes, longer than a service` };
   return { ok: true };
 }
+
+export function parseTimestamp(s) {
+  const t = String(s).trim();
+  if (!/^\d+(?::\d\d){0,2}$/.test(t)) throw new Error(`bad timestamp: ${s}`);
+  return t.split(':').reduce((sec, p) => sec * 60 + Number(p), 0);
+}
+
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const STAMP = '(\\d+(?::\\d\\d){0,2})';
+
+export function parseRecutComment(body, prTitle = '', now = new Date()) {
+  const text = body.trim();
+  if (!/^recut\b/i.test(text)) return { error: 'Start the comment with "recut", for example: recut start 42:10 end 1:19:00.' };
+  const start = text.match(new RegExp(`\\b(?:start|from)(?:\\s+at)?\\s+${STAMP}`, 'i'));
+  if (!start) return { error: 'I could not find a start time; add "start 42:10".' };
+  const end = text.match(new RegExp(`\\b(?:end|to)(?:\\s+at)?\\s+${STAMP}`, 'i'));
+  if (!end) return { error: 'I could not find an end time; add "end 1:19:00".' };
+  const year = localDate(now).slice(0, 4);
+  const pad = n => String(n).padStart(2, '0');
+  let date;
+  const iso = text.match(/\b(\d{4}-\d\d-\d\d)\b/);
+  const named = text.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})\b/i);
+  const slash = text.match(/\b(\d{1,2})\/(\d{1,2})\b/);
+  if (iso) date = iso[1];
+  else if (named) date = `${year}-${pad(MONTHS.indexOf(named[1].toLowerCase()) + 1)}-${pad(named[2])}`;
+  else if (slash) date = `${year}-${pad(slash[1])}-${pad(slash[2])}`;
+  else date = prTitle.match(/Sermon archive: (\d{4}-\d\d-\d\d)/)?.[1] || previousSunday(now);
+  return { date, start: parseTimestamp(start[1]), end: parseTimestamp(end[1]) };
+}
+
+export function retireVideoFields({ name, description }) {
+  const dated = /Sunday Sermon (\d\d-\d\d-\d{4})/.test(name || '');
+  return {
+    name: dated ? name.replace(/Sunday Sermon (\d\d-\d\d-\d{4})/, 'Superseded sermon $1') : `Superseded: ${name}`,
+    description: (description || '').replace(/Sermon date: /g, 'Superseded sermon date: '),
+  };
+}

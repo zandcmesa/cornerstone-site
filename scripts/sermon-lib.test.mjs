@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import {
   parseArchive, sermonDateFromVideo, vttToText, json3ToTimed, formatTimed,
   buildEntryLine, insertEntries, pickCandidates, previousSunday, artFile, validateBounds, archiveContext,
+  parseTimestamp, parseRecutComment, retireVideoFields,
 } from './sermon-lib.mjs';
 
 const fx = name => fs.readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
@@ -102,4 +103,33 @@ test('archiveContext gives Claude the known series, speakers and three example r
   assert.ok(ctx.knownSpeakers.includes('Pastor Christine Disibio'));
   assert.equal(ctx.examples.length, 3);
   assert.ok(ctx.examples.every(l => /^\s*\{ id: \d+,/.test(l)));
+});
+
+test('parseTimestamp reads seconds, MM:SS and H:MM:SS', () => {
+  assert.equal(parseTimestamp('2530'), 2530);
+  assert.equal(parseTimestamp(2530), 2530);
+  assert.equal(parseTimestamp('42:10'), 2530);
+  assert.equal(parseTimestamp('1:19:00'), 4740);
+  assert.throws(() => parseTimestamp('42m'), /bad timestamp/);
+});
+
+test('parseRecutComment reads the grammar and resolves the date', () => {
+  const now = new Date('2026-10-27T15:00:00Z');
+  assert.deepEqual(parseRecutComment('recut 2026-10-25 start 42:10 end 1:19:00', '', now), { date: '2026-10-25', start: 2530, end: 4740 });
+  assert.deepEqual(parseRecutComment('Recut Oct 25, start at 42:10, end at 1:19:00', '', now), { date: '2026-10-25', start: 2530, end: 4740 });
+  assert.deepEqual(parseRecutComment('recut 10/25 from 42:10 to 1:19:00', '', now), { date: '2026-10-25', start: 2530, end: 4740 });
+  assert.deepEqual(parseRecutComment('recut start 42:10 end 1:19:00', 'Sermon archive: 2026-10-18', now), { date: '2026-10-18', start: 2530, end: 4740 });
+  assert.deepEqual(parseRecutComment('recut start 42:10 end 1:19:00', 'Sermon archive: 3 new sermons', now), { date: '2026-10-25', start: 2530, end: 4740 });
+  assert.match(parseRecutComment('recut start 42:10', '', now).error, /end/);
+  assert.match(parseRecutComment('looks good, merging', '', now).error, /recut/);
+});
+
+test('retireVideoFields makes a video invisible to sermonDateFromVideo', () => {
+  const agency = retireVideoFields({ name: 'Sunday Sermon 10-25-2026', description: null });
+  assert.equal(sermonDateFromVideo(agency), null);
+  assert.match(agency.name, /Superseded/);
+  const cutter = retireVideoFields({ name: 'Wonderful, Beautiful', description: 'Josh \u00b7 John 15\n\nSermon date: 2026-10-25\nSource: x' });
+  assert.equal(sermonDateFromVideo(cutter), null);
+  assert.equal(cutter.name, 'Superseded: Wonderful, Beautiful');
+  assert.match(cutter.description, /Superseded sermon date: 2026-10-25/);
 });
