@@ -1,6 +1,9 @@
+# Runs on the Mac mini. Never add pull_request triggers to a self-hosted workflow.
 name: Check YouTube access
 
 on:
+  schedule:
+    - cron: '0 11 * * 0'
   workflow_dispatch:
     inputs:
       video:
@@ -9,24 +12,16 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, sermon-mini]
     timeout-minutes: 10
+    env:
+      PATH: /opt/homebrew/bin:/usr/bin:/bin
     steps:
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
-      - run: python3 -m pip install --quiet --upgrade yt-dlp
-
-      - name: Write cookies
-        env:
-          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
-        run: printf '%s' "$YOUTUBE_COOKIES" > /tmp/cookies.txt
-
       - name: Pull 20 seconds of real video
         continue-on-error: true
         run: |
-          yt-dlp --cookies /tmp/cookies.txt --remote-components ejs:npm \
+          rm -f /tmp/check.mp4
+          yt-dlp --remote-components ejs:npm \
             -f 'bv*[height<=480][ext=mp4]/bv*[ext=mp4]/b[ext=mp4]/b' \
             --download-sections '*120-140' --force-keyframes-at-cuts \
             --no-progress -o /tmp/check.mp4 \
@@ -36,9 +31,9 @@ jobs:
         run: |
           if [ -s /tmp/check.mp4 ]; then
             echo "## ✅ YouTube access is working" >> $GITHUB_STEP_SUMMARY
-            echo "Pulled $(stat -c%s /tmp/check.mp4) bytes. Monday's cut should run fine." >> $GITHUB_STEP_SUMMARY
+            echo "Pulled $(stat -f%z /tmp/check.mp4) bytes. Monday's cut should run fine." >> $GITHUB_STEP_SUMMARY
           else
             echo "## ❌ YouTube access is blocked" >> $GITHUB_STEP_SUMMARY
-            echo "Almost always the \`YOUTUBE_COOKIES\` secret has rotated. Re-export per \`docs/sermon-automation-setup.md\`." >> $GITHUB_STEP_SUMMARY
+            echo "The mini could not reach YouTube. Check that the runner is online and run \`brew upgrade yt-dlp\` on the mini." >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
