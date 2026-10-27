@@ -312,6 +312,7 @@ if (pcoBackdrop) {
           <select id="cf-type" name="type" required aria-required="true">
             <option value="" disabled selected>Select one</option>
             <option value="General">General</option>
+            <option value="Planning a visit">Planning a visit</option>
             <option value="Prayer">Prayer</option>
             <option value="Testimony">Testimony</option>
           </select>
@@ -470,7 +471,10 @@ if (pcoBackdrop) {
 
   // Wire up all contact modal triggers
   document.querySelectorAll('[data-contact-modal]').forEach(el => {
-    el.addEventListener('click', () => openContactModal());
+    el.addEventListener('click', () => {
+      const type = el.getAttribute('data-contact-type');
+      openContactModal(type ? { type } : undefined);
+    });
   });
 
   if (location.hash === '#contact') openContactModal();
