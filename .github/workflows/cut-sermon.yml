@@ -27,10 +27,6 @@ permissions:
   pull-requests: write
   issues: write
 
-concurrency:
-  group: sermon-cut
-  cancel-in-progress: false
-
 jobs:
   parse:
     if: github.event_name == 'issue_comment' && github.event.issue.pull_request && github.event.comment.author_association == 'OWNER' && (startsWith(github.event.comment.body, 'recut') || startsWith(github.event.comment.body, 'Recut'))
@@ -65,6 +61,9 @@ jobs:
     if: always() && (github.event_name != 'issue_comment' || needs.parse.outputs.start != '')
     runs-on: [self-hosted, macOS, sermon-mini]
     timeout-minutes: 90
+    concurrency:
+      group: sermon-cut-${{ github.event_name }}
+      cancel-in-progress: false
     env:
       PATH: /opt/homebrew/bin:/usr/bin:/bin
     steps:
@@ -92,6 +91,7 @@ jobs:
         run: |
           id=$(grep '^vimeo=' "$RUNNER_TEMP/cut.log" 2>/dev/null | tail -n 1 | cut -d= -f2)
           last=$(tail -n 1 "$RUNNER_TEMP/cut.log" 2>/dev/null || true)
+          last=${last:-see the run log}
           if [ "$OUTCOME" = success ] && [ -n "$id" ]; then body="Recut done: https://vimeo.com/$id"
           elif [ "$OUTCOME" = success ]; then body="Recut finished without a new upload: $last"
           else body="Recut failed: $last"; fi
