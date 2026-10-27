@@ -11,7 +11,7 @@ function fakes(overrides = {}) {
   const deps = {
     listVideos: async () => [
       { vimeoId: 'M', name: 'Sunday Sermon 07-26-2026', description: null },
-      { vimeoId: 'N', name: 'Sunday Sermon 07-19-2026', description: null },
+      { vimeoId: 'N', name: 'Sunday Sermon 07-19-2026', link: 'https://vimeo.com/N/h4sh', description: null },
       { vimeoId: 'D', name: 'Sunday Sermon 07-12-2026', description: null },
       { vimeoId: 'X', name: 'Christmas Eve 2026', description: null },
       { vimeoId: 'A', name: 'Sunday Sermon 06-28-2026', description: null },
@@ -102,4 +102,10 @@ test('a series drafted earlier in the run is offered to later sermons as a known
   assert.equal(seen.length, 2);
   assert.ok(!seen[0].includes('Seek First the Kingdom'));
   assert.ok(seen[1].includes('Seek First the Kingdom'));
+});
+
+test('the PR body carries the private link from the Vimeo listing', async () => {
+  const { deps, calls } = fakes();
+  await syncSermons({}, deps);
+  assert.match(calls.published.body, /\*\*Watch the cut:\*\* https:\/\/vimeo\.com\/N\/h4sh/);
 });

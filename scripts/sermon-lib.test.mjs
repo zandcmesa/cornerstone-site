@@ -156,3 +156,9 @@ test('buildPrBody names the missing art by series or by its absence', () => {
   const noSeries = buildPrBody([{ date: '2026-11-01', title: 'T', speaker: 'S', series: null, scripture: '', description: '', vimeoId: '1', art: null }]);
   assert.match(noSeries, /No series and no art: if this belongs to an existing series, fix the series name here; otherwise run \/sermon-art\./);
 });
+
+test('buildPrBody uses the private review link when Vimeo gives one', () => {
+  const entry = { date: '2026-10-25', title: 'T', speaker: 'S', series: null, scripture: '', description: '', vimeoId: '999', art: 'x.jpg' };
+  assert.ok(buildPrBody([{ ...entry, link: 'https://vimeo.com/999/abc123' }]).startsWith('**Watch the cut:** https://vimeo.com/999/abc123  (unlisted until merge)'));
+  assert.ok(buildPrBody([entry]).startsWith('**Watch the cut:** https://vimeo.com/999  (unlisted until merge)'));
+});

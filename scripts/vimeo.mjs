@@ -29,8 +29,8 @@ export async function listVideos({ perPage = 50, pages = 2, user = process.env.V
   const base = user === 'me' ? '/me/videos' : `/users/${user}/videos`;
   const out = [];
   for (let page = 1; page <= pages; page++) {
-    const d = await api(`${base}?sort=date&direction=desc&per_page=${perPage}&page=${page}&fields=uri,name,description,created_time,duration,privacy.view`);
-    for (const v of d.data) out.push({ vimeoId: v.uri.split('/').pop(), name: v.name, description: v.description, created_time: v.created_time, duration: v.duration, privacy: v.privacy?.view });
+    const d = await api(`${base}?sort=date&direction=desc&per_page=${perPage}&page=${page}&fields=uri,name,link,description,created_time,duration,privacy.view`);
+    for (const v of d.data) out.push({ vimeoId: v.uri.split('/').pop(), name: v.name, link: v.link, description: v.description, created_time: v.created_time, duration: v.duration, privacy: v.privacy?.view });
     if (!d.paging?.next) break;
   }
   return out;

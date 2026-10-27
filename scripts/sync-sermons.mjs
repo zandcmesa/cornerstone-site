@@ -79,7 +79,7 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
       const artPath = artFile(draft);
       const jpg = d.git.show(`origin/${BRANCH}`, artPath);
       if (jpg) files.push({ path: artPath, content: jpg });
-      entries.push({ ...draft, reused: true, art: jpg ? artPath : null });
+      entries.push({ ...draft, link: c.link, reused: true, art: jpg ? artPath : null });
       d.log(`reusing draft for ${c.date} (${c.vimeoId})`);
       continue;
     }
@@ -95,7 +95,7 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
       d.log(`skipping ${c.date}: ${e.message}`);
       continue;
     }
-    const entry = { ...meta, id: nextId++, date: c.date, vimeoId: c.vimeoId, reused: false };
+    const entry = { ...meta, id: nextId++, date: c.date, vimeoId: c.vimeoId, link: c.link, reused: false };
     if (entry.series && !ctx.knownSeries.includes(entry.series)) ctx.knownSeries.push(entry.series);
     entry.line = buildEntryLine(entry);
     const artPath = artFile(entry);

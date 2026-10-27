@@ -63,7 +63,7 @@ export function buildPrBody(entries, skipped = [], previews = {}) {
   const blocks = entries.map(e => {
     const pv = previews[e.vimeoId];
     const lines = [
-      `**Watch the cut:** https://vimeo.com/${e.vimeoId}  (unlisted until merge)`,
+      `**Watch the cut:** ${e.link || `https://vimeo.com/${e.vimeoId}`}  (unlisted until merge)`,
       `**${e.title}** — ${e.speaker}${e.series ? ` · ${e.series}` : ''} · ${e.date}`,
     ];
     const ref = [e.scripture, pv && `${span(pv.start)}–${span(pv.end)} of the YouTube replay`].filter(Boolean).join(' · ');
