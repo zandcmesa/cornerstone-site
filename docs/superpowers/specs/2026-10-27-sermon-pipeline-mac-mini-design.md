@@ -139,10 +139,6 @@ Zach did not pick, so the default is the safer one: FileVault stays locked and a
 - Test fixtures for `parseRecutComment`, `parseTimestamp`, `retireDescription`, and the replacement branch of `cutSermon` (the existing `cut-sermon.test.mjs` injects deps; extend that pattern, don't call Vimeo in tests).
 - Whether to post a comment on the PR when the scheduled run finishes too (nice, not required).
 
-## Open question (Zach)
-
-- **Auto-login after reboot.** FileVault is on and auto-login is off, so after a power cut or macOS update the runner stays offline until someone signs in at the mini. Turning auto-login on means anyone with physical access gets into the account, but the runner comes back on its own. Leaving it off keeps the disk locked, and the runbook says "sign in at the mini after a reboot," with the Sunday health check as the reminder. Zach decides; the doc's Offline section is written for whichever he picks.
-
 ## Out of scope but noted
 
 - The Oct 25 cut itself still needs recutting once this ships; the first real use of Door A will be that recut. The Oct 26 run chose 0:17:16 → 0:59:09 with high confidence, which is the worship set; the spans used as examples in this doc (42:10–1:19:00) are illustrative, not verified. Find the actual timestamps from the YouTube replay `DszPuPkw1m0`.
