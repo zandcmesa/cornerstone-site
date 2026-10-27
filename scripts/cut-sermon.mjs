@@ -7,6 +7,7 @@ import { json3ToTimed, formatTimed, previousSunday, localDate, validateBounds, s
 import * as vimeo from './vimeo.mjs';
 import * as ai from './sermon-ai.mjs';
 import { syncSermons } from './sync-sermons.mjs';
+import { editSermon } from './sermon-edit.mjs';
 
 const CHANNEL = process.env.YOUTUBE_CHANNEL || 'UCl4J6MR32QrZOfk8M_n7wvA';
 const CUT_START = process.env.SERMON_CUT_START || '2026-10-04';
@@ -52,11 +53,11 @@ export function sliceSegments(segments, start, end) {
 
 const vttTime = sec => `${String(Math.floor(sec / 3600)).padStart(2, '0')}:${String(Math.floor((sec % 3600) / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}.000`;
 
-export function rebaseVtt(segments, start, end) {
+export function rebaseVtt(segments, start, end, offset = 0) {
   const inside = sliceSegments(segments, start, end);
   const cues = inside.map((s, i) => {
-    const from = s.t - start;
-    const to = i + 1 < inside.length ? inside[i + 1].t - start : from + 4;
+    const from = s.t - start + offset;
+    const to = i + 1 < inside.length ? inside[i + 1].t - start + offset : from + 4;
     return `${vttTime(from)} --> ${vttTime(Math.max(to, from + 1))}\n${s.text}\n`;
   });
   return 'WEBVTT\n\n' + cues.join('\n');
@@ -94,7 +95,7 @@ const readArchive = () => parseArchive(fs.readFileSync(path.join(ROOT, 'js/sermo
 
 const cutDeps = {
   listVideos: vimeo.listVideos, uploadVideo: vimeo.uploadVideo, uploadTextTrack: vimeo.uploadTextTrack, retireVideo: vimeo.retireVideo, me: vimeo.me,
-  findReplay, fetchTimedCaptions, downloadSection, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, log: console.log,
+  findReplay, fetchTimedCaptions, downloadSection, editSermon, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, log: console.log,
 };
 
 export async function cutSermon({ date, youtubeId, start, end, dryRun = false, skipUpload = false, keep = false } = {}, deps = cutDeps) {
@@ -139,15 +140,18 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
   const out = path.join(keep ? process.cwd() : dir, `sermon-${date}.mp4`);
   d.downloadSection(youtubeId, bounds.start, bounds.end, out);
   log(`cut saved: ${out} (${Math.round(fs.statSync(out).size / 1048576)} MB)`);
-  if (skipUpload) return { status: 'cut-only', youtubeId, bounds, meta, file: out };
+  const edit = await d.editSermon({ input: out, output: path.join(path.dirname(out), `sermon-${date}-edit.mp4`), meta, date, log });
+  const file = edit ? edit.output : out, leadIn = edit ? edit.leadIn : 0;
+  if (edit) log(`bumper added: ${file} (${Math.round(fs.statSync(file).size / 1048576)} MB)`);
+  if (skipUpload) return { status: 'cut-only', youtubeId, bounds, meta, file };
 
   const description = [
     [meta.speaker, meta.scripture].filter(Boolean).join(' · '), '', meta.description, '',
     `Sermon date: ${date}`, `Source: https://www.youtube.com/watch?v=${youtubeId} (${hms(bounds.start)}–${hms(bounds.end)})`,
   ].join('\n');
-  const vimeoId = await d.uploadVideo({ filePath: out, name: meta.title, description, privacy: UPLOAD_PRIVACY });
+  const vimeoId = await d.uploadVideo({ filePath: file, name: meta.title, description, privacy: UPLOAD_PRIVACY });
   log(`uploaded (unlisted) to vimeo.com/${vimeoId}`);
-  try { await d.uploadTextTrack(vimeoId, rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER)); } catch (e) { log(`caption upload failed: ${e.message}`); }
+  try { await d.uploadTextTrack(vimeoId, rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER, leadIn)); } catch (e) { log(`caption upload failed: ${e.message}`); }
   if (!keep) fs.rmSync(dir, { recursive: true, force: true });
   if (manual) for (const v of videos.filter(v => sermonDateFromVideo(v) === date)) { await d.retireVideo(v.vimeoId); log(`retired vimeo.com/${v.vimeoId}`); }
 

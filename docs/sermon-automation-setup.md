@@ -95,6 +95,28 @@ Variables (only if needed):
 
 Already done for this repo (Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests"). If the sync fails with "GitHub Actions is not permitted to create or approve pull requests", re-check that box.
 
+## The bumper (logo intro and outro)
+
+Every cut gets a short cinematic open and close before it goes to Vimeo: a slow light-ray plate, the Cornerstone logo, then a title card with the sermon title, series, speaker and date, a one-second crossfade into the message, and at the end a crossfade back to the logo with the website and service time. A soft music bed sits under both. The edit runs on the Mac mini as part of the cut and adds about seven seconds before the sermon; captions are shifted to match.
+
+The pieces live outside the repo in `~/sermon-bumper` on the mini (the music excerpt is licensed through Artlist and must not be published with the site):
+
+- `plate.mp4` — the 10-second background, generated once on Artlist (Kling 3.0).
+- `logo.png` — the stacked logo on transparency, rendered from the vector logo.
+- `bed.wav` — a 40-second excerpt of "Heavens" by Starluxe (Artlist), loudness-normalized.
+- `font.ttf` — Montserrat (variable weight).
+- `textcard` — a small macOS program compiled from `scripts/textcard.swift` that draws the title cards; it rebuilds itself when the source changes.
+
+If any of those files is missing the cut still runs and uploads the raw sermon, with one log line saying the bumper was skipped.
+
+To change the look, edit `cardSpecs` (text, sizes, colors, positions) or `TIMING` (lengths and crossfades) in `scripts/sermon-edit.mjs`. To swap the music, drop a new `bed.wav` in the folder; the intro uses its first eight seconds and the outro uses seconds 12 to 19. To preview an edit on any video without uploading:
+
+```bash
+node scripts/sermon-edit.mjs --in sermon.mp4 --out sermon-edit.mp4 --title "Get Out of the Tube" --speaker "Pastor Josh Eldridge" --date 2026-10-25 --series "Seek First the Kingdom"
+```
+
+A full sermon renders in roughly a tenth of its running time on the mini.
+
 ## First run
 
 1. Go to the repo's Actions tab, pick **Sync sermons**, click Run workflow.

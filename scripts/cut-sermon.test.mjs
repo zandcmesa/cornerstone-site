@@ -78,8 +78,9 @@ function fakeDeps(over = {}) {
     extractMetadata: rec('extractMetadata', async () => ({ title: 'T', speaker: 'Pastor Josh Eldridge', scripture: 'John 3', description: 'd' })),
     readArchive: rec('readArchive', () => ({ entries: [{ date: '2026-10-18', vimeoId: 'X' }], maxId: 1 })),
     downloadSection: (id, start, end, out) => { calls.push('downloadSection'); dirs.add(path.dirname(out)); fs.writeFileSync(out, 'x'); return out; },
-    uploadVideo: rec('uploadVideo', async () => '999'),
-    uploadTextTrack: rec('uploadTextTrack', async () => {}),
+    editSermon: rec('editSermon', async () => null),
+    uploadVideo: rec('uploadVideo', async a => { seen.upload = a; return '999'; }),
+    uploadTextTrack: async (id, vtt) => { calls.push('uploadTextTrack'); seen.vtt = vtt; },
     retireVideo: async id => { calls.push(`retireVideo:${id}`); },
     syncSermons: async arg => { calls.push('syncSermons'); seen.sync = arg; },
     log: () => {},
@@ -150,4 +151,31 @@ test('--strict turns a missing replay or missing captions into a failure', () =>
   assert.equal(exitCodeFor('no-replay', false), 0);
   assert.equal(exitCodeFor('already-on-vimeo', true), 0);
   assert.equal(exitCodeFor('uploaded', true), 0);
+});
+
+test('rebaseVtt shifts every cue by the offset', () => {
+  const segs = [{ t: 100, text: 'b' }, { t: 104, text: 'c' }];
+  assert.equal(rebaseVtt(segs, 100, 250, 7), 'WEBVTT\n\n00:00:07.000 --> 00:00:11.000\nb\n\n00:00:11.000 --> 00:00:15.000\nc\n');
+});
+
+test('the bumper edit is uploaded instead of the raw cut and captions move by the lead-in', async () => {
+  const { deps, calls, seen, cleanup } = fakeDeps({
+    editSermon: async ({ input, output }) => { calls.push('editSermon'); fs.writeFileSync(output, 'xx'); return { output, leadIn: 7 }; },
+  });
+  try {
+    const r = await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
+    assert.equal(r.status, 'replaced');
+    assert.ok(calls.indexOf('downloadSection') < calls.indexOf('editSermon') && calls.indexOf('editSermon') < calls.indexOf('uploadVideo'));
+    assert.match(seen.upload.filePath, /sermon-2026-10-25-edit\.mp4$/);
+    assert.match(seen.vtt, /^WEBVTT\n\n00:00:(0[7-9]|1[0-9])/);
+  } finally { cleanup(); }
+});
+
+test('without bumper assets the raw cut is uploaded and captions start at zero', async () => {
+  const { deps, seen, cleanup } = fakeDeps();
+  try {
+    await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
+    assert.match(seen.upload.filePath, /sermon-2026-10-25\.mp4$/);
+    assert.match(seen.vtt, /^WEBVTT\n\n00:00:0[0-9]\.000/);
+  } finally { cleanup(); }
 });
