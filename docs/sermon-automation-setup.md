@@ -107,7 +107,7 @@ The whole Monday flow works from the GitHub app or a phone browser.
 
 1. **The PR arrives.** Sometime Monday morning, a PR titled "Sermon archive: 2026-10-25" (the Sunday's date) shows up. The hourly runs are quiet when there is nothing to do, so no PR yet means the captions are not ready; check back in an hour.
 2. **Judge the cut.** The top of the PR has an unlisted Vimeo link. Open it and scrub the start and the end. The PR also shows what the first and last spoken lines are (Starts: and Ends:) and the cut times, so you can check at a glance without watching.
-3. **Add art if needed**, then **merge**. If the cut is right, merging publishes the sermon.
+3. **Merge.** If the cut is right, merging publishes the sermon. Art can wait for a computer: a sermon without art still looks fine because its card falls back to the gradient, and only a brand-new series needs art at all (see section 3).
 
 If the cut is wrong (it starts in the worship set, or runs into the closing announcements), recut it **before you merge**. There are two ways in. Try the first, and use the second if Claude on your phone says it does not have permission to run workflows.
 
@@ -115,7 +115,7 @@ If the cut is wrong (it starts in the worship set, or runs into the closing anno
 
 ```bash
 gh workflow run cut-sermon.yml -f date=2026-10-25 -f start=42:10 -f end=1:19:00
-gh run watch --exit-status
+gh run watch $(gh run list --workflow=cut-sermon.yml --limit 1 --json databaseId --jq '.[0].databaseId') --exit-status
 ```
 
 **Door B: comment on the PR.** Write a comment that begins with `recut` and gives a start and an end:
@@ -124,20 +124,20 @@ gh run watch --exit-status
 gh pr comment 31 --body "recut start 42:10 end 1:19:00"
 ```
 
-or just type `recut start 42:10 end 1:19:00` in the PR's comment box in the app. Only comments from the repo owner (your account) are accepted. The mini reacts with an eyes emoji right away, then posts "Recut done" with the new Vimeo link, or "Recut failed" with the reason. If it can't read your comment, it replies with what is missing.
+or just type `recut start 42:10 end 1:19:00` in the PR's comment box in the app. Only comments from the repo owner (your account) are accepted. GitHub puts an eyes emoji on your comment right away. If it can't read your comment, it replies with what is missing. Otherwise the mini picks the job up and, when it finishes, posts "Recut done" with the new Vimeo link, or "Recut failed" with the reason. An eyes emoji followed by silence means the mini is offline: sign in at the mini (see section 4).
 
 The date is optional in the comment; it defaults to the PR's Sunday. These all work if you want to name it: `recut Oct 25 start 42:10 end 1:19:00`, `recut 10/25 start 42:10 end 1:19:00`, `recut 2026-10-25 start 42:10 end 1:19:00`. `from` and `to` also work in place of `start` and `end`.
 
-Either door re-cuts from the replay, uploads a new private Vimeo video, retires the old one (it is renamed "Superseded sermon …"), and updates the same PR. Open the new Vimeo link, check it, and merge.
+Either door re-cuts from the replay, uploads a new private Vimeo video, retires the old one (it is renamed to start with "Superseded" and made private), and updates the same PR. Open the new Vimeo link, check it, and merge.
 
 **Recut only works while the sermon is still an open PR.** Once you merge, the Sunday is published and a recut is refused with "already published on the site". To fix a published sermon, edit it by hand in `js/sermons.js`, or ask Claude to open a fix.
 
 ## If something is off
 
-- **No PR by Monday afternoon.** Open Actions → Cut Sunday sermon and read the latest run. "Captions for ... are not ready yet" means YouTube has not produced captions for the replay; the hourly run keeps trying until Tuesday. "No YouTube live replay found" means the Sunday stream was not recorded or titled as usual; run it by hand with the video id (see "Running by hand"). "Already on Vimeo" means the agency uploaded it and the regular sync handles it.
+- **No PR by Monday afternoon.** Open Actions → Cut Sunday sermon and read the latest run. "Captions for ... are not ready yet" means YouTube has not produced captions for the replay; the hourly run keeps trying until Tuesday. "No YouTube live replay found" means the Sunday stream was not recorded or titled as usual; run it by hand with the video id (see "Running by hand"). "Already on Vimeo" means that Sunday is already uploaded, either by the cut earlier that morning or by the agency; the later hourly runs stop there and the regular sync handles the PR.
 - **Runner shows Offline, or the Sunday check is red.** Go to the mini and sign in (see section 4). If it is signed in and still red, run `brew upgrade yt-dlp` there, then re-run the check.
 - **"Recut failed" on a PR.** The comment includes the last line of the log. A time outside 15 to 90 minutes long is refused; fix the times and try again. "Already published" means the PR was merged; see above.
-- **Cut works but art or titles look wrong.** Edit them in the PR as usual; they are separate from the cut.
+- **Cut works but art or titles look wrong.** Edit titles in the PR as usual; they are separate from the cut. Art is fixed later with `/sermon-art` on a computer.
 
 ## Running by hand
 
