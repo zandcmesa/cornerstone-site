@@ -3,7 +3,7 @@
 Four GitHub Actions keep `js/sermons.js` current. Nothing publishes without you: each run opens or updates one PR on the `sermon-sync` branch, and you merge it.
 
 - **Sync sermons** (Mon–Wed 5am ET, or run by hand). Looks at the church's Vimeo library, finds Sunday sermons not yet in the archive, reads the auto-captions, has Claude write the title, scripture, series, topics and description, generates the typographic art, and opens the PR.
-- **Cut Sunday sermon** (every hour Monday from about 7am to 2pm ET, plus Tuesday morning, on the Mac mini; or run by hand, or by commenting on the PR). From Oct 4, 2026 onward. Finds Sunday's live replay on YouTube, uses the captions to locate where the sermon starts and ends, downloads and cuts that section, uploads it privately to Vimeo with captions, then runs the sync so the PR appears as soon as the cut is done. Once Sunday has a sermon on Vimeo, the later hourly runs do nothing.
+- **Cut Sunday sermon** (every hour Monday from about 7am to 2pm ET, plus Tuesday morning, on the Mac mini; or run by hand, or by commenting on the PR). From Oct 4, 2026 onward. Finds Sunday's live replay on YouTube, uses the captions to locate where the sermon starts and ends, downloads and cuts that section, uploads it unlisted to Vimeo with captions, then runs the sync so the PR appears as soon as the cut is done. Once Sunday has a sermon on Vimeo, the later hourly runs do nothing.
 - **Check YouTube access** (Sundays about 7am ET, on the Mac mini). Pulls 20 seconds of real video. If it goes red, YouTube has changed something and the Monday cut is at risk; see "If something is off".
 - **Publish merged sermons** (on merge). Flips any private Vimeo upload in the merged archive to public.
 
@@ -61,7 +61,7 @@ cd ~/actions-runner
 ./svc.sh start
 ```
 
-FileVault is on and auto-login is off. After a reboot or a macOS update, sign in at the mini once; the runner comes back with the login. If the mini restarts overnight and nobody signs in, Monday's cut waits (Tuesday's run is the backstop).
+FileVault is on and auto-login is off. After a reboot or a macOS update, sign in at the mini once; the runner comes back with the login. If the mini restarts overnight and nobody signs in, Monday's cut waits. Tuesday's run needs the mini too, so sign in before then; it is the strict run, which turns red if the replay or its captions never showed up.
 
 One manual repo setting protects the mini: Settings → Actions → General → "Require approval for all external contributors". Leave it on so a stranger's pull request can never run code on the mini. The workflows also never use `pull_request` triggers.
 
@@ -115,7 +115,7 @@ If the cut is wrong (it starts in the worship set, or runs into the closing anno
 
 ```bash
 gh workflow run cut-sermon.yml -f date=2026-10-25 -f start=42:10 -f end=1:19:00
-gh run watch $(gh run list --workflow=cut-sermon.yml --limit 1 --json databaseId --jq '.[0].databaseId') --exit-status
+gh run watch $(gh run list --workflow=cut-sermon.yml --event workflow_dispatch --limit 1 --json databaseId --jq '.[0].databaseId') --exit-status
 ```
 
 **Door B: comment on the PR.** Write a comment that begins with `recut` and gives a start and an end:
@@ -128,7 +128,7 @@ or just type `recut start 42:10 end 1:19:00` in the PR's comment box in the app.
 
 The date is optional in the comment; it defaults to the PR's Sunday. These all work if you want to name it: `recut Oct 25 start 42:10 end 1:19:00`, `recut 10/25 start 42:10 end 1:19:00`, `recut 2026-10-25 start 42:10 end 1:19:00`. `from` and `to` also work in place of `start` and `end`.
 
-Either door re-cuts from the replay, uploads a new private Vimeo video, retires the old one (it is renamed to start with "Superseded" and made private), and updates the same PR. Open the new Vimeo link, check it, and merge.
+Either door re-cuts from the replay, uploads a new unlisted Vimeo video, retires the old one (it is renamed to start with "Superseded" and made private), and updates the same PR. Open the new Vimeo link, check it, and merge.
 
 **Recut only works while the sermon is still an open PR.** Once you merge, the Sunday is published and a recut is refused with "already published on the site". To fix a published sermon, edit it by hand in `js/sermons.js`, or ask Claude to open a fix.
 
