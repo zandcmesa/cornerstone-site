@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { parseTimestamp } from './sermon-lib.mjs';
 
 const MODEL = 'claude-opus-5-5';
 export const MAX_TOKENS = 16000;
@@ -24,8 +25,8 @@ export const BOUNDS_SCHEMA = {
   additionalProperties: false,
   required: ['start', 'end', 'confidence', 'note'],
   properties: {
-    start: { type: 'integer', description: 'Seconds into the recording where the preacher begins the sermon.' },
-    end: { type: 'integer', description: 'Seconds into the recording where the sermon ends.' },
+    start: { type: 'string', description: 'Where the preacher begins the sermon: the [H:MM:SS] tag of that line, copied exactly, without brackets.' },
+    end: { type: 'string', description: 'Where the sermon ends: the [H:MM:SS] tag of that line, copied exactly, without brackets.' },
     confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
     note: { type: 'string', description: 'One sentence on what marks the start and end.' },
   },
@@ -50,7 +51,7 @@ export function buildBoundsPrompt(timedTranscript) {
     'You are given a timestamped auto-caption transcript of a full church livestream (roughly two hours): pre-service, worship songs, welcome and announcements, offering, kids dismissal, the sermon, and a closing response.',
     'Find the sermon only. `start` is the moment the preacher begins the message: their first words when they take the stage, including any opening greeting or prayer that leads straight into the teaching. Exclude the host\'s introduction of the preacher, announcements, and singing.',
     '`end` is the last sentence of the message before a closing song, altar call music, or dismissal begins. Include a closing prayer only if it flows directly from the message with no music.',
-    'Timestamps are [H:MM:SS]; report `start` and `end` as integer seconds from the beginning of the recording. Use the timestamp of the line where the change happens.',
+    'Each line starts with an [H:MM:SS] tag. For `start` and `end`, copy the tag of the line where the change happens exactly as written, without brackets. Do not convert or calculate times.',
     'The preacher often greets the room before worship ("Morning everybody") and again after the offering and kids dismissal. The sermon is the second appearance, normally in the second half of the recording, and lasts 30 to 50 minutes.',
     'If the span you chose contains singing or an offering, it is wrong: move start later, to where the teaching from scripture begins.',
   ].join('\n');
@@ -81,6 +82,11 @@ export async function extractMetadata(transcript, ctx) {
   return { ...meta, series: meta.series || null };
 }
 
+export function resolveBounds(raw, timedTranscript) {
+  for (const tag of [raw.start, raw.end]) if (!timedTranscript.includes(`[${tag}]`)) throw new Error(`boundary tag ${tag} is not in the transcript`);
+  return { start: parseTimestamp(raw.start), end: parseTimestamp(raw.end), confidence: raw.confidence, note: raw.note };
+}
+
 export async function findSermonBounds(timedTranscript) {
-  return askJSON(buildBoundsPrompt(timedTranscript), BOUNDS_SCHEMA);
+  return resolveBounds(await askJSON(buildBoundsPrompt(timedTranscript), BOUNDS_SCHEMA), timedTranscript);
 }
