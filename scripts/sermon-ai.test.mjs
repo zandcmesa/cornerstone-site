@@ -19,6 +19,14 @@ test('bounds prompt includes the timed transcript and asks for seconds', () => {
   assert.deepEqual(Object.keys(BOUNDS_SCHEMA.properties), ['start', 'end', 'confidence', 'note']);
 });
 
+test('bounds prompt warns that the welcome before worship is not the sermon', () => {
+  const { system } = buildBoundsPrompt('[0:00:00] hi');
+  assert.match(system, /second appearance/i);
+  assert.match(system, /second half/i);
+  assert.match(system, /30 to 50 minutes/);
+  assert.match(system, /singing or an offering/i);
+});
+
 test('series uses anyOf for the nullable type', () => {
   assert.deepEqual(METADATA_SCHEMA.properties.series.anyOf, [{ type: 'string' }, { type: 'null' }]);
   assert.equal(METADATA_SCHEMA.properties.series.type, undefined);

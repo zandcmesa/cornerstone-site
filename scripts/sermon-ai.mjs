@@ -51,6 +51,8 @@ export function buildBoundsPrompt(timedTranscript) {
     'Find the sermon only. `start` is the moment the preacher begins the message: their first words when they take the stage, including any opening greeting or prayer that leads straight into the teaching. Exclude the host\'s introduction of the preacher, announcements, and singing.',
     '`end` is the last sentence of the message before a closing song, altar call music, or dismissal begins. Include a closing prayer only if it flows directly from the message with no music.',
     'Timestamps are [H:MM:SS]; report `start` and `end` as integer seconds from the beginning of the recording. Use the timestamp of the line where the change happens.',
+    'The preacher often greets the room before worship ("Morning everybody") and again after the offering and kids dismissal. The sermon is the second appearance, normally in the second half of the recording, and lasts 30 to 50 minutes.',
+    'If the span you chose contains singing or an offering, it is wrong: move start later, to where the teaching from scripture begins.',
   ].join('\n');
   return { system, user: `Transcript:\n${timedTranscript}` };
 }
