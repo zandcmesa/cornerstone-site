@@ -122,6 +122,9 @@ test('parseRecutComment reads the grammar and resolves the date', () => {
   assert.deepEqual(parseRecutComment('recut start 42:10 end 1:19:00', 'Sermon archive: 3 new sermons', now), { date: '2026-10-25', start: 2530, end: 4740 });
   assert.match(parseRecutComment('recut start 42:10', '', now).error, /end/);
   assert.match(parseRecutComment('looks good, merging', '', now).error, /recut/);
+  assert.match(parseRecutComment('recut start 42:1 end 1:19:00', '', now).error, /start/);
+  assert.match(parseRecutComment('recut start 42m10 end 1:19:00', '', now).error, /start/);
+  assert.deepEqual(parseRecutComment('recut Dec 28 start 42:10 end 1:19:00', '', new Date('2027-01-02T15:00:00Z')), { date: '2026-12-28', start: 2530, end: 4740 });
 });
 
 test('retireVideoFields makes a video invisible to sermonDateFromVideo', () => {

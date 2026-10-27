@@ -121,7 +121,7 @@ export function parseTimestamp(s) {
 }
 
 const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-const STAMP = '(\\d+(?::\\d\\d){0,2})';
+const STAMP = '(\\d+(?::\\d\\d){0,2})(?=\\.?(?:\\s|,|$))';
 
 export function parseRecutComment(body, prTitle = '', now = new Date()) {
   const text = body.trim();
@@ -130,15 +130,20 @@ export function parseRecutComment(body, prTitle = '', now = new Date()) {
   if (!start) return { error: 'I could not find a start time; add "start 42:10".' };
   const end = text.match(new RegExp(`\\b(?:end|to)(?:\\s+at)?\\s+${STAMP}`, 'i'));
   if (!end) return { error: 'I could not find an end time; add "end 1:19:00".' };
-  const year = localDate(now).slice(0, 4);
+  const today = localDate(now);
   const pad = n => String(n).padStart(2, '0');
+  const yearless = (m, d) => {
+    const md = `${pad(m)}-${pad(d)}`;
+    const year = Number(today.slice(0, 4));
+    return `${year}-${md}` > today ? `${year - 1}-${md}` : `${year}-${md}`;
+  };
   let date;
   const iso = text.match(/\b(\d{4}-\d\d-\d\d)\b/);
   const named = text.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})\b/i);
   const slash = text.match(/\b(\d{1,2})\/(\d{1,2})\b/);
   if (iso) date = iso[1];
-  else if (named) date = `${year}-${pad(MONTHS.indexOf(named[1].toLowerCase()) + 1)}-${pad(named[2])}`;
-  else if (slash) date = `${year}-${pad(slash[1])}-${pad(slash[2])}`;
+  else if (named) date = yearless(MONTHS.indexOf(named[1].toLowerCase()) + 1, named[2]);
+  else if (slash) date = yearless(slash[1], slash[2]);
   else date = prTitle.match(/Sermon archive: (\d{4}-\d\d-\d\d)/)?.[1] || previousSunday(now);
   return { date, start: parseTimestamp(start[1]), end: parseTimestamp(end[1]) };
 }
