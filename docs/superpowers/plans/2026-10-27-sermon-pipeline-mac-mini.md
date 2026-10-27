@@ -191,7 +191,7 @@ Expected: new tests fail (deps not accepted / wrong status / throws).
 
 - [ ] **Step 3: Implement**
 
-In `scripts/vimeo.mjs`: `getVideo(id)` and `retireVideo(id)` as specified. In `scripts/cut-sermon.mjs`: build `cutDeps` from the module imports, thread `d.` through `cutSermon`, parse `start`/`end` with `parseTimestamp`, add the published-date guard right after the cutover check (`d.readArchive().entries.some(e => e.date === date)` only when bounds are given), skip the already-on-Vimeo early return when bounds are given, retire matching videos after `uploadTextTrack`, compute `startLine`/`endLine` from `segments`, pass `previewOverride`. Leave `YouTubeLoginError` and its cookie advice as they are; cookies may be needed again someday.
+In `scripts/vimeo.mjs`: `getVideo(id)` and `retireVideo(id)` as specified. In `scripts/cut-sermon.mjs`: build `cutDeps` from the module imports, thread `d.` through `cutSermon`, parse `start`/`end` with `parseTimestamp`, add the published-date guard right after the cutover check (`d.readArchive().entries.some(e => e.date === date)` only when bounds are given), skip the already-on-Vimeo early return when bounds are given or `dryRun` is set (so a dry run can re-examine a Sunday that is already uploaded), retire matching videos after `uploadTextTrack`, compute `startLine`/`endLine` from `segments`, pass `previewOverride`. Leave `YouTubeLoginError` and its cookie advice as they are; cookies may be needed again someday.
 
 - [ ] **Step 4: Run all tests**
 
@@ -409,10 +409,10 @@ git commit -m "Document the Mac mini runner and the phone recut flow"
 Export `VIMEO_TOKEN` (from `~/grokbot/oasis-creative-studios/cornerstone-church/vimeo-token.rtf`) and `ANTHROPIC_API_KEY` (from `~/Desktop/anthropic-api-key-cornerstone.rtf`) in the shell, never into a file in the repo, then:
 
 ```bash
-node scripts/cut-sermon.mjs --date 2026-10-25 --start 0 --end 0 --dry-run
+node scripts/cut-sermon.mjs --date 2026-10-25 --dry-run
 ```
 
-Dry run with placeholder bounds would short-circuit the finder, so instead add `--dry-run` support that ignores the already-on-Vimeo check when `--dry-run` is given (one-line change in Task 3's early return: `if (existing && !dryRun && start == null)`). Expected: it prints bounds, confidence, and the note and exits with `dry-run`; with the improved prompt the start should be after the offering, around the second half of the 1:59:20 recording.
+Expected: it prints bounds, confidence, and the note and exits with `dry-run`; with the improved prompt the start should be after the offering, around the second half of the 1:59:20 recording.
 
 - [ ] **Step 2: Confirm the bounds against the captions**
 
