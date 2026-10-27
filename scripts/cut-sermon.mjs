@@ -151,11 +151,13 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
   if (!keep) fs.rmSync(dir, { recursive: true, force: true });
   if (manual) for (const v of videos.filter(v => sermonDateFromVideo(v) === date)) { await d.retireVideo(v.vimeoId); log(`retired vimeo.com/${v.vimeoId}`); }
 
-  const nearest = t => segments.reduce((a, b) => Math.abs(b.t - t) < Math.abs(a.t - t) ? b : a, segments[0])?.text;
-  const startLine = nearest(bounds.start), endLine = nearest(bounds.end), cutAt = new Date().toISOString();
+  const startLine = segments.find(s => s.t >= bounds.start)?.text, endLine = segments.findLast(s => s.t <= bounds.end)?.text, cutAt = new Date().toISOString();
   await d.syncSermons({ transcriptOverride: { [vimeoId]: transcript }, metaOverride: { [vimeoId]: meta }, previewOverride: { [vimeoId]: { youtubeId, start: bounds.start, end: bounds.end, startLine, endLine, cutAt } } });
   return { status: manual ? 'replaced' : 'uploaded', youtubeId, bounds, meta, vimeoId, startLine, endLine, cutAt };
 }
+
+const STRICT_FAILURES = ['captions-not-ready', 'no-replay'];
+export const exitCodeFor = (status, strict) => strict && STRICT_FAILURES.includes(status) ? 1 : 0;
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   const args = process.argv.slice(2);
@@ -163,6 +165,6 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const stamp = n => flag(n) == null ? undefined : parseTimestamp(flag(n));
   Promise.resolve()
     .then(() => cutSermon({ date: flag('--date'), youtubeId: flag('--youtube'), start: stamp('--start'), end: stamp('--end'), dryRun: args.includes('--dry-run'), skipUpload: args.includes('--skip-upload'), keep: args.includes('--keep') }))
-    .then(r => { console.log(r.status); if (r.vimeoId) console.log(`vimeo=${r.vimeoId}`); })
+    .then(r => { console.log(r.status); if (r.vimeoId) console.log(`vimeo=${r.vimeoId}`); process.exitCode = exitCodeFor(r.status, args.includes('--strict')); })
     .catch(e => { console.error(e.message || e); process.exit(1); });
 }

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, ytdlpError, YouTubeLoginError, UPLOAD_PRIVACY, cutSermon } from './cut-sermon.mjs';
+import { matchReplay, sliceSegments, rebaseVtt, ytBaseArgs, findReplay, ytdlpError, YouTubeLoginError, UPLOAD_PRIVACY, cutSermon, exitCodeFor } from './cut-sermon.mjs';
 
 test('matchReplay picks the stream released on the target Sunday in New York time', () => {
   const list = [
@@ -73,7 +73,7 @@ function fakeDeps(over = {}) {
     me: rec('me', async () => ({ name: 'x', link: 'y' })),
     listVideos: rec('listVideos', async () => [{ vimeoId: '123', name: 'Old', description: 'Sermon date: 2026-10-25' }]),
     findReplay: rec('findReplay', () => ({ id: 'yt1' })),
-    fetchTimedCaptions: (id, dir) => { calls.push('fetchTimedCaptions'); dirs.add(dir); return [{ t: 0, text: 'pre' }, { t: 2500, text: 'Open your Bibles' }, { t: 4800, text: 'amen' }]; },
+    fetchTimedCaptions: (id, dir) => { calls.push('fetchTimedCaptions'); dirs.add(dir); return [{ t: 0, text: 'pre' }, { t: 2528, text: 'Let us welcome Pastor Josh' }, { t: 2540, text: 'Open your Bibles' }, { t: 4700, text: 'amen' }, { t: 4745, text: 'Amen. God bless you' }, { t: 4800, text: 'closing song' }]; },
     findSermonBounds: rec('findSermonBounds', async () => ({ start: 2500, end: 4800, confidence: 'high', note: 'ai' })),
     extractMetadata: rec('extractMetadata', async () => ({ title: 'T', speaker: 'Pastor Josh Eldridge', scripture: 'John 3', description: 'd' })),
     readArchive: rec('readArchive', () => ({ entries: [{ date: '2026-10-18', vimeoId: 'X' }], maxId: 1 })),
@@ -141,4 +141,13 @@ test('bounds accept H:MM:SS on the CLI path', async () => {
     const r = await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00', dryRun: true }, deps);
     assert.equal(r.bounds.start, 2530);
   } finally { cleanup(); }
+});
+
+test('--strict turns a missing replay or missing captions into a failure', () => {
+  assert.equal(exitCodeFor('captions-not-ready', true), 1);
+  assert.equal(exitCodeFor('no-replay', true), 1);
+  assert.equal(exitCodeFor('captions-not-ready', false), 0);
+  assert.equal(exitCodeFor('no-replay', false), 0);
+  assert.equal(exitCodeFor('already-on-vimeo', true), 0);
+  assert.equal(exitCodeFor('uploaded', true), 0);
 });

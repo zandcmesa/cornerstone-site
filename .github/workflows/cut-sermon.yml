@@ -14,10 +14,10 @@ on:
         description: YouTube video id, if the replay can't be found automatically
         required: false
       start:
-        description: Sermon start in seconds (manual override)
+        description: Sermon start in seconds or H:MM:SS, e.g. 1:07:17 (manual override)
         required: false
       end:
-        description: Sermon end in seconds (manual override)
+        description: Sermon end in seconds or H:MM:SS, e.g. 1:59:09 (manual override)
         required: false
   issue_comment:
     types: [created]
@@ -58,7 +58,7 @@ jobs:
 
   cut:
     needs: [parse]
-    if: always() && (github.event_name != 'issue_comment' || needs.parse.outputs.start != '')
+    if: ${{ !cancelled() && (github.event_name != 'issue_comment' || needs.parse.outputs.start != '') }}
     runs-on: [self-hosted, macOS, sermon-mini]
     timeout-minutes: 90
     concurrency:
@@ -81,6 +81,7 @@ jobs:
           ${{ inputs.youtube && format('--youtube {0}', inputs.youtube) || '' }}
           ${{ inputs.start && format('--start {0}', inputs.start) || needs.parse.outputs.start && format('--start {0}', needs.parse.outputs.start) || '' }}
           ${{ inputs.end && format('--end {0}', inputs.end) || needs.parse.outputs.end && format('--end {0}', needs.parse.outputs.end) || '' }}
+          ${{ github.event.schedule == '0 10 * * 2' && '--strict' || '' }}
           2>&1 | tee "$RUNNER_TEMP/cut.log"
         env:
           VIMEO_TOKEN: ${{ secrets.VIMEO_TOKEN }}
