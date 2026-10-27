@@ -50,7 +50,7 @@ cornerstone-site-upgrade/
 - **Brand color:** `#3689C5`
 - **Logo:** `images/cornerstone-logo.png` — use at `height="36"` in nav, `height="30"` in footer
 - **Tagline:** "To see our region forever transformed by the Gospel"
-- **Address:** 15 Kibbe Rd, East Longmeadow, MA · Sundays 10:00am · Foursquare Church
+- **Address:** 15 Kibbe Rd, East Longmeadow, MA · Sundays 10:00am · independent, non-denominational (formerly Foursquare; do not describe it as Foursquare)
 - **Vimeo:** vimeo.com/cornerstonechurchma
 
 ## Sermon data
