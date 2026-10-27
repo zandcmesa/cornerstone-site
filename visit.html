@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap">
   <link rel="stylesheet" href="css/theme-cornerstone.css?v=3">
   <link rel="stylesheet" href="css/blocks.css?v=5">
-  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -62,42 +62,46 @@
 <main id="main" tabindex="-1">
 
 <!-- ─── Visit Hero ────────────────────────────────────────────── -->
-<div class="visit-hero">
+<section class="hero visit-hero-video">
+  <div class="hero-video-wrap">
+    <video class="hero-video hero-video-a" autoplay muted loop playsinline poster="images/visit/drone-poster.jpg" aria-hidden="true" tabindex="-1">
+      <source src="media/visit-drone.mp4" type="video/mp4">
+    </video>
+  </div>
+  <button type="button" class="hero-video-toggle" data-hero-video-toggle aria-pressed="false">
+    <svg class="icon-pause" aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    <svg class="icon-play" aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    <span class="hero-video-toggle-label">Pause video</span>
+  </button>
+  <div class="hero-overlay"></div>
   <div class="container">
-    <div class="visit-hero-grid">
-      <div data-reveal-stagger>
-        <p class="label mb-16" data-reveal>Plan your visit</p>
-        <h1 class="display-section-italic" style="max-width:560px;">You’re invited.<br>Come as you are.</h1>
-        <div class="gold-line mt-24"></div>
-        <p class="body-text mt-24" style="max-width:480px;">
-          Nobody should have to walk into a church wondering whether they belong. Here is everything you might want to know before Sunday, so the only surprise is how glad we are you came.
-        </p>
-        <div class="mt-32" style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;">
-          <a href="#what-to-expect" class="btn btn-primary">What to expect</a>
-          <button type="button" class="btn btn-outline" data-contact-modal data-contact-type="Planning a visit">Talk with a pastor</button>
-        </div>
-        <div class="visit-hero-meta">
-          <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Sundays at 10:00am</span>
-          <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>15 Kibbe Rd, East Longmeadow, MA</span>
-        </div>
+    <div class="hero-content">
+      <p class="label hero-eyebrow">Plan your visit</p>
+      <h1 class="hero-title"><em>Come</em> and see</h1>
+      <p class="hero-body">
+        When people asked Jesus’ first followers what he was about, the answer was “come and see.” Ours is the same. Here is everything you might want to know before Sunday, so the only surprise is how glad we are you came.
+      </p>
+      <div class="hero-ctas">
+        <a href="#what-to-expect" class="btn btn-primary">What to expect</a>
+        <button type="button" class="btn btn-outline" data-contact-modal data-contact-type="Planning a visit">Talk with a pastor</button>
       </div>
-      <figure class="visit-hero-photo" data-reveal="fade" data-reveal-delay="200">
-        <img src="images/announcements/youth-group.jpg" alt="A group of people laughing together in a circle of chairs at church" loading="eager">
-        <figcaption>Real people, real conversations, no name tags.</figcaption>
-      </figure>
+      <div class="visit-hero-meta">
+        <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Sundays at 10:00am</span>
+        <span><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>15 Kibbe Rd, East Longmeadow, MA</span>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ─── Where & When ──────────────────────────────────────────── -->
-<section class="section divider-top" style="background:var(--bg-surface);">
+<section class="section" style="background:var(--bg-surface);padding-top:0;">
   <div class="container">
     <div class="visit-two-col">
       <div data-reveal-stagger>
         <p class="label mb-16" data-reveal>Where &amp; when</p>
         <h2 class="display-section-italic mb-24">Sundays at 10,<br>on Kibbe Road</h2>
         <p class="body-text mb-16">
-          Whether this is your first time in a church, your first time back in a long while, or you are simply curious, there is a seat here for you. No one will single you out, and nobody expects you to have anything figured out.
+          Whether it is your first time in a church or your first time back in years, you can simply come and sit with us. No one will single you out, and you do not have to have anything figured out to walk in the door.
         </p>
         <p class="body-text mb-24">
           We are a few minutes from the East Longmeadow rotary. Free parking is on site, and the front doors are hard to miss.
@@ -106,6 +110,9 @@
           <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Get directions
         </a>
+        <div class="visit-kids-photo mt-32" style="aspect-ratio:16/9;" data-reveal="fade">
+          <img src="images/visit/aerial.jpg" alt="Aerial view of the Cornerstone Church building and parking lot on Kibbe Road">
+        </div>
       </div>
       <ul class="visit-fact-list" data-reveal-stagger>
         <li class="visit-fact" data-reveal>
@@ -146,33 +153,79 @@
   <div class="container">
     <p class="label mb-16" data-reveal style="text-align:center;">Step by step</p>
     <h2 class="display-section-italic mb-16" data-reveal style="text-align:center;">What a Sunday feels like</h2>
-    <p class="body-text mb-48" data-reveal style="text-align:center;max-width:540px;margin-left:auto;margin-right:auto;">From the parking lot to the last cup of coffee, here is how the morning usually goes.</p>
-    <ol class="visit-steps" data-reveal-stagger>
-      <li class="visit-step">
-        <h3>Pulling in</h3>
-        <p>A greeter at the door will say hello, hand you anything you need, and point you toward coffee or kids check-in. If you would rather slip in quietly, that works too.</p>
-      </li>
-      <li class="visit-step">
-        <h3>Coffee and hellos</h3>
-        <p>The lobby is where people catch up before the service. Linger if you like, or head straight for a seat. Both are completely normal.</p>
-      </li>
-      <li class="visit-step">
-        <h3>Kids check-in</h3>
-        <p>Kingdom Kids uses a secure check-in near the entrance. The first time, a volunteer walks you and your kids to their room so nobody has to guess.</p>
-      </li>
-      <li class="visit-step">
-        <h3>Worship</h3>
-        <p>About 25 minutes of live music. It is expressive here. People sing out, raise their hands, and some dance. Join in however feels natural, or simply take it in.</p>
-      </li>
-      <li class="visit-step">
-        <h3>The message</h3>
-        <p>Pastor Josh or Pastor Christine teaches from the Bible for 35 to 40 minutes. Honest, practical, and centered on Jesus. Bring a Bible or follow along on your phone.</p>
-      </li>
-      <li class="visit-step">
-        <h3>Prayer and next steps</h3>
-        <p>We close with an invitation to receive prayer from the team up front. It is always optional. After that it is coffee, conversation, and you are on your way.</p>
-      </li>
-    </ol>
+    <p class="body-text mb-48" data-reveal style="text-align:center;max-width:540px;margin-left:auto;margin-right:auto;">From the parking lot to the last cup of coffee. Pick a moment to see it.</p>
+    <div class="visit-tour" data-visit-tour data-reveal="fade">
+      <div class="visit-tour-tabs" role="tablist" aria-label="Moments of a Sunday morning" aria-orientation="vertical">
+        <button type="button" role="tab" id="tour-tab-0" aria-controls="tour-panel-0" aria-selected="true" class="visit-tour-tab">
+          <span class="visit-tour-num" aria-hidden="true">01</span>
+          <span><span class="visit-tour-tab-title">Pulling in</span><span class="visit-tour-tab-sub">Parking lot and front doors</span></span>
+        </button>
+        <button type="button" role="tab" id="tour-tab-1" aria-controls="tour-panel-1" aria-selected="false" class="visit-tour-tab">
+          <span class="visit-tour-num" aria-hidden="true">02</span>
+          <span><span class="visit-tour-tab-title">Coffee and hellos</span><span class="visit-tour-tab-sub">The lobby before the service</span></span>
+        </button>
+        <button type="button" role="tab" id="tour-tab-2" aria-controls="tour-panel-2" aria-selected="false" class="visit-tour-tab">
+          <span class="visit-tour-num" aria-hidden="true">03</span>
+          <span><span class="visit-tour-tab-title">Kids check-in</span><span class="visit-tour-tab-sub">Secure drop-off near the entrance</span></span>
+        </button>
+        <button type="button" role="tab" id="tour-tab-3" aria-controls="tour-panel-3" aria-selected="false" class="visit-tour-tab">
+          <span class="visit-tour-num" aria-hidden="true">04</span>
+          <span><span class="visit-tour-tab-title">Worship</span><span class="visit-tour-tab-sub">About 25 minutes of live music</span></span>
+        </button>
+        <button type="button" role="tab" id="tour-tab-4" aria-controls="tour-panel-4" aria-selected="false" class="visit-tour-tab">
+          <span class="visit-tour-num" aria-hidden="true">05</span>
+          <span><span class="visit-tour-tab-title">The message</span><span class="visit-tour-tab-sub">Teaching from the Bible</span></span>
+        </button>
+        <button type="button" role="tab" id="tour-tab-5" aria-controls="tour-panel-5" aria-selected="false" class="visit-tour-tab">
+          <span class="visit-tour-num" aria-hidden="true">06</span>
+          <span><span class="visit-tour-tab-title">Prayer and next steps</span><span class="visit-tour-tab-sub">How the morning ends</span></span>
+        </button>
+      </div>
+      <div class="visit-tour-panels">
+        <div role="tabpanel" id="tour-panel-0" aria-labelledby="tour-tab-0" class="visit-tour-panel" tabindex="0">
+          <div class="visit-tour-media"><img src="images/visit/entrance.jpg" alt="The front entrance of Cornerstone Church on a clear day" loading="lazy"></div>
+          <div class="visit-tour-text">
+            <h3>Pulling in</h3>
+            <p>Park anywhere in the lot. A greeter at the front doors will say hello, hand you anything you need, and point you toward coffee or kids check-in. If you would rather slip in quietly, that works too.</p>
+          </div>
+        </div>
+        <div role="tabpanel" id="tour-panel-1" aria-labelledby="tour-tab-1" class="visit-tour-panel" tabindex="0" hidden>
+          <div class="visit-tour-media"><div class="visit-tour-slot"><svg aria-hidden="true" focusable="false" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>Lobby photo to come</span></div></div>
+          <div class="visit-tour-text">
+            <h3>Coffee and hellos</h3>
+            <p>The lobby is where people catch up before the service. Grab a coffee, linger if you like, or head straight for a seat. Both are completely normal.</p>
+          </div>
+        </div>
+        <div role="tabpanel" id="tour-panel-2" aria-labelledby="tour-tab-2" class="visit-tour-panel" tabindex="0" hidden>
+          <div class="visit-tour-media"><img src="images/visit/kids-desk.jpg" alt="The Cornerstone Kids check-in desk" loading="lazy"></div>
+          <div class="visit-tour-text">
+            <h3>Kids check-in</h3>
+            <p>Kingdom Kids uses a secure check-in with matching tags. The first time, a volunteer walks you and your kids to their room so nobody has to guess where to go.</p>
+          </div>
+        </div>
+        <div role="tabpanel" id="tour-panel-3" aria-labelledby="tour-tab-3" class="visit-tour-panel" tabindex="0" hidden>
+          <div class="visit-tour-media"><img src="images/visit/josh-worship.jpg" alt="Pastor Josh leading worship with an acoustic guitar" loading="lazy"></div>
+          <div class="visit-tour-text">
+            <h3>Worship</h3>
+            <p>The band leads about 25 minutes of live music. It is expressive here. People sing out, raise their hands, and some dance. Join in however feels natural, or simply take it in.</p>
+          </div>
+        </div>
+        <div role="tabpanel" id="tour-panel-4" aria-labelledby="tour-tab-4" class="visit-tour-panel" tabindex="0" hidden>
+          <div class="visit-tour-media"><img src="images/visit/josh-preaching.jpg" alt="Pastor Josh preaching with one hand raised" loading="lazy"></div>
+          <div class="visit-tour-text">
+            <h3>The message</h3>
+            <p>Pastor Josh or Pastor Christine teaches from the Bible for 35 to 40 minutes. Honest, practical, and centered on Jesus. Bring a Bible or follow along on your phone.</p>
+          </div>
+        </div>
+        <div role="tabpanel" id="tour-panel-5" aria-labelledby="tour-tab-5" class="visit-tour-panel" tabindex="0" hidden>
+          <div class="visit-tour-media"><img src="images/visit/worship-hands.jpg" alt="People responding in worship with hands raised" loading="lazy"></div>
+          <div class="visit-tour-text">
+            <h3>Prayer and next steps</h3>
+            <p>We close with an invitation to receive prayer from the team up front. It is always optional. After that it is coffee, conversation, and you are on your way.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -183,7 +236,7 @@
       <div class="visit-expect-card visit-expect-yes" data-reveal>
         <h3>What you <em>can</em> expect</h3>
         <ul>
-          <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Casual clothes. Jeans and a hoodie are the norm, and nobody is checking.</span></li>
+          <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>A mix of jeans and Sunday best. Wear what you are comfortable in.</span></li>
           <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Friendly people who will say hi, then give you space.</span></li>
           <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Live, heartfelt worship. People sing out, raise their hands, sometimes dance.</span></li>
           <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Teaching from the Bible you can actually use on Monday.</span></li>
@@ -194,7 +247,7 @@
       <div class="visit-expect-card visit-expect-no" data-reveal>
         <h3>What you <em>won’t</em> find</h3>
         <ul>
-          <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Judgment about where you have been or what you doubt.</span></li>
+          <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Anyone keeping score of where you have been.</span></li>
           <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>A moment where visitors stand up or introduce themselves.</span></li>
           <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Pressure to give. The offering is for people who call this home.</span></li>
           <li><svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Church words nobody explains.</span></li>
@@ -244,7 +297,7 @@
         </ul>
       </div>
       <div class="visit-kids-photo" data-reveal="fade" data-reveal-delay="200">
-        <img src="images/announcements/kids-ministry-volunteers.jpg" alt="A volunteer coloring with three young children at a small table">
+        <img src="images/visit/kids-room.jpg" alt="Two volunteers helping a table of children in a Kingdom Kids classroom">
       </div>
     </div>
   </div>
@@ -262,11 +315,11 @@
       </details>
       <details class="faq-item">
         <summary>What should I wear?<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
-        <div class="faq-item-body"><p>Whatever you are comfortable in. Most people are in jeans. You will see a few dresses and a few shorts, and nobody will notice either way.</p></div>
+        <div class="faq-item-body"><p>Whatever you are comfortable in. On a given Sunday you will see jeans, dresses, and everything in between, and nobody will notice either way.</p></div>
       </details>
       <details class="faq-item">
         <summary>Do I have to believe anything to come?<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
-        <div class="faq-item-body"><p>No. Skeptics, seekers, the curious, and the burned-out are all welcome. You can sit in the back, listen, and leave with no strings attached. If you have questions, we love questions.</p></div>
+        <div class="faq-item-body"><p>No. Plenty of people come with questions, doubts, or no church background at all. You can sit in the back, listen, and leave with no strings attached. If you want to talk it through, the pastors would love to.</p></div>
       </details>
       <details class="faq-item">
         <summary>Will I be singled out as a visitor?<svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></summary>
@@ -409,6 +462,7 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script src="js/visit.js"></script>
 <script src="js/blocks.js"></script>
 </body>
 </html>

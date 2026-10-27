@@ -171,7 +171,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(a => {
 // Hero video cross-fade + pause control
 const heroVideoA = document.querySelector('.hero-video-a');
 const heroVideoB = document.querySelector('.hero-video-b');
-if (heroVideoA && heroVideoB) {
+if (heroVideoA) {
   const HOLD_MS = 9000;
   const FADE_MS = 2500;
   let current = 'a';
@@ -181,7 +181,7 @@ if (heroVideoA && heroVideoB) {
     if (eyebrow) eyebrow.classList.add('highlight-in');
   }, { once: true });
 
-  setTimeout(function crossfade() {
+  if (heroVideoB) setTimeout(function crossfade() {
     if (playing) {
       if (current === 'a') {
         heroVideoA.style.opacity = '0';
@@ -200,7 +200,7 @@ if (heroVideoA && heroVideoB) {
   const label = toggle ? toggle.querySelector('.hero-video-toggle-label') : null;
   function setPlaying(on) {
     playing = on;
-    [heroVideoA, heroVideoB].forEach(v => {
+    [heroVideoA, heroVideoB].filter(Boolean).forEach(v => {
       if (on) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
       else v.pause();
     });
