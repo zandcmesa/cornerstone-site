@@ -63,7 +63,7 @@ var lg = logoComp.layers.add(logo); lg.property("ADBE Transform Group").property
 var lgScale = 1350 / 1050 * 100; lg.property("ADBE Transform Group").property("ADBE Scale").setValue([lgScale, lgScale, 100]);
 var scene5 = find("Scene_05", CompItem);
 layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Anchor Point").setValue([1350, 675, 0]);
-layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Scale").setValue([120, 120, 100]);
+layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Scale").setValue([180, 180, 100]);
 var hereLayers = layersNamed(scene5, "TextS5_01"); for (var h = 0; h < hereLayers.length; h++) hereLayers[h].enabled = false;
 var urlInfo = widenWordComp("TextS5_02", 1400, "'cornerstonechurchma.com'", null); reanchor(scene5, "TextS5_02", 1400, urlInfo.comp.height);
 log("Scene_05 logo + url set");
@@ -78,9 +78,13 @@ layer(scene4, "TextS4_05").property("ADBE Transform Group").property("ADBE Scale
 site.comp.layer(1).property("ADBE Transform Group").property("ADBE Scale").setValue([45, 45, 100]);
 var brand = widenWordComp("TextS4_06", 1200, "'CORNERSTONE CHURCH'", null); reanchor(scene4, "TextS4_06", 1200, brand.comp.height);
 find("TextS4_07", CompItem).layer(1).property("Source Text").expression = "String((new Date()).getFullYear())";
-var offNames = ["Dark Gray Solid 1", "Footage_S4", "Blure", "Grain.mov", "Ramp"]; for (var q = 0; q < offNames.length; q++) { var ol = layer(scene4, offNames[q]); if (ol) ol.enabled = false; }
+var offNames = ["Dark Gray Solid 1", "Footage_S4", "Blure", "Grain.mov", "Ramp", "TextS4_06", "TextS4_08", "TextS4_09"]; for (var q = 0; q < offNames.length; q++) { var ol = layer(scene4, offNames[q]); if (ol) ol.enabled = false; }
 for (var q2 = 0; q2 < layersNamed(scene4, "TextS4_05").length; q2++) layersNamed(scene4, "TextS4_05")[q2].blendingMode = BlendingMode.NORMAL;
 for (var q3 = 0; q3 < layersNamed(scene4, "TextS4_04").length; q3++) layersNamed(scene4, "TextS4_04")[q3].blendingMode = BlendingMode.NORMAL;
+var cmark = importFile(DIR + "/icons/cmark.png", "cmark.png"); cmark.parentFolder = folder;
+var cm = scene4.layers.add(cmark); cm.name = "cmark"; cm.startTime = 0; cm.inPoint = 0; cm.outPoint = 4.0;
+cm.property("ADBE Transform Group").property("ADBE Anchor Point").setValue([88, 90, 0]); cm.property("ADBE Transform Group").property("ADBE Position").setValue([300, 218, 0]); cm.property("ADBE Transform Group").property("ADBE Scale").setValue([62, 62, 100]);
+cm.blendingMode = layer(scene4, "TextS4_07").blendingMode;
 log("Scene_04 text set");
 
 // ---- Intro comp ----
