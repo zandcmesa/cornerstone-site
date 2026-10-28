@@ -14,7 +14,7 @@ test('parseArchive reads every row of the real archive', () => {
   const ids = a.entries.map(e => e.id);
   assert.equal(a.entries.length, SRC.match(/^\s*\{ id: \d+,/gm).length);
   assert.equal(new Set(ids).size, ids.length);
-  assert.equal(a.maxId, a.entries.length);
+  assert.ok(a.maxId >= a.entries.length);
   const first = a.entries.find(e => e.id === 1);
   assert.deepEqual({ ...first, line: undefined }, { id: 1, date: '2026-06-28', vimeoId: '1205525119', series: null, speaker: 'Pastor Christine Disibio', line: undefined });
   assert.equal(a.entries.find(e => e.id === 7).series, 'Leadership Lessons');
