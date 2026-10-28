@@ -47,16 +47,16 @@ test('buildAssembleArgs defaults to the ffmpeg bumper lengths', () => {
   assert.equal(plan.leadIn, TIMING.intro - TIMING.xfade);
 });
 
-const evalExpr = (expr, t) => Function('t', 'ifx', 'lt', 'return ' + expr.replace(/if\(/g, 'ifx('))(t, (c, a, b) => c ? a : b, (a, b) => a < b);
+const evalExpr = (expr, t) => Function('t', 'ifx', 'lt', 'cos', 'PI', 'return ' + expr.replace(/if\(/g, 'ifx('))(t, (c, a, b) => c ? a : b, (a, b) => a < b, Math.cos, Math.PI);
 
-test('musicEnvelope: full through the intro, ducked through the crossfade and pre-roll, gone 6s after the first words, back for the outro', () => {
+test('musicEnvelope: full through the intro, then one smooth nine-second fade from the crossfade; back for the outro', () => {
   const env = musicEnvelope({ off1: 8.6, off2: 3123.6, xfade: 1, outroLen: 8 });
   assert.equal(evalExpr(env.head, 0), 1);
-  assert.equal(evalExpr(env.head, 8), 1);
-  assert.ok(Math.abs(evalExpr(env.head, 9.6) - MUSIC.duck) < 1e-9);
-  assert.ok(Math.abs(evalExpr(env.head, 12.5) - MUSIC.duck) < 1e-9);
-  assert.ok(evalExpr(env.head, 15.6) > 0 && evalExpr(env.head, 15.6) < MUSIC.duck);
-  assert.equal(evalExpr(env.head, 18.7), 0);
+  assert.equal(evalExpr(env.head, 8.6), 1);
+  assert.ok(evalExpr(env.head, 9.6) > 0.95);
+  assert.ok(Math.abs(evalExpr(env.head, 13.1) - 0.5) < 1e-9);
+  assert.ok(evalExpr(env.head, 16.6) < 0.1 && evalExpr(env.head, 16.6) > 0);
+  assert.equal(evalExpr(env.head, 17.7), 0);
   assert.equal(evalExpr(env.tail, 3120), 0);
   assert.ok(Math.abs(evalExpr(env.tail, 3123.6) - MUSIC.duck) < 1e-9);
   assert.equal(evalExpr(env.tail, 3125), 1);

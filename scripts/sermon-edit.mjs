@@ -10,7 +10,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const TIMING = { intro: 8.0, outro: 7.0, xfade: 1.0, outroPlateOffset: 2, bedOutroOffset: 12, bedGain: '-9dB' };
 export const leadIn = () => TIMING.intro - TIMING.xfade;
 export const AE = { app: 'Adobe After Effects 2026', bundle: '/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app', font: 'DegularDisplay-Bold', renderTimeoutMs: 20 * 60 * 1000, launchTimeoutMs: 120 * 1000 };
-export const MUSIC = { duck: 0.126, preRoll: 3, tail: 6, rise: 3, outroFade: 1.5 };
+export const MUSIC = { duck: 0.126, fade: 9, rise: 3, outroFade: 1.5 };
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 export function longDate(iso) {
@@ -60,9 +60,9 @@ export function buildBumperArgs({ kind, output, assets, card }) {
 }
 
 export function musicEnvelope({ off1, off2, xfade, outroLen }) {
-  const { duck, preRoll, tail, rise, outroFade } = MUSIC;
-  const a = off1, b = off1 + xfade, c = b + preRoll, d = c + tail;
-  const head = `if(lt(t,${a}),1,if(lt(t,${b}),1-(1-${duck})*(t-${a})/${xfade},if(lt(t,${c}),${duck},if(lt(t,${d}),${duck}*(1-(t-${c})/${tail}),0))))`;
+  const { duck, fade, rise, outroFade } = MUSIC;
+  const a = off1, d = off1 + fade;
+  const head = `if(lt(t,${a}),1,if(lt(t,${d}),0.5*(1+cos(PI*(t-${a})/${fade})),0))`;
   const t0 = off2 - rise, t1 = off2, t2 = off2 + xfade, end = off2 + outroLen, f = end - outroFade;
   const tailExpr = `if(lt(t,${t0}),0,if(lt(t,${t1}),${duck}*(t-${t0})/${rise},if(lt(t,${t2}),${duck}+(1-${duck})*(t-${t1})/${xfade},if(lt(t,${f}),1,if(lt(t,${end}),1-(t-${f})/${outroFade},0)))))`;
   return { head, tail: tailExpr, headLen: +(d + 0.5).toFixed(3), tailStart: +t0.toFixed(3), tailLen: +(end - t0).toFixed(3) };

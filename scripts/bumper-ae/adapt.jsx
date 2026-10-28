@@ -6,7 +6,7 @@ function flush() { var f = new File(DIR + "/adapt.log"); f.open("w"); f.write(LO
 function find(name, type) { for (var i = 1; i <= app.project.numItems; i++) { var it = app.project.item(i); if (it.name == name && (!type || it instanceof type)) return it; } return null; }
 function layer(c, name, nth) { var k = 0; for (var i = 1; i <= c.numLayers; i++) if (c.layer(i).name == name && ++k == (nth || 1)) return c.layer(i); return null; }
 function layersNamed(c, name) { var out = []; for (var i = 1; i <= c.numLayers; i++) if (c.layer(i).name == name) out.push(c.layer(i)); return out; }
-function importFile(path, name) { var old = find(name); if (old) return old; var it = app.project.importFile(new ImportOptions(File(path))); it.name = name; return it; }
+function importFile(path, name) { var old = find(name); if (old) return old; app.beginSuppressDialogs(); var it = app.project.importFile(new ImportOptions(File(path))); app.endSuppressDialogs(false); it.name = name; return it; }
 function removeLayersNamed(c, names) { for (var i = c.numLayers; i >= 1; i--) { for (var n = 0; n < names.length; n++) if (c.layer(i).name == names[n]) { c.layer(i).remove(); break; } } }
 function removeLayersWithSource(c, srcName) { for (var i = c.numLayers; i >= 1; i--) { var L = c.layer(i); if (L instanceof AVLayer && L.source && L.source.name == srcName) L.remove(); } }
 var JSON_REF = 'footage("sermon.json").sourceData';
@@ -63,6 +63,7 @@ var lg = logoComp.layers.add(logo); lg.property("ADBE Transform Group").property
 var lgScale = 1350 / 1050 * 100; lg.property("ADBE Transform Group").property("ADBE Scale").setValue([lgScale, lgScale, 100]);
 var scene5 = find("Scene_05", CompItem);
 layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Anchor Point").setValue([1350, 675, 0]);
+layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Scale").setValue([120, 120, 100]);
 var hereLayers = layersNamed(scene5, "TextS5_01"); for (var h = 0; h < hereLayers.length; h++) hereLayers[h].enabled = false;
 var urlInfo = widenWordComp("TextS5_02", 1400, "'cornerstonechurchma.com'", null); reanchor(scene5, "TextS5_02", 1400, urlInfo.comp.height);
 log("Scene_05 logo + url set");
@@ -77,8 +78,9 @@ layer(scene4, "TextS4_05").property("ADBE Transform Group").property("ADBE Scale
 site.comp.layer(1).property("ADBE Transform Group").property("ADBE Scale").setValue([45, 45, 100]);
 var brand = widenWordComp("TextS4_06", 1200, "'CORNERSTONE CHURCH'", null); reanchor(scene4, "TextS4_06", 1200, brand.comp.height);
 find("TextS4_07", CompItem).layer(1).property("Source Text").expression = "String((new Date()).getFullYear())";
-layer(scene4, "Dark Gray Solid 1").enabled = false;
-layer(scene4, "Footage_S4").enabled = false;
+var offNames = ["Dark Gray Solid 1", "Footage_S4", "Blure", "Grain.mov", "Ramp"]; for (var q = 0; q < offNames.length; q++) { var ol = layer(scene4, offNames[q]); if (ol) ol.enabled = false; }
+for (var q2 = 0; q2 < layersNamed(scene4, "TextS4_05").length; q2++) layersNamed(scene4, "TextS4_05")[q2].blendingMode = BlendingMode.NORMAL;
+for (var q3 = 0; q3 < layersNamed(scene4, "TextS4_04").length; q3++) layersNamed(scene4, "TextS4_04")[q3].blendingMode = BlendingMode.NORMAL;
 log("Scene_04 text set");
 
 // ---- Intro comp ----
@@ -96,7 +98,7 @@ var fit = Math.max(3840 / mountain.width, 2160 / mountain.height) * 100; bg.prop
 var grad = intro.layers.addSolid([0, 0, 0], "Scrim", 3840, 2160, 1); grad.moveBefore(bg); grad.blendingMode = BlendingMode.MULTIPLY;
 var ramp = grad.property("ADBE Effect Parade").addProperty("ADBE Ramp"); ramp.property("ADBE Ramp-0001").setValue([400, 200]); ramp.property("ADBE Ramp-0002").setValue([0.18, 0.18, 0.2]); ramp.property("ADBE Ramp-0003").setValue([3600, 2100]); ramp.property("ADBE Ramp-0004").setValue([0.85, 0.85, 0.85]);
 intro.duration = 9.6; intro.frameRate = 30;
-log("Intro: " + intro.duration + "s, layers " + intro.numLayers);
+log("Intro: " + Number(intro.duration) + "s, layers " + Number(intro.numLayers));
 
 // ---- Outro comp ----
 var outro = find("Outro", CompItem); if (outro) outro.remove();
@@ -107,13 +109,14 @@ removeLayersWithSource(outro, "BackGround");
 var s4 = layer(outro, "Scene_04"); s4.startTime = 0; s4.inPoint = 0; s4.outPoint = 4.0;
 var leak3 = layer(outro, "LightLeack 3"); leak3.startTime = 3.3; leak3.outPoint = 4.6;
 var s5b = layer(outro, "Scene_05"); s5b.startTime = 3.8; s5b.inPoint = 3.8; s5b.outPoint = 8.0;
-var dbg = outro.layers.add(drone); dbg.moveToEnd(); dbg.startTime = -(drone.duration - 8.2); dbg.inPoint = 0; dbg.outPoint = 8.0;
+var dbg = outro.layers.add(drone); dbg.moveToEnd(); dbg.startTime = -10; dbg.inPoint = 0; dbg.outPoint = 8.0; dbg.property("ADBE Transform Group").property("ADBE Scale").setValue([112, 112, 100]); dbg.property("ADBE Transform Group").property("ADBE Position").setValue([1920, 950, 0]);
 var grad2 = outro.layers.addSolid([0, 0, 0], "Scrim", 3840, 2160, 1); grad2.moveBefore(dbg); grad2.blendingMode = BlendingMode.MULTIPLY;
 var ramp2 = grad2.property("ADBE Effect Parade").addProperty("ADBE Ramp"); ramp2.property("ADBE Ramp-0001").setValue([1920, 2160]); ramp2.property("ADBE Ramp-0002").setValue([0.25, 0.25, 0.28]); ramp2.property("ADBE Ramp-0003").setValue([1920, 600]); ramp2.property("ADBE Ramp-0004").setValue([0.9, 0.9, 0.9]);
 outro.duration = 8.0; outro.frameRate = 30;
-log("Outro: " + outro.duration + "s, layers " + outro.numLayers);
+log("Outro: " + Number(outro.duration) + "s, layers " + Number(outro.numLayers));
 
 app.endUndoGroup();
+$.evalFile(File($.fileName).parent.fsName + "/icons.jsx");
 app.project.save(new File(DIR + "/cornerstone-bumper.aep"));
 log("saved " + app.project.file.fsName);
 flush();
