@@ -51,7 +51,10 @@ export function sliceSegments(segments, start, end) {
   return segments.filter(s => s.t >= start && s.t <= end);
 }
 
-const vttTime = sec => `${String(Math.floor(sec / 3600)).padStart(2, '0')}:${String(Math.floor((sec % 3600) / 60)).padStart(2, '0')}:${String(sec % 60).padStart(2, '0')}.000`;
+const vttTime = sec => {
+  const ms = Math.round(sec * 1000), pad = (n, w = 2) => String(n).padStart(w, '0');
+  return `${pad(Math.floor(ms / 3600000))}:${pad(Math.floor(ms / 60000) % 60)}:${pad(Math.floor(ms / 1000) % 60)}.${pad(ms % 1000, 3)}`;
+};
 
 export function rebaseVtt(segments, start, end, offset = 0) {
   const inside = sliceSegments(segments, start, end);

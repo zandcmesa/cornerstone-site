@@ -26,6 +26,11 @@ test('rebaseVtt produces a VTT starting at zero', () => {
   assert.equal(vtt, 'WEBVTT\n\n00:00:00.000 --> 00:00:04.000\nb\n\n00:00:04.000 --> 00:00:08.000\nc\n');
 });
 
+test('rebaseVtt writes valid timestamps for a fractional lead-in', () => {
+  const segs = [{ t: 4041, text: 'a' }, { t: 7145.4, text: 'b' }];
+  assert.equal(rebaseVtt(segs, 4041, 7155, 8.6), 'WEBVTT\n\n00:00:08.600 --> 00:51:53.000\na\n\n00:51:53.000 --> 00:51:57.000\nb\n');
+});
+
 test('ytBaseArgs always allows the EJS solver and adds cookies only when set', () => {
   assert.deepEqual(ytBaseArgs({}), ['--remote-components', 'ejs:npm']);
   const args = ytBaseArgs({ YOUTUBE_COOKIES: '# Netscape HTTP Cookie File\n.youtube.com\tTRUE\t/\tTRUE\t0\tSID\tabc\n' });
