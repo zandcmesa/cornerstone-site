@@ -171,7 +171,7 @@ document.querySelectorAll('a[target="_blank"]').forEach(a => {
 // Hero video cross-fade + pause control
 const heroVideoA = document.querySelector('.hero-video-a');
 const heroVideoB = document.querySelector('.hero-video-b');
-if (heroVideoA && heroVideoB) {
+if (heroVideoA) {
   const HOLD_MS = 9000;
   const FADE_MS = 2500;
   let current = 'a';
@@ -181,7 +181,7 @@ if (heroVideoA && heroVideoB) {
     if (eyebrow) eyebrow.classList.add('highlight-in');
   }, { once: true });
 
-  setTimeout(function crossfade() {
+  if (heroVideoB) setTimeout(function crossfade() {
     if (playing) {
       if (current === 'a') {
         heroVideoA.style.opacity = '0';
@@ -200,7 +200,7 @@ if (heroVideoA && heroVideoB) {
   const label = toggle ? toggle.querySelector('.hero-video-toggle-label') : null;
   function setPlaying(on) {
     playing = on;
-    [heroVideoA, heroVideoB].forEach(v => {
+    [heroVideoA, heroVideoB].filter(Boolean).forEach(v => {
       if (on) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
       else v.pause();
     });
@@ -312,6 +312,7 @@ if (pcoBackdrop) {
           <select id="cf-type" name="type" required aria-required="true">
             <option value="" disabled selected>Select one</option>
             <option value="General">General</option>
+            <option value="Planning a visit">Planning a visit</option>
             <option value="Prayer">Prayer</option>
             <option value="Testimony">Testimony</option>
           </select>
@@ -470,7 +471,10 @@ if (pcoBackdrop) {
 
   // Wire up all contact modal triggers
   document.querySelectorAll('[data-contact-modal]').forEach(el => {
-    el.addEventListener('click', () => openContactModal());
+    el.addEventListener('click', () => {
+      const type = el.getAttribute('data-contact-type');
+      openContactModal(type ? { type } : undefined);
+    });
   });
 
   if (location.hash === '#contact') openContactModal();
