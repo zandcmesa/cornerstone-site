@@ -95,7 +95,7 @@ const readArchive = () => parseArchive(fs.readFileSync(path.join(ROOT, 'js/sermo
 
 const cutDeps = {
   listVideos: vimeo.listVideos, uploadVideo: vimeo.uploadVideo, uploadTextTrack: vimeo.uploadTextTrack, retireVideo: vimeo.retireVideo, me: vimeo.me,
-  findReplay, fetchTimedCaptions, downloadSection, editSermon, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, log: console.log,
+  getVideo: vimeo.getVideo, sleep: ms => new Promise(r => setTimeout(r, ms)), findReplay, fetchTimedCaptions, downloadSection, editSermon, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, log: console.log,
 };
 
 export async function cutSermon({ date, youtubeId, start, end, dryRun = false, skipUpload = false, keep = false } = {}, deps = cutDeps) {
@@ -151,12 +151,17 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
   ].join('\n');
   const vimeoId = await d.uploadVideo({ filePath: file, name: meta.title, description, privacy: UPLOAD_PRIVACY });
   log(`uploaded (unlisted) to vimeo.com/${vimeoId}`);
-  try { await d.uploadTextTrack(vimeoId, rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER, leadIn)); } catch (e) { log(`caption upload failed: ${e.message}`); }
+  const uploadedLink = await d.getVideo(vimeoId).then(v => v.link).catch(() => undefined);
+  const vtt = rebaseVtt(segments, bounds.start - PAD_BEFORE, bounds.end + PAD_AFTER, leadIn);
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try { await d.uploadTextTrack(vimeoId, vtt); break; }
+    catch (e) { log(`caption upload failed (${attempt}/4): ${e.message}`); if (attempt < 4) await d.sleep(20000); }
+  }
   if (!keep) fs.rmSync(dir, { recursive: true, force: true });
   if (manual) for (const v of videos.filter(v => sermonDateFromVideo(v) === date)) { await d.retireVideo(v.vimeoId); log(`retired vimeo.com/${v.vimeoId}`); }
 
   const startLine = segments.find(s => s.t >= bounds.start)?.text, endLine = segments.findLast(s => s.t <= bounds.end)?.text, cutAt = new Date().toISOString();
-  await d.syncSermons({ transcriptOverride: { [vimeoId]: transcript }, metaOverride: { [vimeoId]: meta }, previewOverride: { [vimeoId]: { youtubeId, start: bounds.start, end: bounds.end, startLine, endLine, cutAt } } });
+  await d.syncSermons({ transcriptOverride: { [vimeoId]: transcript }, metaOverride: { [vimeoId]: meta }, previewOverride: { [vimeoId]: { youtubeId, start: bounds.start, end: bounds.end, startLine, endLine, cutAt } }, knownVideos: [{ vimeoId, name: meta.title, description, link: uploadedLink }] });
   return { status: manual ? 'replaced' : 'uploaded', youtubeId, bounds, meta, vimeoId, startLine, endLine, cutAt };
 }
 

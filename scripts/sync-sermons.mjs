@@ -52,7 +52,7 @@ const defaultDeps = {
   log: (...a) => console.log(...a),
 };
 
-export async function syncSermons({ dryRun = false, limit = Infinity, transcriptOverride = {}, metaOverride = {}, previewOverride = {} } = {}, deps = {}) {
+export async function syncSermons({ dryRun = false, limit = Infinity, transcriptOverride = {}, metaOverride = {}, previewOverride = {}, knownVideos = [] } = {}, deps = {}) {
   const d = { ...defaultDeps, ...deps };
   d.git.fetch();
   const baseSrc = d.git.show('origin/main', 'js/sermons.js');
@@ -62,13 +62,14 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
   const drafts = draftSrc ? parseArchive(draftSrc) : { entries: [] };
   const draftById = new Map(drafts.entries.map(e => [e.vimeoId, e]));
 
-  let videos = await d.listVideos();
+  const withKnown = list => [...knownVideos.filter(k => !list.some(v => v.vimeoId === k.vimeoId)), ...list];
+  let videos = withKnown(await d.listVideos());
   let candidates = pickCandidates(videos, base, drafts).slice(0, limit);
   const wanted = Object.keys(metaOverride);
   for (let attempt = 1; wanted.some(id => !candidates.some(c => c.vimeoId === id)) && attempt <= d.listRetries; attempt++) {
     d.log(`waiting for Vimeo to list the new upload (${attempt}/${d.listRetries})`);
     await d.sleep(10000);
-    videos = await d.listVideos();
+    videos = withKnown(await d.listVideos());
     candidates = pickCandidates(videos, base, drafts).slice(0, limit);
   }
   d.log(`${candidates.length} sermon(s) not in the archive`);

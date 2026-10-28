@@ -127,3 +127,11 @@ test('the override error still fires after the retries run out', async () => {
   const { deps } = fakes({ listVideos: async () => [] });
   await assert.rejects(() => syncSermons({ metaOverride: { Z: { title: 'x' } } }, deps), /metaOverride for Z/);
 });
+
+test('knownVideos are drafted even when the Vimeo listing never shows them', async () => {
+  const { deps, calls } = fakes({ listVideos: async () => [] });
+  const r = await syncSermons({ transcriptOverride: { K: 'words' }, metaOverride: { K: { title: 'Known', speaker: 'S', series: null, scripture: '', scriptureBook: '', topics: [], description: '', artMood: '' } }, knownVideos: [{ vimeoId: 'K', name: 'Known', description: 'Sermon date: 2026-08-09', link: 'https://vimeo.com/K/h' }] }, deps);
+  assert.equal(r.entries[0].vimeoId, 'K');
+  assert.equal(calls.sleeps || 0, 0);
+  assert.match(calls.published.body, /vimeo\.com\/K\/h/);
+});

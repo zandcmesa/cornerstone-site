@@ -79,6 +79,8 @@ function fakeDeps(over = {}) {
     readArchive: rec('readArchive', () => ({ entries: [{ date: '2026-10-18', vimeoId: 'X' }], maxId: 1 })),
     downloadSection: (id, start, end, out) => { calls.push('downloadSection'); dirs.add(path.dirname(out)); fs.writeFileSync(out, 'x'); return out; },
     editSermon: rec('editSermon', async () => null),
+    getVideo: async id => ({ name: 'n', description: 'd', link: `https://vimeo.com/${id}/h` }),
+    sleep: async () => {},
     uploadVideo: rec('uploadVideo', async a => { seen.upload = a; return '999'; }),
     uploadTextTrack: async (id, vtt) => { calls.push('uploadTextTrack'); seen.vtt = vtt; },
     retireVideo: async id => { calls.push(`retireVideo:${id}`); },
@@ -177,5 +179,25 @@ test('without bumper assets the raw cut is uploaded and captions start at zero',
     await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
     assert.match(seen.upload.filePath, /sermon-2026-10-25\.mp4$/);
     assert.match(seen.vtt, /^WEBVTT\n\n00:00:0[0-9]\.000/);
+  } finally { cleanup(); }
+});
+
+test('the sync is told about the upload directly so a slow Vimeo listing cannot lose it', async () => {
+  const { deps, seen, cleanup } = fakeDeps();
+  try {
+    await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
+    assert.equal(seen.sync.knownVideos[0].vimeoId, '999');
+    assert.equal(seen.sync.knownVideos[0].link, 'https://vimeo.com/999/h');
+    assert.match(seen.sync.knownVideos[0].description, /Sermon date: 2026-10-25/);
+  } finally { cleanup(); }
+});
+
+test('a failed caption upload is retried and never fails the cut', async () => {
+  let tries = 0;
+  const { deps, cleanup } = fakeDeps({ uploadTextTrack: async () => { if (++tries < 3) throw new Error('Vimeo text track upload → 404'); } });
+  try {
+    const r = await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
+    assert.equal(r.status, 'replaced');
+    assert.equal(tries, 3);
   } finally { cleanup(); }
 });
