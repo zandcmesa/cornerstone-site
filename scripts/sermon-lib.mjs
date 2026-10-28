@@ -184,3 +184,38 @@ export function retireVideoFields({ name, description }) {
     description: (description || '').replace(/Sermon date: /g, 'Superseded sermon date: '),
   };
 }
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+export function longDate(iso) { const [y, m, d] = iso.split('-').map(Number); return `${MONTH_NAMES[m - 1]} ${d}, ${y}`; }
+
+export function titleLines(title, max = 4) {
+  const words = title.trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  let best = null;
+  const walk = (i, lines) => {
+    if (i === words.length) {
+      const longest = Math.max(...lines.map(l => l.length));
+      const key = [2 * longest + 3 * lines.length, ...lines.map(l => -l.length)];
+      if (!best || cmp(key, best.key) < 0) best = { key, lines };
+      return;
+    }
+    if (lines.length >= max) return;
+    for (let j = i + 1; j <= words.length; j++) walk(j, [...lines, words.slice(i, j).join(' ')]);
+  };
+  const cmp = (a, b) => { for (let k = 0; k < Math.max(a.length, b.length); k++) { const x = a[k] ?? 0, y = b[k] ?? 0; if (x !== y) return x - y; } return 0; };
+  walk(0, []);
+  return best.lines;
+}
+
+export function titleSize(lines) {
+  const longest = Math.max(0, ...lines.map(l => l.length));
+  if (longest <= 10) return 143;
+  if (longest <= 13) return 124;
+  if (longest <= 16) return 108;
+  return 96;
+}
+
+export function sermonJson({ title, speaker, date, series }) {
+  const lines = titleLines(title);
+  return { lines, size: titleSize(lines), series: series || '', subtitle: [speaker, longDate(date)].filter(Boolean).join('   ·   ').toUpperCase(), title };
+}

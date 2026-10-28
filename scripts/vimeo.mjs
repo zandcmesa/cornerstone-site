@@ -119,7 +119,7 @@ export async function setPrivacy(vimeoId, view) {
 }
 
 export async function getVideo(vimeoId) {
-  return api(`/videos/${vimeoId}?fields=name,description`);
+  return api(`/videos/${vimeoId}?fields=name,description,link`);
 }
 
 export async function retireVideo(vimeoId) {

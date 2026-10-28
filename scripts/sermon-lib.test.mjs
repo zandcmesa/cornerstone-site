@@ -4,8 +4,7 @@ import fs from 'node:fs';
 import {
   parseArchive, sermonDateFromVideo, vttToText, json3ToTimed, formatTimed,
   buildEntryLine, insertEntries, pickCandidates, previousSunday, artFile, validateBounds, archiveContext,
-  parseTimestamp, parseRecutComment, retireVideoFields, buildPrBody,
-} from './sermon-lib.mjs';
+  parseTimestamp, parseRecutComment, retireVideoFields, buildPrBody, titleLines, titleSize, sermonJson } from './sermon-lib.mjs';
 
 const fx = name => fs.readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
 const SRC = fs.readFileSync(new URL('../js/sermons.js', import.meta.url), 'utf8');
@@ -161,4 +160,23 @@ test('buildPrBody uses the private review link when Vimeo gives one', () => {
   const entry = { date: '2026-10-25', title: 'T', speaker: 'S', series: null, scripture: '', description: '', vimeoId: '999', art: 'x.jpg' };
   assert.ok(buildPrBody([{ ...entry, link: 'https://vimeo.com/999/abc123' }]).startsWith('**Watch the cut:** https://vimeo.com/999/abc123  (unlisted until merge)'));
   assert.ok(buildPrBody([entry]).startsWith('**Watch the cut:** https://vimeo.com/999  (unlisted until merge)'));
+});
+
+test('titleLines balances a title across up to four lines without splitting words', () => {
+  assert.deepEqual(titleLines('Get Out of the Tube'), ['Get Out', 'of the', 'Tube']);
+  assert.deepEqual(titleLines('Wonderful, Beautiful, Glorious, Matchless'), ['Wonderful,', 'Beautiful,', 'Glorious,', 'Matchless']);
+  assert.deepEqual(titleLines('Jubilee'), ['Jubilee']);
+  assert.deepEqual(titleLines('A Kingdom Algorithm'), ['A Kingdom', 'Algorithm']);
+});
+
+test('titleSize steps down with the longest line', () => {
+  assert.equal(titleSize(['Jubilee']), 143);
+  assert.equal(titleSize(titleLines('Wonderful, Beautiful, Glorious, Matchless')), 143);
+  assert.equal(titleSize(['Because of Jesus,']), 96);
+});
+
+test('sermonJson is the shape the After Effects project reads', () => {
+  const j = sermonJson({ title: 'Get Out of the Tube', speaker: 'Pastor Josh Eldridge', date: '2026-10-25', series: 'Seek First the Kingdom' });
+  assert.deepEqual(j, { lines: ['Get Out', 'of the', 'Tube'], size: 143, series: 'Seek First the Kingdom', subtitle: 'PASTOR JOSH ELDRIDGE   ·   OCTOBER 25, 2026', title: 'Get Out of the Tube' });
+  assert.equal(sermonJson({ title: 'T', speaker: 'S', date: '2026-01-04', series: null }).series, '');
 });

@@ -20,6 +20,10 @@ func font(_ path: String, _ size: CGFloat, _ weight: CGFloat) -> NSFont {
 }
 
 let args = CommandLine.arguments
+if args.count >= 3 && args[1] == "--has-font" {
+  let names = (CTFontManagerCopyAvailablePostScriptNames() as? [String]) ?? []
+  exit(names.contains(args[2]) ? 0 : 1)
+}
 let spec = try! JSONDecoder().decode(Spec.self, from: Data(contentsOf: URL(fileURLWithPath: args[1])))
 let fontPath = args[2]; let out = args[3]
 let rep = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(spec.width), pixelsHigh: Int(spec.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0)!

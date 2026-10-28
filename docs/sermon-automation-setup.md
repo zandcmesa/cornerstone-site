@@ -95,27 +95,29 @@ Variables (only if needed):
 
 Already done for this repo (Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests"). If the sync fails with "GitHub Actions is not permitted to create or approve pull requests", re-check that box.
 
-## The bumper (logo intro and outro)
+## The bumper (intro and outro)
 
-Every cut gets a short cinematic open and close before it goes to Vimeo: a slow light-ray plate, the Cornerstone logo, then a title card with the sermon title, series, speaker and date, a one-second crossfade into the message, and at the end a crossfade back to the logo with the website and service time. A soft music bed sits under both. The edit runs on the Mac mini as part of the cut and adds about seven seconds before the sermon; captions are shifted to match.
+Every cut gets an open and a close before it goes to Vimeo, rendered from the Artlist "Product Teaser" After Effects template adapted for Cornerstone: the sermon title in big stacked Degular caps over a mountain sunset, the series above it, the speaker and date below, then the Cornerstone logo; at the end, a crossfade to the drone shot of the church with "Join us Sundays 10:00am", the address and the website, then the logo again and a fade to black. The synth-keys loop plays through the intro, drops under Josh for his first few sentences and is gone about six seconds after he starts, then rises again under his last line and carries through the outro. The intro adds about nine seconds before the sermon; captions are shifted to match.
 
-The pieces live outside the repo in `~/sermon-bumper` on the mini (the music excerpt is licensed through Artlist and must not be published with the site):
+Everything lives in `~/sermon-bumper` on the mini, outside the repo (the template, stock clip, music and font are licensed and must not be published with the site):
 
-- `plate.mp4` — the 10-second background, generated once on Artlist (Kling 3.0).
-- `logo.png` — the stacked logo on transparency, rendered from the vector logo.
-- `bed.wav` — a 40-second excerpt of "Heavens" by Starluxe (Artlist), loudness-normalized.
-- `font.ttf` — Montserrat (variable weight).
-- `textcard` — a small macOS program compiled from `scripts/textcard.swift` that draws the title cards; it rebuilds itself when the source changes.
+- `cornerstone-bumper.aep` — the adapted project with two comps, `Intro` and `Outro`. Built once by `scripts/bumper-ae/adapt.jsx` from the template on the Desktop; re-run that only if the template or logo changes.
+- `mountain.mp4`, `drone.mov`, `logo.png`, `loop.wav` — the footage, logo on transparency, and music the project uses.
+- `sermon.json`, `intro.mp4`, `outro.mp4`, `render.log` — written fresh on every cut.
+- `plate.mp4`, `bed.wav`, `font.ttf`, `textcard` — the older ffmpeg bumper, kept as the fallback.
 
-If any of those files is missing the cut still runs and uploads the raw sermon, with one log line saying the bumper was skipped.
+How a Monday render works: the cutter writes `sermon.json` (title split into up to four lines, series, speaker and date), then runs `scripts/bumper-ae/render.jsx` inside After Effects through AppleScript. That script sets the text on the template's layers and renders both comps through the render queue (the headless renderer cannot read the JSON, so the app itself does the work). After Effects must be installed and left able to launch; the cutter opens it if it is not running and waits up to two minutes for it to answer. Creative Cloud must be signed in and running so the Degular font resolves. If any of that is missing, or the render takes more than twenty minutes, the cut goes out with the ffmpeg bumper instead and the log says `bumper: After Effects skipped (reason)`.
 
-To change the look, edit `cardSpecs` (text, sizes, colors, positions) or `TIMING` (lengths and crossfades) in `scripts/sermon-edit.mjs`. To swap the music, drop a new `bed.wav` in the folder; the intro uses its first eight seconds and the outro uses seconds 12 to 19. To preview an edit on any video without uploading:
+One-time setup on the mini: open After Effects once by hand and click through its first-launch dialogs; in the Creative Cloud app activate the Degular font (Display Bold and Semibold). Never pass a script to After Effects as a file path through AppleScript; always `DoScript "$.evalFile(\"/path.jsx\")"`, or the app shows an error dialog and stops answering until someone clicks it.
+
+To preview the bumper on any sermon without touching the real upload (renders the intro, the first 30 seconds, and the outro, uploads it unlisted and prints the private link):
 
 ```bash
-node scripts/sermon-edit.mjs --in sermon.mp4 --out sermon-edit.mp4 --title "Get Out of the Tube" --speaker "Pastor Josh Eldridge" --date 2026-10-25 --series "Seek First the Kingdom"
+export VIMEO_TOKEN=paste-the-token-here
+node scripts/sermon-edit.mjs --preview --in sermon.mp4 --title "Get Out of the Tube" --speaker "Pastor Josh Eldridge" --date 2026-10-25 --series "Seek First the Kingdom"
 ```
 
-A full sermon renders in roughly a tenth of its running time on the mini.
+To change the look, edit the After Effects project in the app (the text slots are the `TextS1_*`, `TextS4_*` and `TextS5_02` comps; the footage is the `mountain.mp4` and `drone.mov` layers in `Intro` and `Outro`). To change the music timing, edit `MUSIC` in `scripts/sermon-edit.mjs`.
 
 ## First run
 

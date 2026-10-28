@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { cardSpecs, buildBumperArgs, buildAssembleArgs, longDate, leadIn, TIMING } from './sermon-edit.mjs';
+import { cardSpecs, buildBumperArgs, buildAssembleArgs, longDate, leadIn, TIMING, musicEnvelope, aeGuards, runJsx, MUSIC } from './sermon-edit.mjs';
 
 test('longDate spells the month out', () => {
   assert.equal(longDate('2026-10-25'), 'October 25, 2026');
@@ -28,16 +28,46 @@ test('buildBumperArgs renders finite intro and outro clips from the plate, logo,
   assert.match(outro[outro.indexOf('-filter_complex') + 1], /fade=t=out:st=5\.8:d=1\.2/);
 });
 
-test('buildAssembleArgs places the crossfades from the sermon length and delays the sermon audio by the lead-in', () => {
-  const plan = buildAssembleArgs({ intro: 'i.mp4', input: 'in.mp4', outro: 'o.mp4', output: 'out.mp4', duration: 3116 });
-  assert.equal(plan.leadIn, TIMING.intro - TIMING.xfade);
-  assert.equal(plan.leadIn, leadIn());
+test('buildAssembleArgs places the crossfades from the intro and sermon lengths and mixes the loop at head and tail', () => {
+  const plan = buildAssembleArgs({ intro: 'i.mp4', input: 'in.mp4', outro: 'o.mp4', output: 'out.mp4', duration: 3116, introLen: 9.6, outroLen: 8, loop: 'loop.wav' });
+  assert.equal(plan.leadIn, 8.6);
   const filter = plan.args[plan.args.indexOf('-filter_complex') + 1];
-  assert.match(filter, /xfade=transition=fade:duration=1:offset=7\[v1\]/);
-  assert.match(filter, /xfade=transition=fade:duration=1:offset=3122\[v\]/);
-  assert.match(filter, /adelay=7000\|7000\[sa\]/);
-  assert.match(filter, /adelay=3122000\|3122000\[oa\]/);
-  assert.equal(plan.total, 3122 + TIMING.outro);
-  assert.equal(plan.args.at(-1), 'out.mp4');
-  assert.ok(plan.args.includes('h264_videotoolbox'));
+  assert.match(filter, /xfade=transition=fade:duration=1:offset=8\.6\[v1\]/);
+  assert.match(filter, /xfade=transition=fade:duration=1:offset=3123\.6\[v\]/);
+  assert.match(filter, /adelay=8600\|8600\[sa\]/);
+  assert.match(filter, /adelay=3120600\|3120600\[mt\]/);
+  assert.match(filter, /fade=t=out:st=6\.800:d=1\.2\[ov\]/);
+  assert.ok(!filter.includes('[0:a]') && !filter.includes('[2:a]'));
+  assert.equal(plan.total, 3131.6);
+  assert.deepEqual(plan.args.slice(3, 11), ['-i', 'i.mp4', '-i', 'in.mp4', '-i', 'o.mp4', '-i', 'loop.wav']);
+});
+
+test('buildAssembleArgs defaults to the ffmpeg bumper lengths', () => {
+  const plan = buildAssembleArgs({ intro: 'i.mp4', input: 'in.mp4', outro: 'o.mp4', output: 'out.mp4', duration: 100, loop: 'l.wav' });
+  assert.equal(plan.leadIn, TIMING.intro - TIMING.xfade);
+});
+
+const evalExpr = (expr, t) => Function('t', 'ifx', 'lt', 'return ' + expr.replace(/if\(/g, 'ifx('))(t, (c, a, b) => c ? a : b, (a, b) => a < b);
+
+test('musicEnvelope: full through the intro, ducked through the crossfade and pre-roll, gone 6s after the first words, back for the outro', () => {
+  const env = musicEnvelope({ off1: 8.6, off2: 3123.6, xfade: 1, outroLen: 8 });
+  assert.equal(evalExpr(env.head, 0), 1);
+  assert.equal(evalExpr(env.head, 8), 1);
+  assert.ok(Math.abs(evalExpr(env.head, 9.6) - MUSIC.duck) < 1e-9);
+  assert.ok(Math.abs(evalExpr(env.head, 12.5) - MUSIC.duck) < 1e-9);
+  assert.ok(evalExpr(env.head, 15.6) > 0 && evalExpr(env.head, 15.6) < MUSIC.duck);
+  assert.equal(evalExpr(env.head, 18.7), 0);
+  assert.equal(evalExpr(env.tail, 3120), 0);
+  assert.ok(Math.abs(evalExpr(env.tail, 3123.6) - MUSIC.duck) < 1e-9);
+  assert.equal(evalExpr(env.tail, 3125), 1);
+  assert.equal(evalExpr(env.tail, 3131.6), 0);
+  assert.equal(env.tailStart, 3120.6);
+  assert.equal(env.tailLen, 11);
+});
+
+test('aeGuards names what is missing', () => {
+  assert.deepEqual(aeGuards({ installed: true, ccRunning: true, hasFont: true }), { ok: true });
+  assert.match(aeGuards({ installed: false, ccRunning: true, hasFont: true }).reason, /not installed/);
+  assert.match(aeGuards({ installed: true, ccRunning: false, hasFont: true }).reason, /Creative Cloud/);
+  assert.match(aeGuards({ installed: true, ccRunning: true, hasFont: false }).reason, /DegularDisplay-Bold/);
 });

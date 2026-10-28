@@ -1,6 +1,6 @@
 # Sermon bumper from the After Effects template: design
 
-Date: 2026-10-27. Status: reviewed; awaiting Zach's go and two one-time actions on the mini. Supersedes the ffmpeg-only bumper that shipped earlier today (`scripts/sermon-edit.mjs`); that code stays as the fallback.
+Date: 2026-10-27. Status: built 2026-10-28. Deviation from Decision 2: `aerender` cannot read JSON footage (`footage("sermon.json").sourceData` evaluates only inside the app), so the Monday render sets the text by script inside the running After Effects app and renders through its render queue; `aerender` is unused. Supersedes the ffmpeg-only bumper that shipped earlier today (`scripts/sermon-edit.mjs`); that code stays as the fallback.
 
 ## Intent
 
