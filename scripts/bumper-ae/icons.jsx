@@ -17,7 +17,7 @@ function swap(sceneName, suffix) {
     L.parent = old;
     nt.property("ADBE Anchor Point").setValue([256, 256, 0]);
     nt.property("ADBE Position").setValue([ax, ay, 0]);
-    nt.property("ADBE Scale").setValue([40, 40, 100]);
+    var sizes = { facebook: 30, instagram: 31, youtube: 36 }; nt.property("ADBE Scale").setValue([sizes[map[m][1]], sizes[map[m][1]], 100]);
     var oop = ot.property("ADBE Opacity"), nop = nt.property("ADBE Opacity"), nk = Number(oop.numKeys);
     if (nk > 0) { for (var k = 1; k <= nk; k++) nop.setValueAtTime(Number(oop.keyTime(k)), Number(oop.keyValue(k))); } else nop.setValue(Number(oop.value));
     old.enabled = false;

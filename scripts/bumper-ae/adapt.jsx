@@ -29,7 +29,7 @@ app.beginUndoGroup("Cornerstone adapt");
 var folder = find("Cornerstone", FolderItem) || app.project.items.addFolder("Cornerstone");
 var mountain = importFile(DIR + "/mountain.mp4", "mountain.mp4"); mountain.parentFolder = folder;
 var drone = importFile(DIR + "/drone.mov", "drone.mov"); drone.parentFolder = folder;
-var logo = importFile(DIR + "/logo.png", "logo.png"); logo.parentFolder = folder;
+var logo = importFile(DIR + "/logo-hires.png", "logo-hires.png"); logo.parentFolder = folder;
 var data = importFile(DIR + "/sermon.json", "sermon.json"); data.parentFolder = folder;
 log("imported: " + mountain.width + "x" + mountain.height + " " + mountain.duration + "s, drone " + drone.duration + "s, logo " + logo.width + "x" + logo.height);
 
@@ -60,10 +60,10 @@ log("Scene_01 extended to 5.0");
 var logoComp = find("Logo", CompItem); logoComp.width = 2700; logoComp.height = 1350;
 for (var i = logoComp.numLayers; i >= 1; i--) logoComp.layer(i).remove();
 var lg = logoComp.layers.add(logo); lg.property("ADBE Transform Group").property("ADBE Position").setValue([1350, 675, 0]);
-var lgScale = 1350 / 1050 * 100; lg.property("ADBE Transform Group").property("ADBE Scale").setValue([lgScale, lgScale, 100]);
+var lgScale = 1350 / (Number(logo.width) * 1050 / 1920) * 100; lg.property("ADBE Transform Group").property("ADBE Scale").setValue([lgScale, lgScale, 100]);
 var scene5 = find("Scene_05", CompItem);
 layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Anchor Point").setValue([1350, 675, 0]);
-layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Scale").setValue([180, 180, 100]);
+layer(scene5, "Logo").property("ADBE Transform Group").property("ADBE Scale").setValue([162, 162, 100]);
 var hereLayers = layersNamed(scene5, "TextS5_01"); for (var h = 0; h < hereLayers.length; h++) hereLayers[h].enabled = false;
 var urlInfo = widenWordComp("TextS5_02", 1400, "'cornerstonechurchma.com'", null); reanchor(scene5, "TextS5_02", 1400, urlInfo.comp.height);
 log("Scene_05 logo + url set");
@@ -111,12 +111,12 @@ removeLayersNamed(outro, ["Scene_01", "Scene_02", "Scene_03", "LightLeack", "Lig
 removeLayersNamed(outro, ["Transition"]);
 removeLayersWithSource(outro, "BackGround");
 var s4 = layer(outro, "Scene_04"); s4.startTime = 0; s4.inPoint = 0; s4.outPoint = 4.0;
-var leak3 = layer(outro, "LightLeack 3"); leak3.startTime = 3.3; leak3.outPoint = 4.6;
-var s5b = layer(outro, "Scene_05"); s5b.startTime = 3.8; s5b.inPoint = 3.8; s5b.outPoint = 8.0;
-var dbg = outro.layers.add(drone); dbg.moveToEnd(); dbg.startTime = -10; dbg.inPoint = 0; dbg.outPoint = 8.0; dbg.property("ADBE Transform Group").property("ADBE Scale").setValue([112, 112, 100]); dbg.property("ADBE Transform Group").property("ADBE Position").setValue([1920, 950, 0]);
+var leak3 = layer(outro, "LightLeack 3"); leak3.startTime = 3.5; leak3.outPoint = 4.8;
+var s5b = layer(outro, "Scene_05"); s5b.startTime = 4.4; s5b.inPoint = 4.4; s5b.outPoint = 8.8;
+var dbg = outro.layers.add(drone); dbg.moveToEnd(); dbg.startTime = -10; dbg.inPoint = 0; dbg.outPoint = 8.8; dbg.property("ADBE Transform Group").property("ADBE Scale").setValue([112, 112, 100]); dbg.property("ADBE Transform Group").property("ADBE Position").setValue([1920, 950, 0]);
 var grad2 = outro.layers.addSolid([0, 0, 0], "Scrim", 3840, 2160, 1); grad2.moveBefore(dbg); grad2.blendingMode = BlendingMode.MULTIPLY;
 var ramp2 = grad2.property("ADBE Effect Parade").addProperty("ADBE Ramp"); ramp2.property("ADBE Ramp-0001").setValue([1920, 2160]); ramp2.property("ADBE Ramp-0002").setValue([0.25, 0.25, 0.28]); ramp2.property("ADBE Ramp-0003").setValue([1920, 600]); ramp2.property("ADBE Ramp-0004").setValue([0.9, 0.9, 0.9]);
-outro.duration = 8.0; outro.frameRate = 30;
+outro.duration = 8.8; outro.frameRate = 30;
 log("Outro: " + Number(outro.duration) + "s, layers " + Number(outro.numLayers));
 
 app.endUndoGroup();
