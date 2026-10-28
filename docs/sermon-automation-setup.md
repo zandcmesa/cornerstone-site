@@ -154,6 +154,8 @@ The date is optional in the comment; it defaults to the PR's Sunday. These all w
 
 Either door re-cuts from the replay, uploads a new unlisted Vimeo video, retires the old one (it is renamed to start with "Superseded" and made private), and updates the same PR. Open the new Vimeo link, check it, and merge.
 
+Two things learned the hard way: a recut refuses any Sunday that `main` already lists (it reads `origin/main`, not the branch the runner checked out), because retiring a published video takes it off the live site; and Vimeo can hold a finished upload in "uploading" for an hour or more before it starts transcoding, so a cut whose upload looks stuck is usually fine, it just needs time, and the PR will say "processing" until Vimeo catches up.
+
 **Recut only works while the sermon is still an open PR.** Once you merge, the Sunday is published and a recut is refused with "already published on the site". To fix a published sermon, edit it by hand in `js/sermons.js`, or ask Claude to open a fix.
 
 ## If something is off
