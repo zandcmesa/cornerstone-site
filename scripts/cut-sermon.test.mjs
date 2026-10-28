@@ -77,6 +77,7 @@ function fakeDeps(over = {}) {
     findSermonBounds: rec('findSermonBounds', async () => ({ start: 2500, end: 4800, confidence: 'high', note: 'ai' })),
     extractMetadata: rec('extractMetadata', async () => ({ title: 'T', speaker: 'Pastor Josh Eldridge', scripture: 'John 3', description: 'd' })),
     readArchive: rec('readArchive', () => ({ entries: [{ date: '2026-10-18', vimeoId: 'X' }], maxId: 1 })),
+    readPublished: rec('readPublished', () => ({ entries: [{ date: '2026-10-18', vimeoId: 'X' }], maxId: 1 })),
     downloadSection: (id, start, end, out) => { calls.push('downloadSection'); dirs.add(path.dirname(out)); fs.writeFileSync(out, 'x'); return out; },
     editSermon: rec('editSermon', async () => null),
     getVideo: async id => ({ name: 'n', description: 'd', link: `https://vimeo.com/${id}/h` }),
@@ -199,5 +200,16 @@ test('a failed caption upload is retried and never fails the cut', async () => {
     const r = await cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps);
     assert.equal(r.status, 'replaced');
     assert.equal(tries, 3);
+  } finally { cleanup(); }
+});
+
+test('the published guard reads main, not the checked-out branch', async () => {
+  const { deps, calls, cleanup } = fakeDeps({
+    readArchive: () => ({ entries: [], maxId: 1 }),
+    readPublished: () => ({ entries: [{ date: '2026-10-25', vimeoId: 'LIVE' }], maxId: 2 }),
+  });
+  try {
+    await assert.rejects(() => cutSermon({ date: '2026-10-25', start: '42:10', end: '1:19:00' }, deps), /already published/);
+    assert.ok(!calls.some(c => c.startsWith('retireVideo')) && !calls.includes('uploadVideo'));
   } finally { cleanup(); }
 });

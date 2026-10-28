@@ -92,10 +92,14 @@ export function downloadSection(youtubeId, start, end, out) {
 }
 
 const readArchive = () => parseArchive(fs.readFileSync(path.join(ROOT, 'js/sermons.js'), 'utf8'));
+const readPublished = () => {
+  try { execFileSync('git', ['fetch', '-q', 'origin', 'main'], { cwd: ROOT, stdio: 'ignore' }); return parseArchive(execFileSync('git', ['show', 'origin/main:js/sermons.js'], { cwd: ROOT, encoding: 'utf8' })); }
+  catch { return readArchive(); }
+};
 
 const cutDeps = {
   listVideos: vimeo.listVideos, uploadVideo: vimeo.uploadVideo, uploadTextTrack: vimeo.uploadTextTrack, retireVideo: vimeo.retireVideo, me: vimeo.me,
-  getVideo: vimeo.getVideo, sleep: ms => new Promise(r => setTimeout(r, ms)), findReplay, fetchTimedCaptions, downloadSection, editSermon, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, log: console.log,
+  getVideo: vimeo.getVideo, sleep: ms => new Promise(r => setTimeout(r, ms)), findReplay, fetchTimedCaptions, downloadSection, editSermon, findSermonBounds: ai.findSermonBounds, extractMetadata: ai.extractMetadata, syncSermons, readArchive, readPublished, log: console.log,
 };
 
 export async function cutSermon({ date, youtubeId, start, end, dryRun = false, skipUpload = false, keep = false } = {}, deps = cutDeps) {
@@ -107,7 +111,7 @@ export async function cutSermon({ date, youtubeId, start, end, dryRun = false, s
     throw new Error(`VIMEO_USER is set to "${process.env.VIMEO_USER}" but the token belongs to ${who.name} (${who.link}). Uploads go to the token's own library, so the cut workflow needs a token minted as the church account and VIMEO_USER unset.`);
   }
   if (date < CUT_START) { log(`${date} is before the cutover date ${CUT_START}; nothing to do`); return { status: 'before-cutover' }; }
-  if (manual && d.readArchive().entries.some(e => e.date === date)) throw new Error(`${date} is already published on the site; a recut only replaces a sermon still waiting in its PR`);
+  if (manual && d.readPublished().entries.some(e => e.date === date)) throw new Error(`${date} is already published on the site; a recut only replaces a sermon still waiting in its PR`);
   const videos = await d.listVideos({ perPage: 25, pages: 1 });
   const existing = videos.find(v => sermonDateFromVideo(v) === date);
   if (existing && !manual && !dryRun) { log(`${date} is already on Vimeo (${existing.vimeoId}); nothing to do`); return { status: 'already-on-vimeo', vimeoId: existing.vimeoId }; }
