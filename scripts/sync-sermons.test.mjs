@@ -26,6 +26,8 @@ function fakes(overrides = {}) {
       publish: async p => { calls.published = p; },
     },
     log: () => {},
+    listRetries: 2,
+    sleep: async () => { calls.sleeps = (calls.sleeps || 0) + 1; },
     ...overrides,
   };
   return { deps, calls };
@@ -108,4 +110,20 @@ test('the PR body carries the private link from the Vimeo listing', async () => 
   const { deps, calls } = fakes();
   await syncSermons({}, deps);
   assert.match(calls.published.body, /\*\*Watch the cut:\*\* https:\/\/vimeo\.com\/N\/h4sh/);
+});
+
+test('a just-uploaded video that Vimeo has not listed yet is retried before giving up', async () => {
+  let listings = 0;
+  const { deps, calls } = fakes({
+    listVideos: async () => (++listings < 2 ? [] : [{ vimeoId: 'U', name: 'Sunday Sermon 08-02-2026', description: null }]),
+  });
+  const r = await syncSermons({ transcriptOverride: { U: 'words' }, metaOverride: { U: { title: 'Late', speaker: 'S', series: null, scripture: '', scriptureBook: '', topics: [], description: '', artMood: '' } } }, deps);
+  assert.equal(listings, 2);
+  assert.equal(calls.sleeps, 1);
+  assert.equal(r.entries[0].vimeoId, 'U');
+});
+
+test('the override error still fires after the retries run out', async () => {
+  const { deps } = fakes({ listVideos: async () => [] });
+  await assert.rejects(() => syncSermons({ metaOverride: { Z: { title: 'x' } } }, deps), /metaOverride for Z/);
 });

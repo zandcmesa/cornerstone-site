@@ -42,6 +42,8 @@ export const realGit = {
 };
 
 const defaultDeps = {
+  listRetries: 6,
+  sleep: ms => new Promise(r => setTimeout(r, ms)),
   listVideos: vimeo.listVideos,
   getTranscript: vimeo.getTranscript,
   extractMetadata: ai.extractMetadata,
@@ -60,12 +62,19 @@ export async function syncSermons({ dryRun = false, limit = Infinity, transcript
   const drafts = draftSrc ? parseArchive(draftSrc) : { entries: [] };
   const draftById = new Map(drafts.entries.map(e => [e.vimeoId, e]));
 
-  const videos = await d.listVideos();
-  const candidates = pickCandidates(videos, base, drafts).slice(0, limit);
+  let videos = await d.listVideos();
+  let candidates = pickCandidates(videos, base, drafts).slice(0, limit);
+  const wanted = Object.keys(metaOverride);
+  for (let attempt = 1; wanted.some(id => !candidates.some(c => c.vimeoId === id)) && attempt <= d.listRetries; attempt++) {
+    d.log(`waiting for Vimeo to list the new upload (${attempt}/${d.listRetries})`);
+    await d.sleep(10000);
+    videos = await d.listVideos();
+    candidates = pickCandidates(videos, base, drafts).slice(0, limit);
+  }
   d.log(`${candidates.length} sermon(s) not in the archive`);
 
   const ctx = archiveContext(base);
-  for (const id of Object.keys(metaOverride)) {
+  for (const id of wanted) {
     if (!candidates.some(c => c.vimeoId === id)) throw new Error(`metaOverride for ${id} but that video is not among the new Vimeo videos (check VIMEO_USER matches the token's account)`);
   }
   let nextId = Math.max(base.maxId, ...drafts.entries.map(e => e.id)) + 1;
