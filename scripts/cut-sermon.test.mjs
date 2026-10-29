@@ -26,6 +26,11 @@ test('rebaseVtt produces a VTT starting at zero', () => {
   assert.equal(vtt, 'WEBVTT\n\n00:00:00.000 --> 00:00:04.000\nb\n\n00:00:04.000 --> 00:00:08.000\nc\n');
 });
 
+test('rebaseVtt writes valid timestamps for a fractional lead-in', () => {
+  const segs = [{ t: 4041, text: 'a' }, { t: 7145.4, text: 'b' }];
+  assert.equal(rebaseVtt(segs, 4041, 7155, 8.6), 'WEBVTT\n\n00:00:08.600 --> 00:51:53.000\na\n\n00:51:53.000 --> 00:51:57.000\nb\n');
+});
+
 test('ytBaseArgs always allows the EJS solver and adds cookies only when set', () => {
   assert.deepEqual(ytBaseArgs({}), ['--remote-components', 'ejs:npm']);
   const args = ytBaseArgs({ YOUTUBE_COOKIES: '# Netscape HTTP Cookie File\n.youtube.com\tTRUE\t/\tTRUE\t0\tSID\tabc\n' });
@@ -159,11 +164,6 @@ test('--strict turns a missing replay or missing captions into a failure', () =>
 test('rebaseVtt shifts every cue by the offset', () => {
   const segs = [{ t: 100, text: 'b' }, { t: 104, text: 'c' }];
   assert.equal(rebaseVtt(segs, 100, 250, 7), 'WEBVTT\n\n00:00:07.000 --> 00:00:11.000\nb\n\n00:00:11.000 --> 00:00:15.000\nc\n');
-});
-
-test('rebaseVtt keeps fractional offsets valid', () => {
-  const segs = [{ t: 100, text: 'b' }, { t: 104, text: 'c' }];
-  assert.equal(rebaseVtt(segs, 100, 250, 8.6), 'WEBVTT\n\n00:00:08.600 --> 00:00:12.600\nb\n\n00:00:12.600 --> 00:00:16.600\nc\n');
 });
 
 test('the bumper edit is uploaded instead of the raw cut and captions move by the lead-in', async () => {
